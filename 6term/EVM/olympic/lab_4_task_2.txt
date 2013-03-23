@@ -1,0 +1,103 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+#define rrep(i,k,n) for(int (i) = (k); (i) >= (n); (i)--)
+using namespace std;
+int n,k=0,m;
+vector<int> v, co, temp;
+vector<vector<int>> vvi;
+string s,g;
+int foo()
+{
+	int k = 0;
+	rep(i,0,n)
+		k+=co[i]*v[i];
+	return k;
+}
+void add(int s)
+{
+	rep(i,0,n)
+		if(co[i] == 2)
+		{
+			vvi[s].push_back(v[i]);
+			vvi[s].push_back(v[i]);
+		}
+		else if(co[i] == 1)
+			vvi[s].push_back(v[i]);
+}
+void out(int m)
+{
+	int n = vvi[m].size();
+	cout << n << "\n";
+	rep(i,0,n)
+		cout << vvi[m][i] << " ";
+}
+int pl()
+{
+	int s = co.size();
+	rrep(i,s-1,0)
+	{
+		if(co[i] == 2)
+		{
+			if(i)
+				co[i]=0;
+			else
+				return 1;	
+		}
+		else
+		{
+			co[i]++;
+			return 0;
+		}
+	}
+}
+int main()
+{
+	freopen("input.txt","r", stdin);
+	freopen("output.txt", "w", stdout);
+	cin >> m >> n;
+	int min = m+1;
+	co = vector<int>(n,0);
+	v = vector<int>(n,0);
+	temp = vector<int>(0);
+	rep(i,0,n)
+		cin >> v[i];
+	int i = n-1;
+	rep(i,0,n)
+		k+=2*v[i];
+	if(k < m)
+	{
+		cout << "-1";
+		return 0;
+	}
+
+	while(1)
+	{
+		k = foo();
+		if(k == m)
+		{
+			vvi.push_back(temp);
+			add(vvi.size()-1);
+		}
+		if(pl())
+			break;
+	}
+	if(!vvi.size())
+		cout << 0;
+	else
+	{
+		k = vvi.size();
+		rep(i,0,k)
+			if(vvi[i].size()<min)
+			{
+				m = i;
+				min = vvi[i].size();
+			}
+		out(m);
+	}
+	return 0;
+}

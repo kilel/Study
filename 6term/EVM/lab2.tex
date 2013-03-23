@@ -1,0 +1,166 @@
+\documentclass[12pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{cmap}
+\usepackage{soul}
+\usepackage{ulem}
+\usepackage[english,russian]{babel}
+\usepackage{enumerate}
+\pagestyle{empty}
+	\hoffset=0mm
+	\oddsidemargin=-15mm
+	\topmargin=-15mm
+
+	\headheight=0pt
+	\headsep=0pt
+	\textheight=28cm
+	\textwidth=16cm
+	\marginparsep=0pt
+	\marginparwidth=0pt
+	\footskip=0pt
+	\marginparpush=0pt
+	\hoffset=0mm
+	\voffset=0mm
+	\parindent=0.5cm
+	\hangindent=0.5cm 
+	\hangafter=2
+	%{\raggedright}
+%\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\textbf{Вариант 5.}
+\begin{flushleft}
+\framebox(550,740)[1]{
+
+\begin{minipage}[0]{540pt}
+
+\begin{flushright}
+{\large \uline{\textbf{Кратные интегралы}}}
+
+\end{flushright}
+\par{\ }
+%\vspace*{-10pt}
+
+%\hspace{3mm}
+	\parindent=0.5cm
+\hangindent=-0.5cm 
+	\hangafter=0
+
+
+\textbf{1 Свойства кратных интегралов}
+
+
+$$\hspace*{-11.5cm}\int\limits_{D}{1 \cdotp dx_1 \cdotp dx_2 \cdotp ... \cdotp dx_n = mD}$$
+
+\vspace*{-1cm}
+\textbf{1)}
+
+$$\hspace*{-0.5cm}
+\int\limits_{D}
+{[A \cdotp f(x) + B \cdotp g(x)]dx} = 
+A \cdotp \int\limits_{D}{f(x)dx} + 
+B \cdotp \int\limits_{D}{g(x)dx}$$
+
+\vspace*{-1cm}
+\textbf{2) \uline{\textit{Линейность}}}
+
+$$\hspace*{1.5cm} 
+\int\limits_{D}{f(x)dx} \leq 
+\int\limits_{D}{g(x)dx}$$
+
+\vspace*{-1.0cm}
+\textbf{3)} Если $f(x) \leq g(x)$ в области  D, тогда 
+
+$$\hspace*{0.5cm}
+-\int\limits_{D}{g(x)dx} \leq 
+\int\limits_{D}{f(x)dx} \leq 
+\int\limits_{D}{g(x)dx}$$
+
+\vspace*{-1.0cm}
+\textbf{4)} Если $\vert f(x) \vert \leq g(x)$, тогда 
+
+$$\hspace*{-11.5cm} 
+\left| \int\limits_{D}{f(x)dx} \right|\leq 
+\int\limits_{D}{\vert f(x) \vert dx} 
+$$
+
+\vspace*{-1.0cm}
+\textbf{5)}  
+
+$$ $$
+
+\vspace*{-0.5cm}
+\textbf{6)}  \uline{\textit{Теорема о среднем}}
+\par{Пусть функция $f(x) = f(x_1,x_2,...,x_n)$ непрерывна в области D, тогда $\exists \xi \in D$, такая, что}
+
+$$\hspace*{-4.0cm} 
+ \int\limits_{D}{f(x)dx} \leq f( \xi )mD,\ \  
+m \leq f(x) \leq M,\ \  m = \min_{x \in D}f(x), \ \ 
+M = \max_{x \in D}f(x)
+$$
+%\vspace*{-1.0cm}
+$$\hspace*{2.7cm} 
+m(mD) \leq \int\limits_{D}{f(x)dx} \leq M(mD) \Rightarrow
+m \leq \int\limits_{D}{\frac{f(x)}{mD}dx} \leq M \Rightarrow \exists \xi \in D \mbox{ такая, что} $$
+
+
+\vspace*{-1.3cm}
+\par{По 3) свойству} 
+\vspace*{0.3cm}
+$$\hspace*{-14cm} 
+\int\limits_{D}{\frac{f(x)}{mD}dx} \leq f( \xi )
+$$
+
+$$ $$
+
+\vspace*{-1.0cm}
+\textbf{7)}  \uline{\textit{Интеграл от непрерывной функции}} $f(x) \exists$ в области D, если $f(x)$ непрерывна в D, тогда 
+
+$$\hspace*{-15.5cm}
+\exists \int\limits_{D}{f(x)dx}
+$$
+
+$$ $$
+
+\vspace*{-1.0cm}
+\textbf{2 Двойной интеграл.} 
+\uline{\textit{Сведение к повторному интегралу}}
+\\
+\par{Перестановка пределов интегрирования}
+\par{Интеграл по прямоугольнику D}
+
+\vspace*{-0.3cm}
+\begin{equation}
+\hspace*{-7.0cm}
+\int\limits_{a}^{b}{\int\limits_{c}^{d}{f(x,y)dxdy}} = 
+\int\limits_{c}^{d}{dy \int\limits_{a}^{b}{f(x,y)dx}} = 
+\int\limits_{a}^{b}{dx \int\limits_{c}^{d}{f(x,y)dy}}  
+\end{equation}
+
+\begin{equation}
+\hspace*{-10.5cm}
+\int{}
+\hspace*{-0.3cm}
+\int\limits_{\hspace*{-0.3cm}(D)}{f(x,y)dxdy} = 
+\int\limits_{a}^{b}{dx \int\limits_{v(x)}^{w(x)}{f(x,y)dy}}  
+\end{equation}
+\\
+$$\hspace*{-3.2cm}
+D = D_1 \cup D_2 \ \ \ 
+\int\limits_{D}{f(x)dx}  = 
+\int\limits_{D_1}{f(x)dx} +
+\int\limits_{D_2}{f(x)dx} \ \ 
+\mbox{(мера границы = 0)}
+$$
+
+\vspace*{-1.15cm}
+\textbf{8)}  
+\\ \\ \\ \\ \\ \\ 
+
+
+\end{minipage} 
+
+}
+
+\end{flushleft}
+\end{document}

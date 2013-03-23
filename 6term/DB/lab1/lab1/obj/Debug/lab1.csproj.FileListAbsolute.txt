@@ -1,0 +1,9 @@
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\bin\Debug\lab1.exe.config
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\bin\Debug\lab1.exe
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\bin\Debug\lab1.pdb
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\obj\Debug\ResolveAssemblyReference.cache
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\obj\Debug\lab1.Form1.resources
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\obj\Debug\lab1.Properties.Resources.resources
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\obj\Debug\lab1.csproj.GenerateResource.Cache
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\obj\Debug\lab1.exe
+D:\!__dropbox\Dropbox\вуз\6 семестр\Database\lab1\lab1\obj\Debug\lab1.pdb

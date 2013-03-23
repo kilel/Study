@@ -1,0 +1,138 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#include <time.h>
+#include <stdio.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+#define sqr(r) (r)*(r)
+#define ii pair<int,int>
+#define vii vector<ii>
+#define vi vector<int>
+using namespace std;
+vector<string> s;
+
+set<long long> si;
+long long mod;
+long long n,m,k,d,l,r,c, INF = 10000009;
+ii t;
+vii list;
+vi q;
+vi wei;
+vii dh;
+vi vd;
+
+void add(int i,int j)
+{
+	c = i*m+j;
+	q.push_back(list.size());
+	if(i > 0)
+	{
+		list.push_back(ii(c,c-m));
+		wei.push_back(sqr(s[i][j] - s[i-1][j]));
+	}
+	if(j > 0)
+	{
+		list.push_back(ii(c,c-1));
+		wei.push_back(sqr(s[i][j] - s[i][j-1]));
+	}
+	if(j < m-1)
+	{
+		list.push_back(ii(c,c+1));
+		wei.push_back(sqr(s[i][j] - s[i][j+1]));
+	}
+	if(i < n-1)
+	{
+		list.push_back(ii(c,c+m));
+		wei.push_back(sqr(s[i][j] - s[i+1][j]));
+	}
+}
+
+void swap(int i,int j)
+{
+	t = dh[j];
+	dh[j] = dh[i];
+	dh[i] = t;
+	//
+	c = vd[dh[i].second];
+	vd[dh[i].second] = vd[dh[j].second];
+	vd[dh[j].second] = c;
+}	
+bool cmp(int i, int j)
+{
+	if(dh[i].first > dh[j].first)
+		return true;
+	else return false;
+}
+void upheap(int i)
+{
+	int j = i/2;
+	if(j == 0)
+		return;
+	if(cmp(j,i))
+	{
+		swap(i,j);
+		upheap(j);
+	}
+}
+void downheap(int i, int n)
+{
+	int j = 2*i;
+	if(j > n)
+		return;
+	if(j < n)
+		if(cmp(j,j+1))
+			j++;
+	if(cmp(i,j))
+	{
+		swap(i,j);
+		downheap(j,n);
+	}
+}
+
+void deixtra(int c)
+{
+	while (c > 1)
+	{
+		swap(1,c);
+		downheap(1,c-1);
+		rep(i,q[dh[c].second],q[dh[c].second+1])
+		{
+			if(dh[vd[list[i].second]].first > dh[c].first + wei[i])
+			{
+				dh[vd[list[i].second]].first = dh[c].first + wei[i];
+				upheap(vd[list[i].second]);
+			}
+		}
+		c--;
+	}
+}
+
+int main()
+{
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  
+  cin >> m >> n;
+  s = vector<string>(n);
+  rep(i,0,n)
+	  cin >> s[n-i-1];
+  rep(i,0,n)
+	  rep(j,0,m)
+		add(i,j);
+  q.push_back(list.size());
+  dh = vii(n*m+1,ii(0,0));
+  dh[0] = ii(0,0);
+  dh[1] = ii(0,0);
+  rep(i,2,n*m+1)
+	dh[i] = ii(INF,i-1);
+  rep(i,0,n*m+1)
+	  vd.push_back(i+1);
+  deixtra(n*m);
+  cout << dh[vd[n*m-1]].first;
+
+  return 0;
+}

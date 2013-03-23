@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Проект отчета2", "Проект отчета2\Проект отчета2.rptproj", "{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.Debug|Default.ActiveCfg = Debug
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.Debug|Default.Build.0 = DebugLocal
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.Debug|Default.Deploy.0 = DebugLocal
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.DebugLocal|Default.Build.0 = DebugLocal
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.Release|Default.ActiveCfg = Release
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.Release|Default.Build.0 = Release
+		{93F90D6A-906A-42EA-95D1-C0F3A0328DF9}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

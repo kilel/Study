@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <CommandText>
+SELECT
+soh.SalesPersonID AS id,
+p.FirstName,
+p.LastName,
+soh.SalesOrderNumber AS [Order],
+soh.OrderDate AS [Date],
+DATEPART(yy, soh.OrderDate) AS [Year],
+DATEPART(mm, soh.OrderDate) AS [Month],
+st.[Group] AS [Geography],
+st.CountryRegionCode AS CountryRegion,
+st.Name AS Territory,
+ppc.Name AS Category,
+pps.Name AS Subcat,
+pp.Name AS Product,
+pp.Color, pp.Size,
+CASE
+WHEN pp.Size = 'S' THEN 1
+WHEN pp.Size = 'M' THEN 2
+WHEN pp.Size = 'L' THEN 3
+WHEN pp.Size = 'XL' THEN 4
+ELSE pp.Size
+END AS SizeSortOrder,
+SUM(sd.OrderQty) AS Qty,
+SUM(sd.LineTotal) AS LineTotal
+FROM
+Sales.SalesPerson AS sp
+INNER JOIN Sales.SalesOrderHeader AS soh
+ON sp.BusinessEntityID = soh.SalesPersonID
+INNER JOIN Person.Person AS p
+ON p.BusinessEntityID = sp.BusinessEntityID
+INNER JOIN Sales.SalesOrderDetail AS sd
+ON sd.SalesOrderID = soh.SalesOrderID
+INNER JOIN Production.Product AS pp
+ON sd.ProductID = pp.ProductID
+INNER JOIN Sales.SalesTerritory AS st
+ON st.TerritoryID = sp.TerritoryID
+INNER JOIN Production.ProductSubcategory AS pps
+ON pp.ProductSubcategoryID = pps.ProductSubcategoryID
+INNER JOIN Production.ProductCategory AS ppc
+ON ppc.ProductCategoryID = pps.ProductCategoryID
+GROUP BY ppc.Name, soh.OrderDate, soh.SalesOrderNumber, pps.Name,
+pp.Name, soh.SalesPersonID, p.LastName, p.FirstName,
+st.[Group], st.CountryRegionCode, st.Name, pp.Color, pp.Size
+--HAVING (DATEPART(yy,soh.OrderDate) IN ('2003','2004'))
+--AND st.[Group] = 'North America'
+--AND LEFT(pps.Name,1) IN ('C','T')
+--AND LEFT(ppc.Name,1) = 'C')</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="id">
+        <DataField>id</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="FirstName">
+        <DataField>FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="LastName">
+        <DataField>LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Order">
+        <DataField>Order</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Date">
+        <DataField>Date</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="Year">
+        <DataField>Year</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Month">
+        <DataField>Month</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Geography">
+        <DataField>Geography</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CountryRegion">
+        <DataField>CountryRegion</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Territory">
+        <DataField>Territory</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Category">
+        <DataField>Category</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Subcat">
+        <DataField>Subcat</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Product">
+        <DataField>Product</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Color">
+        <DataField>Color</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Size">
+        <DataField>Size</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="SizeSortOrder">
+        <DataField>SizeSortOrder</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Qty">
+        <DataField>Qty</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="LineTotal">
+        <DataField>LineTotal</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

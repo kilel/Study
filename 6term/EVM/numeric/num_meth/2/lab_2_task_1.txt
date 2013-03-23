@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+using namespace std;
+//bool a[100000010] = {{0}};
+vector<long long> vi;
+
+
+int main()
+{
+  //freopen("input.txt","r", stdin);
+  //freopen("output.txt", "w", stdout);
+  
+  long long n,s;
+  cin >> n;
+  s = sqrt((long double)n);
+  if(s*s == n)
+  {
+    vi.push_back(s);
+    s--;
+  }
+  rep(i,1,s+1)
+    if(n%i == 0)
+    {
+      vi.push_back(i);
+      vi.push_back(n/i);
+    }
+  sort(vi.begin(),vi.begin()+vi.size());
+  n = vi.size();
+  rep(i,0,n)
+    cout << vi[i] << " ";
+  return 0;
+}

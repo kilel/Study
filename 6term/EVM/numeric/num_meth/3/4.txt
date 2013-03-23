@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+using namespace std;
+bool b[100000010] = {{0}};
+vector<long long> vi;
+set<long long> si;
+
+bool prime(long long n)
+{
+  int k = vi.size();
+  rep(i,0,k)
+  {
+    if(n == vi[i])
+      return true;
+    if(!(n%vi[i]))
+      return false;
+  }
+  return true;
+}
+int main()
+{
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  
+  long long n,s,k;
+  s = 1e6+1;
+  rep(i,2,s)
+  {
+    if(b[i] == 0)
+    {
+      vi.push_back(i);
+      for(int j = 2*i; j < s; j+=i)
+        b[j] = 1;
+    }
+  }
+  n = vi.size();
+  /*cout << "long long a[] = {";
+  rep(i,0,n)
+  {
+	  cout << vi[i];
+	  if(i!= n-1)
+		  cout << ",";
+  }
+  cout <<"};";*/
+  cin >> k;
+  s = 0;
+  n = 78490;
+  rep(i,0,n)
+  {
+	  s = 0;
+	  while(k%vi[i]==0)
+	  {
+		  s++;
+		  k = k/vi[i];
+	  }
+	  if(s)
+		  cout << vi[i] << " " << s << "\n";
+  }
+  if(k > 1)
+	  cout << k << " " << "1";
+
+  
+  return 0;
+}

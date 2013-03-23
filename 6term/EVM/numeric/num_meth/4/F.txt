@@ -1,0 +1,83 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#include <time.h>
+#include <stdio.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+#define sqr(r) (r)*(r)
+#define ii pair<int,int>
+#define vii vector<ii>
+#define vi vector<int>
+using namespace std;
+vector<string> s;
+
+set<long long> si;
+long long mod;
+long long n,m,k,d,l,r,c, INF = 10000009;
+ii t;
+vii list;
+vi q;
+vi wei;
+vii v;
+
+
+bool prime(long long n)
+{
+	long long s = sqrt((double)n)+1;
+	rep(i,2,s)
+		if(n%i == 0)
+			return false;
+	return true;
+}
+int gcd(long long a,long long b)
+{
+	if(a < b) gcd(b,a);
+	else if(a==0||b==0) return a|b;
+	else return gcd(b,a%b);
+}
+void calc(int k)
+{
+	int m = 0,s = sqrt((double)k);
+	rep(i,1,s+1)
+		if(k%i == 0)
+		{
+			if(i*i != k)
+				m += i;
+			m += k/i;
+		}
+	v.push_back(ii(k,m-k));
+}
+
+int main()
+{
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  long long A,B;
+  cin >> A >> B;
+  v.push_back(ii(0,0));
+  rep(i,1,1000001)
+	calc(i);
+  v[1].second = 0;
+  rep(i,A,B+1)
+  {
+	  c = v[i].second;
+	  if( c > B || c < A)
+		  continue;
+	  if(c == v[c].second)
+		  continue;
+	  if(v[c].second == i)
+	  {
+		  list.push_back(ii(i,c));
+		  
+		  v[i].second = -1;
+	  }
+  }
+  cout << list.size() << "\n";
+  rep(i,0,list.size())
+   cout << list[i].first  << " " << list[i].second << "\n";
+  return 0;
+}

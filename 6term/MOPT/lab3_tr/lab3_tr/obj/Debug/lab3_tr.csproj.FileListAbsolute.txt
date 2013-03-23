@@ -1,0 +1,8 @@
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\obj\Debug\ResolveAssemblyReference.cache
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\obj\Debug\lab3_tr.Form1.resources
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\obj\Debug\lab3_tr.Properties.Resources.resources
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\obj\Debug\lab3_tr.csproj.GenerateResource.Cache
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\bin\Debug\lab3_tr.exe
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\bin\Debug\lab3_tr.pdb
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\obj\Debug\lab3_tr.exe
+D:\!__dropbox\Dropbox\вуз\6 семестр\Методы оптимизации\lab3_tr\lab3_tr\obj\Debug\lab3_tr.pdb

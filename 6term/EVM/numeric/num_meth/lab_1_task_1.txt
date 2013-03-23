@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#define mod 10
+using namespace std;
+int a[10][1000] = {{0}};
+int n;
+string s;
+
+int Max(int a, int b)
+{
+  if(a>b) return a; 
+  return b;
+}
+void wr(string s, int k)
+{
+  a[k][0] = s.length();
+  for(int i = a[k][0]; i > 0; i--)
+    a[k][i] = s[a[k][0] - i] - '0';
+}
+void sum(int i, int j, int k)
+{
+  int p = 0, pr = 0;
+  a[k][0] = Max(a[i][0],a[j][0]);
+  for(int s = 1; s <= a[k][0]; s++)
+  {
+    p = (a[i][s] + a[j][s] + pr)/mod;
+    a[k][s] = (a[i][s] + a[j][s] + pr)%mod;
+    pr = p;
+  }
+  if(pr)
+  {
+    a[k][0]++;
+    a[k][a[k][0]] = pr;
+  }
+}
+void out(int k)
+{
+  for(int i = a[k][0]; i > 0; i--)
+    cout << a[k][i];
+}
+int main()
+{
+  //freopen("input.txt","r", stdin);
+  //freopen("output.txt", "w", stdout);
+  cin >> s;
+  wr(s, 1);
+  cin >> s;
+  wr(s,2);
+  sum(1,2,3);
+  out(3);
+  return 0;
+}

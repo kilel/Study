@@ -1,0 +1,95 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+using namespace std;
+bool a[100000010] = {{0}};
+vector<long long> vi;
+set<long long> si;
+long long b[100] = {0},g[100] = {0}, c[500] = {0};
+
+int get_r(long long n)
+{
+  rep(i,1,33)
+  {
+    if(n%(1<<i))
+      return (i-1);
+  }
+}
+bool power(long long a,long long mod)
+{
+  c[0] = a%mod;
+  long long d = 1;
+  if(b[0])
+    d = c[0];
+  rep(j,1,50)
+  {
+    c[j] = (c[j-1]*c[j-1])%mod;
+    if(b[j])
+    {
+      d = (d*c[j])%mod;
+    }
+  }
+  if(d == 1)
+    return true;
+  return false;
+}
+
+bool power2(long long a,long long mod, int sh)
+{
+  c[0] = a%mod;
+  long long d = 1;
+  rep(j,0,50)
+  {
+    if(j)
+    c[j] = (c[j-1]*c[j-1])%mod;
+    if(g[j+sh])
+    {
+      d = (d*c[j])%mod;
+    }
+  }
+  if(d == mod-1)
+    return true;
+  return false;
+}
+bool prime(long long a, long long r, long long t, long long n)
+{
+  if(power(a,n))
+    return true;
+  bool c = false;
+  rep(i,0,r)
+    c = c||power2(a,n,i);
+  if(c)
+    return true;
+  return false;
+}
+int main()
+{
+  freopen("input.txt","r", stdin);
+  //freopen("output.txt", "w", stdout);
+  
+  
+  long long n,k,a,d;
+  cin >> n >> k;
+  int r = get_r(n-1);
+  int t = (n-1)/(1<<r);
+
+  rep(i,0,32)
+  {
+    b[i] = (t)&(1<<i);
+    g[i] = ((n-1)/2)&(1<<i);
+  }
+  
+  rep(i,0,k)
+  {
+    cin >> a;
+    if(prime(a,r,t,n))
+      cout << "pseudoprime\n";
+    else
+      cout << "composite\n";
+  }
+  return 0;
+}

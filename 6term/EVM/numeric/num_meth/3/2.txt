@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+using namespace std;
+
+vector<long long> vi;
+set<long long> si;
+
+long long ferma(long long n)
+{
+  long long r,x,y;
+  x = sqrt((double)n);
+  if(n==2)
+    return 1;
+  y = 0;
+  r = x*x - y*y - n;
+  while(r)
+    {
+      if(r < 0)
+        x++;
+      else y++;
+      r = x*x - y*y - n;
+    }
+  if(x-y == 1)
+  {
+    vi.push_back(x+y);
+    return 1;
+  }
+  /*if(ferma(x-y) == 1)
+    vi.push_back(x-y);
+  if(ferma(x+y) == 1)
+    vi.push_back(x+y);*/
+  ferma(x-y);
+  ferma(x+y);
+  return x-y;
+
+}
+int main()
+{
+  //freopen("input.txt","r", stdin);
+  //freopen("output.txt", "w", stdout);
+  long long n,r,x,y,d;
+  cin >> n;
+  x = sqrt((double)n);
+  y = 0;
+  d = 999;
+  while(n%2==0)
+  {
+    vi.push_back(2);
+    n = n/2;
+  }
+  ferma(n);
+  
+  sort(vi.begin(),vi.end());
+  n = vi.size();
+  for(int i = 0; i < n; i++)
+  {
+    if(vi[i] == 1)
+      continue;
+    for(int j = i; j < n; j++)
+    {
+      if(vi[i] !=vi[j])
+      {
+        cout << vi[i] << " " << j-i << "\n";
+        i = j-1;
+        break;
+      }
+      else if(j == n-1)
+      {
+        cout << vi[i] << " " << j-i+1 << "\n";
+        i = n+1;  
+        break;
+      }
+    }
+  }
+  
+
+  
+  return 0;
+}

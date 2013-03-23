@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <rd:DataSourceID>5f381248-d3e0-42aa-8270-c6da57a02b5c</rd:DataSourceID>
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=KILEL-NOTEBOOK;Initial Catalog=AdventureWorks2008R2</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+    </DataSource>
+  </DataSources>
+  <rd:ReportID>64e3d372-aae0-4ae9-bd72-1cd97703752f</rd:ReportID>
+  <Width>5in</Width>
+  <Body>
+    <Height>2.29in</Height>
+    <ColumnSpacing>0.5in</ColumnSpacing>
+    <ReportItems>
+      <Textbox Name="textbox1">
+        <Style>
+          <FontFamily>Tahoma</FontFamily>
+          <FontSize>20pt</FontSize>
+          <Color>SteelBlue</Color>
+          <FontWeight>Bold</FontWeight>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+        <rd:DefaultName>textbox1</rd:DefaultName>
+        <Value>Report1</Value>
+        <CanGrow>true</CanGrow>
+        <Height>0.36in</Height>
+      </Textbox>
+      <List Name="List1">
+        <Style>
+          <FontFamily>Tahoma</FontFamily>
+          <FontSize>14pt</FontSize>
+          <Color>SlateGray</Color>
+        </Style>
+        <ReportItems>
+          <Textbox Name="Date">
+            <Style>
+              <FontFamily>Tahoma</FontFamily>
+              <FontSize>14pt</FontSize>
+              <Color>SlateGray</Color>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+            <rd:DefaultName>Date</rd:DefaultName>
+            <Value>=Fields!Date.Value</Value>
+            <CanGrow>true</CanGrow>
+            <Height>0.27in</Height>
+          </Textbox>
+          <List Name="List2">
+            <Style>
+              <FontFamily>Tahoma</FontFamily>
+              <FontSize>12pt</FontSize>
+            </Style>
+            <ReportItems>
+              <Textbox Name="Order">
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>12pt</FontSize>
+                  <PaddingLeft>2pt</PaddingLeft>
+                  <PaddingRight>2pt</PaddingRight>
+                  <PaddingTop>2pt</PaddingTop>
+                  <PaddingBottom>2pt</PaddingBottom>
+                </Style>
+                <rd:DefaultName>Order</rd:DefaultName>
+                <Value>=Fields!Order.Value</Value>
+                <CanGrow>true</CanGrow>
+                <Height>0.24in</Height>
+              </Textbox>
+              <List Name="List3">
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>10pt</FontSize>
+                </Style>
+                <ReportItems>
+                  <Textbox Name="Product">
+                    <Style>
+                      <FontFamily>Tahoma</FontFamily>
+                      <FontSize>10pt</FontSize>
+                      <PaddingLeft>2pt</PaddingLeft>
+                      <PaddingRight>2pt</PaddingRight>
+                      <PaddingTop>2pt</PaddingTop>
+                      <PaddingBottom>2pt</PaddingBottom>
+                    </Style>
+                    <rd:DefaultName>Product</rd:DefaultName>
+                    <Value>=Fields!Product.Value</Value>
+                    <CanGrow>true</CanGrow>
+                    <Height>0.21in</Height>
+                  </Textbox>
+                  <Table Name="table1">
+                    <Top>0.5in</Top>
+                    <Style />
+                    <Header>
+                      <RepeatOnNewPage>true</RepeatOnNewPage>
+                      <TableRows>
+                        <TableRow>
+                          <TableCells>
+                            <TableCell>
+                              <ReportItems>
+                                <Textbox Name="textbox2">
+                                  <Style>
+                                    <BackgroundColor>SteelBlue</BackgroundColor>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                    <BorderStyle>
+                                      <Default>Solid</Default>
+                                    </BorderStyle>
+                                    <BorderColor>
+                                      <Default>LightGrey</Default>
+                                    </BorderColor>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                  <rd:DefaultName>textbox2</rd:DefaultName>
+                                  <Value>Subcat</Value>
+                                  <CanGrow>true</CanGrow>
+                                  <Height>0.22in</Height>
+                                  <Width>1in</Width>
+                                </Textbox>
+                              </ReportItems>
+                            </TableCell>
+                            <TableCell>
+                              <ReportItems>
+                                <Textbox Name="textbox3">
+                                  <Style>
+                                    <BackgroundColor>SteelBlue</BackgroundColor>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                    <BorderStyle>
+                                      <Default>Solid</Default>
+                                    </BorderStyle>
+                                    <BorderColor>
+                                      <Default>LightGrey</Default>
+                                    </BorderColor>
+                                    <TextAlign>Right</TextAlign>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                  <rd:DefaultName>textbox3</rd:DefaultName>
+                                  <Value>Qty</Value>
+                                  <CanGrow>true</CanGrow>
+                                  <Height>0.22in</Height>
+                                  <Width>1in</Width>
+                                </Textbox>
+                              </ReportItems>
+                            </TableCell>
+                            <TableCell>
+                              <ReportItems>
+                                <Textbox Name="textbox4">
+                                  <Style>
+                                    <BackgroundColor>SteelBlue</BackgroundColor>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>White</Color>
+                                    <BorderStyle>
+                                      <Default>Solid</Default>
+                                    </BorderStyle>
+                                    <BorderColor>
+                                      <Default>LightGrey</Default>
+                                    </BorderColor>
+                                    <TextAlign>Right</TextAlign>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                  <rd:DefaultName>textbox4</rd:DefaultName>
+                                  <Value>Line Total</Value>
+                                  <CanGrow>true</CanGrow>
+                                  <Height>0.22in</Height>
+                                  <Width>1in</Width>
+                                </Textbox>
+                              </ReportItems>
+                            </TableCell>
+                          </TableCells>
+                          <Height>0.22in</Height>
+                        </TableRow>
+                      </TableRows>
+                    </Header>
+                    <Details>
+                      <TableRows>
+                        <TableRow>
+                          <TableCells>
+                            <TableCell>
+                              <ReportItems>
+                                <Textbox Name="Subcat">
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>10pt</FontSize>
+                                    <BorderStyle>
+                                      <Default>Solid</Default>
+                                    </BorderStyle>
+                                    <BorderColor>
+                                      <Default>LightGrey</Default>
+                                    </BorderColor>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                  <rd:DefaultName>Subcat</rd:DefaultName>
+                                  <Value>=Fields!Subcat.Value</Value>
+                                  <CanGrow>true</CanGrow>
+                                  <Height>0.21in</Height>
+                                  <Width>1in</Width>
+                                </Textbox>
+                              </ReportItems>
+                            </TableCell>
+                            <TableCell>
+                              <ReportItems>
+                                <Textbox Name="Qty">
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>10pt</FontSize>
+                                    <BorderStyle>
+                                      <Default>Solid</Default>
+                                    </BorderStyle>
+                                    <BorderColor>
+                                      <Default>LightGrey</Default>
+                                    </BorderColor>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                  <rd:DefaultName>Qty</rd:DefaultName>
+                                  <Value>=Fields!Qty.Value</Value>
+                                  <CanGrow>true</CanGrow>
+                                  <Height>0.21in</Height>
+                                  <Width>1in</Width>
+                                </Textbox>
+                              </ReportItems>
+                            </TableCell>
+                            <TableCell>
+                              <ReportItems>
+                                <Textbox Name="LineTotal">
+                                  <Style>
+                                    <FontFamily>Tahoma</FontFamily>
+                                    <FontSize>10pt</FontSize>
+                                    <BorderStyle>
+                                      <Default>Solid</Default>
+                                    </BorderStyle>
+                                    <BorderColor>
+                                      <Default>LightGrey</Default>
+                                    </BorderColor>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                  </Style>
+                                  <rd:DefaultName>LineTotal</rd:DefaultName>
+                                  <Value>=Fields!LineTotal.Value</Value>
+                                  <CanGrow>true</CanGrow>
+                                  <Height>0.21in</Height>
+                                  <Width>1in</Width>
+                                </Textbox>
+                              </ReportItems>
+                            </TableCell>
+                          </TableCells>
+                          <Height>0.21in</Height>
+                        </TableRow>
+                      </TableRows>
+                    </Details>
+                    <TableColumns>
+                      <TableColumn>
+                        <Width>1in</Width>
+                      </TableColumn>
+                      <TableColumn>
+                        <Width>1in</Width>
+                      </TableColumn>
+                      <TableColumn>
+                        <Width>1in</Width>
+                      </TableColumn>
+                    </TableColumns>
+                    <DataSetName>DataSet1</DataSetName>
+                  </Table>
+                </ReportItems>
+                <Grouping Name="list1_Product">
+                  <GroupExpressions>
+                    <GroupExpression>=Fields!Product.Value</GroupExpression>
+                  </GroupExpressions>
+                  <PageBreakAtEnd>true</PageBreakAtEnd>
+                </Grouping>
+                <Sorting>
+                  <SortBy>
+                    <SortExpression>=Fields!Product.Value</SortExpression>
+                  </SortBy>
+                </Sorting>
+                <Top>0.5in</Top>
+                <DataSetName>DataSet1</DataSetName>
+              </List>
+            </ReportItems>
+            <Grouping Name="list1_Order">
+              <GroupExpressions>
+                <GroupExpression>=Fields!Order.Value</GroupExpression>
+              </GroupExpressions>
+              <PageBreakAtEnd>true</PageBreakAtEnd>
+            </Grouping>
+            <Sorting>
+              <SortBy>
+                <SortExpression>=Fields!Order.Value</SortExpression>
+              </SortBy>
+            </Sorting>
+            <Top>0.5in</Top>
+            <DataSetName>DataSet1</DataSetName>
+          </List>
+        </ReportItems>
+        <Grouping Name="list1_Date">
+          <GroupExpressions>
+            <GroupExpression>=Fields!Date.Value</GroupExpression>
+          </GroupExpressions>
+          <PageBreakAtEnd>true</PageBreakAtEnd>
+        </Grouping>
+        <Sorting>
+          <SortBy>
+            <SortExpression>=Fields!Date.Value</SortExpression>
+          </SortBy>
+        </Sorting>
+        <Top>0.36in</Top>
+        <DataSetName>DataSet1</DataSetName>
+      </List>
+    </ReportItems>
+  </Body>
+  <Language>ru-RU</Language>
+  <LeftMargin>1in</LeftMargin>
+  <RightMargin>1in</RightMargin>
+  <TopMargin>1in</TopMargin>
+  <BottomMargin>1in</BottomMargin>
+  <PageWidth>8.5in</PageWidth>
+  <PageHeight>11in</PageHeight>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Fields>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Order">
+          <DataField>Order</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Subcat">
+          <DataField>Subcat</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Product">
+          <DataField>Product</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Qty">
+          <DataField>Qty</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="LineTotal">
+          <DataField>LineTotal</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT     soh.OrderDate AS Date, soh.SalesOrderNumber AS [Order], pps.Name AS Subcat, pp.Name AS Product, SUM(sd.OrderQty) AS Qty, SUM(sd.LineTotal) 
+                      AS LineTotal
+FROM         Sales.SalesPerson AS sp INNER JOIN
+                      Sales.SalesOrderHeader AS soh ON sp.BusinessEntityID = soh.SalesPersonID INNER JOIN
+                      Sales.SalesOrderDetail AS sd ON sd.SalesOrderID = soh.SalesOrderID INNER JOIN
+                      Production.Product AS pp ON sd.ProductID = pp.ProductID INNER JOIN
+                      Production.ProductSubcategory AS pps ON pp.ProductSubcategoryID = pps.ProductSubcategoryID INNER JOIN
+                      Production.ProductCategory AS ppc ON ppc.ProductCategoryID = pps.ProductCategoryID
+GROUP BY ppc.Name, soh.OrderDate, soh.SalesOrderNumber, pps.Name, pp.Name, soh.SalesPersonID
+HAVING      (ppc.Name = 'Clothing')</CommandText>
+        <Timeout>0</Timeout>
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

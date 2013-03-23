@@ -1,0 +1,179 @@
+\documentclass[12pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{cmap}
+\usepackage{soul}
+\usepackage{ulem}
+\usepackage[english,russian]{babel}
+\usepackage{enumerate}
+\pagestyle{empty}
+	\hoffset=0mm
+	\oddsidemargin=-15mm
+	\topmargin=-15mm
+
+	\headheight=0pt
+	\headsep=0pt
+	\textheight=28cm
+	\textwidth=20cm
+	\marginparsep=0pt
+	\marginparwidth=0pt
+	\footskip=0pt
+	\marginparpush=0pt
+	\hoffset=0mm
+	\voffset=0mm
+	\parindent=2cm
+	%\hangindent=0.5cm 
+	%\hangafter=-1
+	{\raggedright}
+\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\begin{flushleft}
+	\parindent=0.5cm
+	\hangindent=-0.5cm 
+	\hangafter=0
+\par{\ } \\
+\textbf{Вариант 5.} 
+
+\textbf{Задача 1}
+\par{Дана величина $X \sim R(-1,1)$, найти матожидание и дисперсию $Y=X^2$.\\}
+\textbf{Решение}
+\par{Так как $X \sim R(-1,1)$ и $Y=X^2$, то $Y \sim R(0,1)$, следовательно, 
+$$M[Y] = \frac{0+1}{2} = \frac{1}{2}$$
+$$D[Y] = \frac{(1-0)^2}{12} = \frac{1}{12}$$
+}
+
+\textbf{Задача 2}
+\par{Решить диференциальное уравнение $y''-2y'+2y=xe^{x}\cos{x}$} \\
+\textbf{Решение}
+\par{Представим $y = \tilde{y} + \overline{y}$.} \\
+\par{$\tilde{y}$ -- решение однородного уравнения. Решим соответствующее характеристическое уравнение:}
+$$ \lambda^2 - 2\lambda + 2 = 0 \Rightarrow \lambda = 1 \pm i \Rightarrow \tilde{y} = e^{x}(c_{1}\cos{x} + c_{2}\sin{x})$$
+\par{$\overline{y}$ -- Частное решение уравнения. Решим как уравнение со специальной правой частью:}
+$$\overline{y} = e^{x}[(ax+b)cos{x} + (cx+d)\sin{x}]$$
+$$\overline{y}' = e^x [\cos{x}(a + b + d + a x + c x) + \sin{x}(-b + c + d - a x + c x)]$$
+$$\overline{y}'' = 2 e^x [\cos{x}(a + c + d + c x) + \sin{x}(a + b - c + a x)]$$
+$$\overline{y}'' - 2 \overline{y}' + 2\overline{y} = xe^{x}\cos{x} \Rightarrow$$
+$$\Rightarrow 
+2 e^x [\cos{x}(2 b + c + 2 d + 2 c x + 2 a (1 + x)) + \sin{x}(a + 2 b - 2 c - 2 d + 2 a x - 2 c x)] = xe^{x}\cos{x}]$$
+\par{Найти коэффициенты можно решив 4 линейных уравнения:}\\
+$$
+\left\{
+\begin{array}[c]{lcl} 
+2b+c+2d+2a & = & 0 \\
+4c + 4a & = & 1 \\ 
+a+2b-2c-2d & = & 0 \\
+2a-2c & = & 0 \ \  
+\end{array}\right. \Longleftrightarrow
+\left\{
+\begin{array}[c]{lcl} 
+a & = & \frac{1}{8} \\
+c & = & \frac{1}{8} \\ 
+2b+2d & = & -\frac{3}{8} \\
+2b-2d & = & \frac{1}{8}   
+\end{array}\right. \Longleftrightarrow
+\left\{
+\begin{array}[c]{lcl} 
+a & = & \frac{1}{8} \\
+c & = & \frac{1}{8} \\ 
+b & = & -\frac{1}{16} \\
+d & = & \frac{1}{8}  
+\end{array}\right. 
+$$
+\par{Ответ:}
+$$
+y = \frac{e^{x}}{8}[((x-2+c_1)\cos{x} + (x+1+c_2)\sin{x})], c_1, c_2 \in \Re
+$$
+
+
+\textbf{Задача 3}
+\par{Привести к каноническому виду $ 7x^2 + 60xy +39y^2 = 0$} \\
+\textbf{Решение}
+\par{Найдём собственные числа и собственные векторы матрицы} 
+$$\left(
+\begin{array}[c]{cc} 
+7 & 30\\
+30 & 39
+\end{array}\right) 
+$$
+\par{найдя корни уравнения}
+$$
+\left|
+\begin{array}[c]{cc} 
+7-\lambda & 30\\
+30 & 39-\lambda
+\end{array}\right| 
+=0=(7-\lambda)(39-\lambda) - 900 = 273-46\lambda+\lambda^{2} - 900 = \lambda^2 - 46\lambda - 627
+$$
+\par{Собственные числа $\lambda_{1} = 57, \lambda_{2} = -11$}
+\par{Собственный вектор $v_{1}$:}
+$$\left(
+\begin{array}[c]{cc} 
+-50 & 30\\
+30 & -18
+\end{array}\right) 
+v_{1} = 0 \Rightarrow v_{1} = 
+\left(\begin{array}[c]{c} 
+-\frac{5}{3} \\
+1
+\end{array}\right),  v_{1}^{normalized}  = \frac{1}{\sqrt{34}}
+\left(\begin{array}[c]{c} -5\\3\end{array}\right)
+$$
+\par{Собственный вектор $v_{2}$:}
+$$\left(
+\begin{array}[c]{cc} 
+18 & 30\\
+30 & 50
+\end{array}\right) 
+v_{2} = 0 \Rightarrow v_{2} = 
+\left(\begin{array}[c]{c} 
+\frac{3}{5} \\1\end{array}\right),
+v_{2}^{normalized}  = \frac{1}{\sqrt{34}}
+\left(\begin{array}[c]{c} 3\\5\end{array}\right)
+$$
+\par{Преобразование координат:}
+$$\left\{
+\begin{array}[c]{rcl} 
+x & = & \frac{1}{\sqrt{34}}(-5x'+3y')\\
+y & = & \frac{1}{\sqrt{34}}(3x'+5y')
+\end{array}\right.
+$$
+$$
+\begin{array}[c]{cc} 
+7x^2 + 60xy +39y^2 = 0 = \frac{1}{34}(7(-5x'+3y')^{2} + 60(-5x'+3y')(3x'+5y') + 39(3x'+5y')^{2}) = \\
+=-11*(x')^{2}+57*(y')^{2}
+\end{array}
+$$
+\par{Ответ: уравнение пересекающихся прямых}
+$$
+\frac{x^{2}}{57} - \frac{y^{2}}{11} = 0
+$$\\
+\textbf{Задача 4}
+\par{Используя квадратурную формулу Гаусса с 5 узлами найти определённый интеграл } 
+$$
+\int\limits_{1}^{6}{\frac{\sqrt{x^2-4}}{x}}dx
+$$\\
+\textbf{Решение}
+\par{Преобразуем интервал интегрирования от (1,6) к (-1,1), введя замену $y=\frac{2x-7}{5}$}: 
+$$I = 
+\int\limits_{1}^{6}{\frac{\sqrt{x^2-4}}{x}}dx=
+\frac{5}{2}\int\limits_{-1}^{1}{ \frac{\sqrt{\left(\frac{5x+7}{2}\right)^{2}-4}}{\frac{5x+7}{2}}}dx = 
+= \frac{5}{2}\int\limits_{-1}^{1}{\frac{\sqrt{(5x+7)^{2}-16}}{5x+7}}dx = \frac{5}{2}\int\limits_{-1}^{1}{f(x)dx}
+$$
+\par{Используя квадратурную формулу Гаусса с 5 узлами,}
+$$
+\begin{array}[c]{c}
+I \approx \frac{5}{2}\sum_{i=1}^{5}{c_{i}f(x_{i})}= 
+ \frac{2}{5}(0.236927f(-0.906180) + 0,478629f(-0.538469) + \\
++0.568889f(0) +0,478629f(0.538469) + 0.236927f(0.906180) = \\
+=3.256695045+0.7549378995i
+\end{array}
+$$
+\par{Ответ:}
+$$
+\int\limits_{1}^{6}{\frac{\sqrt{x^2-4}}{x}}dx \approx 3.256695045+0.7549378995i
+$$
+
+
+\end{flushleft}
+\end{document}

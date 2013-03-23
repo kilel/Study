@@ -1,0 +1,120 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#include <time.h>
+#include <stdio.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+#define sqr(r) (r)*(r)
+#define ii pair<int,int>
+#define vii vector<ii>
+#define vi vector<int>
+#define vvi vector<vi>
+using namespace std;
+
+
+set<long long> si;
+long long mod;
+long long n,m,k,d,l,r,c, INF = 10000009;
+ii t;
+vii list;
+vi us_v;
+vi q;
+vi wei;
+vii dh;
+vi vd;
+vi que;
+vi used;
+vvi s;
+void add(int i,int j)
+{
+	c = i*m+j;
+	q.push_back(list.size());
+	if(i > 0)
+	{
+		if(s[i-1][j] - s[i][j] >= 0)
+			list.push_back(ii(c,c-m));
+	}
+	if(j > 0)
+	{
+		if(s[i][j-1] - s[i][j] >= 0)
+			list.push_back(ii(c,c-1));
+	}
+	if(j < m-1)
+	{
+
+		if(s[i][j+1] - s[i][j] >= 0)
+			list.push_back(ii(c,c+1));
+	}
+	if(i < n-1)
+	{
+		if(s[i+1][j] - s[i][j] >= 0)
+			list.push_back(ii(c,c+m));
+	}
+}
+
+int shir(int i)
+{
+	int tt,kk=0;
+	que.push_back(i);
+	us_v[i] = 1;
+	while(que.size())
+	{
+		tt = que[0];
+		rep(i,q[tt],q[tt+1])
+		{
+			if(!us_v[list[i].second])
+			{
+				us_v[list[i].second] = 1;
+				que.push_back(list[i].second);
+			}
+
+		}
+		kk++;
+		que.erase(que.begin());
+	}
+	return (kk);
+}
+
+int main()
+{
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  
+  cin >> n >> m;
+  s = vvi(n,vi(m,0));
+  us_v = vi(m*n,0);
+  rep(i,0,n)
+	  rep(j,0,m)
+		cin >> s[i][j];
+  rep(i,0,n)
+	  rep(j,0,m)
+		add(i,j);
+  q.push_back(list.size());
+  k = 0;
+  l = n*m;
+  int minx=0, min = 0;
+	int co = 0;
+	rep(i,0,n)
+		rep(j,0,m)
+		dh.push_back(ii(s[i][j],i*m+j));
+	sort(dh.begin(),dh.end());
+  while(k < l)
+  {
+	  rep(i,min,l)
+		  if(!us_v[dh[i].second])
+		  {
+			  min = i+1;
+			  minx = dh[i].second;
+			  break;
+		  }
+	  k += shir(minx);
+	  co++;
+  }
+  cout << co;
+	
+  return 0;
+}

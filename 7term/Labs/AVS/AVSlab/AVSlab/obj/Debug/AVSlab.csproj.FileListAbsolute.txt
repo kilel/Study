@@ -1,0 +1,18 @@
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\bin\Debug\AVSlab.exe.config
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\bin\Debug\AVSlab.exe
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\bin\Debug\AVSlab.pdb
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\obj\Debug\AVSlab.csprojResolveAssemblyReference.cache
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\obj\Debug\AVSlab.Form1.resources
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\obj\Debug\AVSlab.Properties.Resources.resources
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\obj\Debug\AVSlab.csproj.GenerateResource.Cache
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\obj\Debug\AVSlab.exe
+c:\users\kilel_000\documents\visual studio 2012\Projects\AVSlab\AVSlab\obj\Debug\AVSlab.pdb
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\bin\Debug\AVSlab.exe.config
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\obj\Debug\AVSlab.exe
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\obj\Debug\AVSlab.pdb
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\bin\Debug\AVSlab.exe
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\bin\Debug\AVSlab.pdb
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\obj\Debug\AVSlab.csprojResolveAssemblyReference.cache
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\obj\Debug\AVSlab.Form1.resources
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\obj\Debug\AVSlab.Properties.Resources.resources
+D:\Dropbox\VyatSU\7 term\ARS\AVSlab\AVSlab\obj\Debug\AVSlab.csproj.GenerateResource.Cache

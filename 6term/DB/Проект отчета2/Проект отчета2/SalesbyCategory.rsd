@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>DataSource1</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@Category">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@Subcategory">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@Product">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT
+pc.Name AS Category,
+psc.Name AS Subcategory,
+p.Name AS Product,
+soh.[OrderDate],
+soh.SalesOrderNumber,
+sd.OrderQty,
+sd.LineTotal
+FROM [Sales].[SalesPerson] sp
+INNER JOIN [Sales].[SalesOrderHeader] soh
+ON sp.[BusinessEntityID] = soh.[SalesPersonID]
+INNER JOIN Sales.SalesOrderDetail sd
+ON sd.SalesOrderID = soh.SalesOrderID
+INNER JOIN Production.Product p
+ON sd.ProductID = p.ProductID
+INNER JOIN Production.ProductSubcategory psc
+ON p.ProductSubcategoryID = psc.ProductSubcategoryID
+INNER JOIN Production.ProductCategory pc
+ON pc.ProductCategoryID = psc.ProductCategoryID
+WHERE (pc.Name = (@Category)
+AND psc.Name = (@Subcategory)
+AND p.Name = (@Product))</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Category">
+        <DataField>Category</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Subcategory">
+        <DataField>Subcategory</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Product">
+        <DataField>Product</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="OrderDate">
+        <DataField>OrderDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="SalesOrderNumber">
+        <DataField>SalesOrderNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="OrderQty">
+        <DataField>OrderQty</DataField>
+        <rd:TypeName>System.Int16</rd:TypeName>
+      </Field>
+      <Field Name="LineTotal">
+        <DataField>LineTotal</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

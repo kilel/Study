@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#include <time.h>
+#include <stdio.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+#define sqr(r) (r)*(r)
+#define ii pair<int,int>
+#define vii vector<ii>
+#define vi vector<int>
+using namespace std;
+vector<string> s;
+
+set<long long> si;
+long long mod;
+long long n,m,k,d,l,r,c, INF = 10000009;
+ii t;
+vii list;
+vi q;
+vi wei;
+vii dh;
+int v[] = {6, 20, 28, 88, 104, 272, 304, 350, 368, 464, 490, 496, 550, 572, 650, 748, 770, 910, 945};
+
+
+int main()
+{//полусовершенное
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  
+  cin >> k;
+  q.push_back(0);
+  rep(i,1,200)
+	  rep(j,0,19)
+	  q.push_back(i*v[j]);
+  sort(q.begin(),q.end());
+  n = 0;
+  rep(i,0,q.size())
+  {
+	n++;
+	while(q[i+1] == q[i])
+	{
+		i++;
+	}
+	
+	if(k == n-1)
+	{
+		cout << q[i];
+		return 0;
+	}
+  }
+  
+  
+  
+
+  return 0;
+}

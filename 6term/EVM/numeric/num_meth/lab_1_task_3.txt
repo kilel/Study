@@ -1,0 +1,159 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#define mod 1000000000
+using namespace std;
+long long a[10][10000] = {{0}};
+int n;
+string s;
+
+int Max(int a, int b)
+{
+	if(a>b) return a; 
+	return b;
+}
+void wr(string s, int k)
+{
+	int t=0, j = s.length()/9, p = 1;
+	if(s.length()%9) j++;
+	a[k][0] = s.length();
+	for(int i = a[k][0]; i > 0; i--)
+	{
+		for(int d = Max(i-9, 0); d < i; d++)
+		{
+			t = t*10 + s[d] - '0';
+		}
+		i = Max(i-8, 1);
+		a[k][p] = t;
+		p++;
+		t = 0;
+	}
+	a[k][0] = j;
+	
+}
+void sum(int i, int j, int k, int sh)
+{
+	int p = 0, pr = 0;
+	a[k][0] = Max(a[i][0],a[j][0]+sh);
+	for(int s = 1; s <= a[k][0]; s++)
+	{
+		if(s <= sh)
+		{
+			p = (a[i][s] + pr)/mod;
+			a[k][s] = (a[i][s]+ pr)%mod;
+		}
+		else
+		{
+			p = (a[i][s] + a[j][s-sh] + pr)/mod;
+			a[k][s] = (a[i][s] + a[j][s-sh] + pr)%mod;
+		}
+		pr = p;
+	}
+	if(pr)
+	{
+		a[k][0]++;
+		a[k][a[k][0]] = pr;
+	}
+}
+void sub(int i, int j, int k)
+{
+	int p = 0, pr = 0;
+	a[k][0] = Max((a[i][0]),(a[j][0]));
+	for(int s = 1; s <= a[k][0]; s++)
+	{
+		if((a[i][s] - a[j][s] + pr) < 0)
+		{
+			a[i][s] += mod;
+			a[i][s+1]--;
+		}
+		p = (a[i][s] - a[j][s] + pr)/mod;
+		a[k][s] = (a[i][s] - a[j][s] + pr)%mod;
+		pr = p;
+	}
+	if(pr)
+	{
+		a[k][0]++;
+		a[k][a[k][0]] = pr;
+	}
+}
+void pmult(int i, int j, int k)
+{
+	int p = 0, pr = 0;
+	a[k][0] = a[i][0];
+	for(int s = 1; s <= a[k][0]; s++)
+	{
+		p = (a[i][s]*j + pr)/mod;
+		a[k][s] = (a[i][s]*j + pr)%mod;
+		pr = p;
+	}
+	if(pr)
+	{
+		a[k][0]++;
+		a[k][a[k][0]] = pr;
+	}
+}
+void nuliffy(int k)
+{
+	for(int i = 1; i <= a[k][0]; i++)
+		a[k][i] = 0;
+	a[k][0] = 0;
+}
+void mult(int i, int j, int k, int d)
+{
+	for(int s = 1; s <= a[j][0]; s++)
+	{
+		pmult(i,a[j][s],d);
+		nuliffy(5);nuliffy(6);
+		sum(6,k,5,0);
+		nuliffy(k);
+		sum(5,d,k,s-1);
+		nuliffy(d);
+	}
+}
+
+int cmp(int i, int j)
+{
+	if(a[i][0] > a[j][0])
+		return 1;
+	for(int k = a[i][0]; k > 0; k--)
+		if(a[i][k] > a[j][k])
+			return 1;
+		else if(a[i][k] < a[j][k])
+			return -1;
+	return 0;
+}
+void out(int k)
+{
+	if(a[k][0] == 0)
+	{
+		cout << 0;
+		return;
+	}
+	while(a[k][a[k][0]] == 0 )
+		a[k][0]--;
+
+	for(int i = 1; i <= a[k][0]; i++)
+			a[k][i] = (a[k][i]);
+	printf("%ld", a[k][a[k][0]]);
+	for(int i = a[k][0]-1; i > 0; i--)
+		printf("%09ld", a[k][i]);
+	
+}
+int main()
+{
+	//freopen("input.txt","r", stdin);
+	//freopen("output.txt", "w", stdout);
+	cin >> s;
+	wr(s, 1);
+	cin >> s;
+	wr(s,2);
+	if(a[1][a[1][0]] == 0 || a[2][a[2][0]] == 0)
+	{
+		cout << "0";
+		return 0;
+	}
+	mult(1,2,3,4);
+	out(3);
+	return 0;
+}

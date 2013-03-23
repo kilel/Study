@@ -1,0 +1,166 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+
+using namespace std;
+int mod = 10;
+int b[1000] = {0};
+int c[1000] = {0};
+int a[200][1000] = {{0}};
+int n,m;
+string s;
+
+int Max(int a, int b)
+{
+	if(a>b) return a; 
+	return b;
+}
+
+void sum(int i, int j, int k, int sh)
+{
+	int p = 0, pr = 0;
+	a[k][0] = Max(a[i][0],a[j][0]+sh);
+	for(int s = 1; s <= a[k][0]; s++)
+	{
+		if(s <= sh)
+		{
+			p = (a[i][s] + pr)/mod;
+			a[k][s] = (a[i][s]+ pr)%mod;
+		}
+		else
+		{
+			p = (a[i][s] + a[j][s-sh] + pr)/mod;
+			a[k][s] = (a[i][s] + a[j][s-sh] + pr)%mod;
+		}
+		pr = p;
+	}
+	if(pr)
+	{
+		a[k][0]++;
+		a[k][a[k][0]] = pr;
+	}
+}
+void sub(int i)
+{
+	int p = 0, pr = 0;
+	b[0] = Max((b[0]),(a[i][0]));
+	for(int s = 1; s <= b[0]; s++)
+	{
+		if((b[s] - a[i][s] + pr) < 0)
+		{
+			b[s] += mod;
+			b[s+1]--;
+		}
+		p = (b[s] - a[i][s] + pr)/mod;
+		b[s] = (b[s] - a[i][s] + pr)%mod;
+		pr = p;
+	}
+	if(pr)
+	{
+		b[0]++;
+		b[b[0]] = pr;
+	}
+}
+void pmult(int i, int j, int k)
+{
+	int p = 0, pr = 0;
+	a[k][0] = a[i][0];
+	for(int s = 1; s <= a[k][0]; s++)
+	{
+		p = (a[i][s]*j + pr)/mod;
+		a[k][s] = (a[i][s]*j + pr)%mod;
+		pr = p;
+	}
+	while(pr)
+	{
+		a[k][0]++;
+		a[k][a[k][0]] = pr%mod;
+		pr = pr/mod;
+	}
+}
+
+int cmp(int i)
+{
+	if(b[0] > a[i][0])
+		return 1;
+	else
+		if(b[0] < a[i][0])
+		return -1;
+	for(int k = b[0]; k > 0; k--)
+		if(b[k] > a[i][k])
+			return 1;
+		else if(b[k] < a[i][k])
+			return -1;
+	return 0;
+}
+int cmp(int i, int j, int shift_i, int shift_j)
+{
+	if(a[i][0]+shift_i > a[j][0]+shift_j)
+		return 1;
+	else if(a[i][0]+shift_i < a[j][0]+shift_j)
+		return -1;
+	for(int k = a[i][0]; k > 0; k--)
+		if(a[i][k + shift_i] > a[j][k + shift_j])
+			return 1;
+		else if(a[i][k + shift_i] < a[j][k + shift_j])
+			return -1;
+	return 0;
+}
+
+int main()
+{
+	//freopen("input.txt","r", stdin);
+	//freopen("output.txt", "w", stdout);
+	int r = 0;
+	cin >> r;
+	b[0] = r;
+	getchar();
+	for(int i = r; i > 0 ; i--)
+	{
+		b[i]=getchar();
+		if(b[i] > '9' || b[i] < '0')
+			b[i] -= 'A' - 10;
+		else
+			b[i] -= '0';
+	}
+	getchar();
+	cin >> n >> m;
+	mod = n;
+	a[0][0] = 1;
+	a[0][1] = 1;
+	for(int i = 1; i < 200; i++)
+		pmult(i-1,m,i);
+	for(int i = 199; i >= 0; i--)
+	{
+		while(b[b[0]] == 0) b[0]--;
+		r = cmp(i);
+		if(r == 1)
+		{
+			sub(i);
+			c[i]++;
+			i++;
+			continue;
+		}
+		else if(r == 0)
+		{
+			c[i]++;
+			break;
+		}
+	}
+
+	
+	for(int i = 199; i > 0; i--)
+		if(c[i] != 0)
+		{
+			r = i;
+			break;
+		}
+	for(int i = r; i >= 0; i--)
+		if(c[i] < 10)
+			cout << c[i];
+		else cout << (char) (c[i] - 10 + 'A');
+
+	
+	return 0;
+}

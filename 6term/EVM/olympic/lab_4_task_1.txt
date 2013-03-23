@@ -1,0 +1,91 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+using namespace std;
+int n,k=0,m;
+vector<int> vi;
+string s,g;
+struct clock{
+	int h,m,s;
+}a[100000],t,b[500];
+int calc(int i, int j)
+{
+	int k = 0;
+	t = b[i];
+	if(t.s <= a[j].s)
+	{
+		k+=a[j].s-t.s;
+		t.s = a[j].s;
+	}
+	else
+	{
+		k+=60+a[j].s-t.s;
+		t.s = a[j].s;
+		t.m++;
+	}
+	if(t.m <= a[j].m)
+	{
+		k+=a[j].m-t.m;
+		t.m = a[j].m;
+	}
+	else
+	{
+		k+=60+a[j].m-t.m;
+		t.m = a[j].m;
+		t.h++;
+	}
+	if(t.h <= a[j].h)
+	{
+		k+=a[j].h-t.h;
+		t.h = a[i].h;
+	}
+	else
+	{
+		k+=24+a[j].h-t.h;
+		t.h = a[i].h;
+	}
+	if(k)
+		k+=4;
+	return k;
+}
+int main()
+{
+	freopen("input.txt","r", stdin);
+	freopen("output.txt", "w", stdout);
+	cin >> n;
+	int u =0;
+	k = 0;
+	s = "00:00:00";
+	rep(i,0,n)
+	{
+		cin >> g;
+		b[i].h = (g[0]-'0')*10 + g[1] - '0';
+		b[i].m = (g[3]-'0')*10 + g[4] - '0';
+		b[i].s = (g[6]-'0')*10 + g[7] - '0';
+	}
+	rep(i,0,60)
+		rep(j,0,60)
+		rep(k,0,24)
+	{
+		a[u].h = k;
+		a[u].m = j;
+		a[u].s = i;
+		u++;
+	}
+	vi = vector<int>(u,0);
+	rep(i,0,u)
+		rep(j,0,n)
+		{
+			vi[i] += calc(j,i);
+		}
+	int min = 86000;
+	rep(i,0,u)
+		if(vi[i] < min)
+			min = vi[i];
+	cout << min;
+	return 0;
+}

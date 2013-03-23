@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int a[2000][2000] = {{0}},n,m,c;
+string s[2000], w1="", w2="";
+
+bool cross_win(int mask)
+{
+  int  a1=0,a2=0,a3=0,a4=0;
+  for(int i = 0; i < n; i++)
+    for(int j = 0; j < m; j++)
+    {
+      a1=a2=a3=a4=1;
+      for(int k = 0; k < c; k++)
+      {
+        if(a1)
+        if(!(i+c <= n && a[i+k][j]==mask))
+        { a1 = 0;break;}
+      }
+      for(int k = 0; k < c; k++)
+      {
+        if(a2)
+        if(!(j+c <= m && a[i][j+k]==mask))
+        {a2 = 0;break;}
+      }
+      for(int k = 0; k < c; k++)
+      {
+        if(a3)
+        if(!(i+c <= n && j+c<=m && a[i+k][j+k] == mask))
+        {a3 = 0;break;}
+      }
+      for(int k = 0; k < c; k++)
+      {
+        if(a4)
+        if(!(i-c+1 >= 0 && j+c<=m && a[i-k][j+k] == mask))
+        {a4 = 0;break;}
+      }
+      if(a1 || a2 || a3 || a4)
+        return true;
+    }
+    return false;
+}
+
+int main()
+{
+  //freopen("input.txt", "r", stdin);
+  //freopen("output.txt", "w", stdout);
+  
+  cin >> n>> m >> c;
+  
+  for(int i = 0; i < n; i++)
+    cin >> s[i];
+  for(int i = 0; i < n; i++)
+    for(int j = 0; j < m; j++)
+      if(s[i][j] == 'X')  a[i][j] = 1;
+      else        a[i][j] = 0;
+  bool b1 = cross_win(1), b2 = cross_win(0);
+  if(b1&&b2)
+    cout << "Unknown";
+  else if((!b1)&&(!b2))
+    cout << "Draw";
+  else if(b1)
+    cout << "Crosses";
+  else
+    cout << "Noughts";
+  return 0;
+}

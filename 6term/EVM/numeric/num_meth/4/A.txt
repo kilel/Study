@@ -1,0 +1,74 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#include <time.h>
+#include <stdio.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+#define sqr(r) (r)*(r)
+#define ii pair<int,int>
+#define vii vector<ii>
+#define vi vector<int>
+using namespace std;
+vector<string> s;
+
+set<long long> si;
+long long mod;
+long long n,m,k,d,l,r,c, INF = 10000009;
+ii t;
+vii list;
+vi q;
+vi wei;
+vii dh;
+vi vd;
+
+
+bool great(int n)
+{
+	int m = 0;
+	rep(i,1,n)
+		if(n%i == 0)
+			m+= i;
+	if(m == n)
+		return true;
+	return false;
+}
+
+int main()
+{//совершенное
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  
+  cin >> k;
+  n = 0;
+  if(k < 4)
+  rep(i,2,100000)
+  {
+	  if(great(i))
+		  n++;
+	  if(n == k)
+	  {
+		  cout << i;
+		  return 0;
+	  }
+  }
+  else
+  {
+	  switch(k)
+	  {
+	  case 4: cout << 8128; break;
+	  case 5: cout << 33550336; break;
+	  case 6: cout << "8589869056"; break;
+	  case 7: cout << "137438691328"; break;
+	  case 8: cout << "2305843008139952128"; break;
+	  case 9: cout << "2658455991569831744654692615953842176"; break;
+	  case 10: cout << "191561942608236107294793378084303638130997321548169216"; break;
+	  }
+  }
+  
+
+  return 0;
+}

@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#include <time.h>
+#include <stdio.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+#define sqr(r) (r)*(r)
+#define ii pair<int,int>
+#define vii vector<ii>
+#define vi vector<int>
+using namespace std;
+vector<string> s;
+
+set<long long> si;
+long long mod;
+long long n,m,k,d,l,r,c, INF = 10000009;
+ii t;
+vii list;
+vi q;
+vi wei;
+vii dh;
+int v[] = {6, 20, 28, 88, 104, 272, 304, 350, 368, 464, 490, 496, 550, 572, 650, 748, 770, 910, 945};
+
+bool prime(long long n)
+{
+	long long s = sqrt((double)n)+1;
+	rep(i,2,s)
+		if(n%i == 0)
+			return false;
+	return true;
+}
+
+
+int main()
+{
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  
+  cin >> k;
+  long long on = 1;
+  long long f = (long long)9*(on<<(2*k-1))-1;
+  long long p = 3*(1<<(k-1))-1, q = 3*(1<<(k))-1;
+  if(prime(p) && prime(q) && prime(f))
+	  cout << "YES";
+  else cout << "NO";
+  return 0;
+}

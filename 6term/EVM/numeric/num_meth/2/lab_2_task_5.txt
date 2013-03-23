@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+using namespace std;
+bool a[100000010] = {{0}};
+vector<long long> vi;
+set<long long> si;
+
+bool prime(long long n)
+{
+  int k = vi.size();
+  rep(i,0,k)
+  {
+    if(n == vi[i])
+      return true;
+    if(!(n%vi[i]))
+      return false;
+  }
+  return true;
+}
+int main()
+{
+  //freopen("input.txt","r", stdin);
+  //freopen("output.txt", "w", stdout);
+  
+  /*long long n,s;
+  s = 1e8+1;
+  rep(i,2,s)
+  {
+    if(a[i] == 0)
+    {
+      vi.push_back(i);
+      for(int j = 2*i; j < s; j+=i)
+        a[j] = 1;
+    }
+  }
+  n = vi.size();
+  long long k,p,r,f;
+  k = 1e13+1;
+  while(1)
+  {
+    if(prime(k))
+    {
+      cout << k << "\n";
+      break;
+    }
+    k++;
+  }
+  k = 1e14+1;
+  while(1)
+  {
+    if(prime(k))
+    {
+      cout << k << "\n";
+      break;
+    }
+    k++;
+  }*/
+  int n;
+  cin >> n;
+  long long a[20] = {1,2,11,101,9091,14281,333667,9369319 , 39916801, 479001599, 2147483647 , 87178291199, 999999000001, 4398042316799  ,  10000000000037     ,    100000000000031   , 9999999900000001};
+  /*rep(i,1,17)
+    if(prime(a[i]))
+      cout << "T\n";
+    else cout << "F\n";*/
+  cout << a[n];
+  
+  return 0;
+}

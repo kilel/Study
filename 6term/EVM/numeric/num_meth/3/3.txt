@@ -1,0 +1,114 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <set>
+#include <math.h>
+#include <time.h>
+#define rep(i,k,n) for(int (i) = (k); (i) < (n); (i)++)
+using namespace std;
+
+vector<long long> vi;
+set<long long> si;
+long long mod;
+int a[200000] = {0};
+long long abss(long long n)
+{
+	if(n<0)
+		return -n;
+	return n;
+}
+bool prime(long long n)
+{
+	long long s = sqrt((double)n)+1;
+	rep(i,2,s)
+		if(n%i == 0)
+			return false;
+	return true;
+}
+long long f (long long x, long long mod)
+{
+	return ((x*x) + x + 5)%mod;
+}
+int gcd(long long a,long long b)
+{
+	if(a < b)		return gcd(b,a);
+	if(b == 0)		return a;
+	return gcd(b,a%b);
+}
+void po(long long n)
+{
+  long long r,x,y,z = 0,k = 0;
+  if(prime(n))
+  {
+	  vi.push_back(n);
+	  return;
+  }
+  x = rand()%mod;
+  y = 0;
+  a[0] = x;
+  z++;
+  while(1)
+  {
+	  a[z] = f(a[z-1],n);
+	  
+	  
+	  if(z%2==0)
+	  {
+		  
+		  r = gcd(abss(a[z]-a[z/2]),n);
+		  if(r > 1 && r < n)
+			break;
+	  }
+	  z++;
+	  if(z>198000)
+	  {
+		 z = 0;
+	  }
+
+  }
+  po(r);
+  po(n/r);
+
+}
+int main()
+{
+  freopen("input.txt","r", stdin);
+  freopen("output.txt", "w", stdout);
+  long long n,r,x,y,d;
+  cin >> n;
+  mod = n;
+  srand(time(NULL));
+  while(n%2==0)
+  {
+    vi.push_back(2);
+    n = n/2;
+  }
+  po(n);
+
+  sort(vi.begin(),vi.end());
+  n = vi.size();
+  for(int i = 0; i < n; i++)
+  {
+    if(vi[i] == 1)
+      continue;
+    for(int j = i; j < n; j++)
+    {
+      if(vi[i] !=vi[j])
+      {
+        cout << vi[i] << " " << j-i << "\n";
+        i = j-1;
+        break;
+      }
+      else if(j == n-1)
+      {
+        cout << vi[i] << " " << j-i+1 << "\n";
+        i = n+1;  
+        break;
+      }
+    }
+  }
+  
+  return 0;
+}
