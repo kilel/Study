@@ -1,0 +1,230 @@
+{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fswiss\fcharset204 Tahoma;}{\f1\fswiss\fcharset0 Tahoma;}{\f2\froman\fprq2\fcharset0 Times New Roman;}}
+\viewkind4\uc1\pard\nowidctlpar\sl100\slmult0\lang1049\kerning1\f0\fs16\'c3\f1\u1048?\u1055?\u1054?\u1058?\u1045?\u1047?\u1067?:\f2\fs24 
+\par \f1\fs16 TheFellowshipOfTheRing \{Aragorn, Boromir, Frodo, Gandalf, Gimly, Legolas, Sam\}\f2\fs24 
+\par \f1\fs16 
+\par \f0\'cf\f1\u1040?\u1056?\u1040?\u1052?\u1045?\u1058?\u1056?\u1067?:\f2\fs24 
+\par \f1\fs16 GoneToTheValinor \{No, Yes\}\f2\fs24 
+\par \f1\fs16 Height \{Low, Normal\}\f2\fs24 
+\par \f1\fs16 Weapon \{Bow, Dagger, Staff, Sword\lang1033 , Axe\lang1049\}\f2\fs24 
+\par \f1\fs16 isFromRoyalFamily \{No, Yes\}\lang1033  \lang1049\f2\fs24 
+\par \f1\fs16 Bread \{No, Yes\}\f2\fs24 
+\par \f1\fs16 HairLength \{Long, Short\}\f2\fs24 
+\par \lang1033\f1\fs16 Class \{Warrior, Mage, Stranger\}\lang1049\f2\fs24 
+\par \f1\fs16 
+\par \f0\'cf\f1\u1045?\u1056?\u1045?\u1052?\u1045?\u1053?\u1053?\u1067?\u1045?:\f2\fs24 
+\par \f1\fs16 
+\par NAME cond1\f2\fs24 
+\par \f1\fs16 IF Height Low \f2\fs24 
+\par \lang1033\f1\fs16   THEN   TheFellowshipOfTheRing Gandalf [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [-1]\lang1049\f2\fs24 
+\par \f1\fs16 
+\par \lang1033   ELSE IF Height Normal    \lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN TheFellowshipOfTheRing Gandalf [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [0,3]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \f1\fs16 
+\par NAME cond2\f2\fs24 
+\par \f1\fs16 IF isFromRoyalFamily Yes\f2\fs24 
+\par \lang1033\f1\fs16   THEN   TheFellowshipOfTheRing Gandalf [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [0,2],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [0,2],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [0,2],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [0,2]\lang1049\f2\fs24 
+\par \f1\fs16 
+\par \lang1033   ELSE  IF isFromRoyalFamily No \lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN  TheFellowshipOfTheRing Gandalf [0,2],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [0,2],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [0,2],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE\lang1049\f2\fs24 
+\par \f1\fs16 END\f2\fs24 
+\par \f1\fs16 
+\par \lang1033 NAME cond3\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF Weapon Sword \lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN     TheFellowshipOfTheRing Gandalf [0,6],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [0,6],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [0,6],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [0,2]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE IF NOT Weapon Sword 
+\par THEN  TheFellowshipOfTheRing Gandalf [0,5],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [-0,3]
+\par ELSE
+\par  END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond4\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF \lang1049 HairLength \lang1033 Long\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN  TheFellowshipOfTheRing Legolas [0,5],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gimly [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [0,7],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Aragorn [0,3]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par ELSE  TheFellowshipOfTheRing Legolas [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gimly [-0,7],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Aragorn [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par 
+\par NAME cond5\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF Weapon Dagger\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN     TheFellowshipOfTheRing Legolas [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [-0,6],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Aragorn [-0,5]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE    TheFellowshipOfTheRing Frodo [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond6\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF Weapon Axe \lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN     TheFellowshipOfTheRing Gimly [1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Legolas [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Aragorn [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond6a\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF NOT Weapon Axe\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN TheFellowshipOfTheRing Gimly [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond6b\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF Weapon Staff\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Legolas [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Aragorn [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par ELSE IF NOT Weapon Staff
+\par THEN TheFellowshipOfTheRing Gandalf [-1]
+\par ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond6c \lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF Weapon Bow\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN      TheFellowshipOfTheRing Legolas [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [0,3]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE  IF NOT Weapon Bow 
+\par THEN  TheFellowshipOfTheRing Legolas [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16          TheFellowshipOfTheRing Boromir [-1]
+\par ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond7\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF GoneToTheValinor Yes\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN     TheFellowshipOfTheRing Frodo [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Legolas [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Aragorn [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE IF GoneToTheValinor No\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN   TheFellowshipOfTheRing Aragorn [1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gimly [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Legolas [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond8\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF Bread No\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN    TheFellowshipOfTheRing Aragorn [-0,6],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Legolas [0,3]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE  IF Bread Yes\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN  TheFellowshipOfTheRing Aragorn [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gimly [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Boromir [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Gandalf [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16     TheFellowshipOfTheRing Legolas [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16  ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par NAME cond9\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 IF Class Warrior \lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN   TheFellowshipOfTheRing Gandalf [-0,5],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [0,4]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE IF Class Mage\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN   TheFellowshipOfTheRing Gandalf [0,6],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE IF Class Stranger \lang1049\f2\fs24 
+\par \lang1033\f1\fs16 THEN TheFellowshipOfTheRing Gandalf [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Frodo [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Sam [0,3],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Aragorn [0,4],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Gimly [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Boromir [-1],\lang1049\f2\fs24 
+\par \lang1033\f1\fs16        TheFellowshipOfTheRing Legolas [-1]\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 ELSE\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 END\lang1049\f2\fs24 
+\par \lang1033\f1\fs16 
+\par 
+\par \lang1049 
+\par 
+\par 
+\par 
+\par 
+\par }
+ 
