@@ -1,0 +1,131 @@
+body{
+	font-style : normal;
+	font-size : 12pt;
+	font-family : Verdana,  sans-serif;
+	background-color: E7E3E7;
+}
+li{
+	font-family:  Verdana, sans-serif;
+	font-size: 12pt;
+	list-style-position: outside;
+	list-style-type: none;
+
+}
+li.nonum{
+	font-family:  Verdana, sans-serif;
+	font-size: 12pt;
+	list-style-image: url(Boll.gif);
+	list-style-position: outside; 
+}
+li.num{
+	text-align: left;
+	font-family: Verdana, sans-serif;
+	font-size: 12pt;
+}
+.tit_A{
+	text-align: center;
+	font-family: Verdana, sans-serif;
+	font-size: 16pt;
+}
+.Tit_B{
+	text-align: center;
+	font-family: Verdana, sans-serif;
+	font-size: 15pt;
+}
+.tit_C{
+	text-align: center;
+	font-family: Verdana, sans-serif;
+	font-size: 14pt;
+}
+.Text{
+	font-family:  Verdana, sans-serif;
+	font-size: 12pt;
+}
+.Text_b{
+	font-family:  Verdana, sans-serif;
+	font-size: 12pt;
+   font-weight: bold;
+}
+.Text_i{
+	font-family:  Verdana, sans-serif;
+	font-size: 12pt;
+   font-style: italic;
+}
+.Text_red   {
+	color : Red;
+}
+.label {
+	font-size: 12pt;
+     font-family: Verdana, sans-serif;
+     text-align: center;
+}
+
+.Prim {
+	font-family: Verdana, sans-serif;
+	font-size: 12pt;
+	padding: 40px 40px 40px 40px;
+	font-style : italic;
+}
+.Code {
+	font-family: Verdana, sans-serif;
+	font-size: 10pt;
+	padding-left : 20px;
+	font-style : italic;
+}
+
+.border{
+	border : 1px solid Black;
+	border-style : solid solid solid solid;
+	border-bottom : 1px solid Black;
+}
+
+.table_big{
+	font-family: Verdana, sans-serif;
+	font-size: 8pt;
+}
+
+.table_big_b{
+	font-family: Verdana, sans-serif;
+	font-size: 8pt;
+	font-weight : bold;
+}
+a{
+	color="#004080";
+	TEXT-DECORATION: none;
+}
+A:link {
+	Color="#004080";
+	TEXT-DECORATION: none;
+}
+A:visited {
+	Color="#004080";
+	TEXT-DECORATION: none;
+}
+A:active {
+	Color="#004080";
+	TEXT-DECORATION: none
+}
+A:hover {
+	Color="#008080";
+	TEXT-DECORATION: underline;
+}
+a.ser{
+	color="#FF0000";
+	TEXT-DECORATION: none;
+}
+a.ser:link {
+	Color="#FF0000";
+	TEXT-DECORATION: none;
+}
+a.ser:visited {
+	Color="#FF0000";
+	TEXT-DECORATION: none;
+}
+a.ser:active {
+	Color="#FF0000";
+	TEXT-DECORATION: none
+}
+a.ser:hover {
+	Color="#FF0000";
+	TEXT-DECORATION: underline;
+}

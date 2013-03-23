@@ -1,0 +1,27 @@
+//welcome to the textbourd of our club. here you can find a lot of information about cars.
+//Pleaase, add information about cars with using following form:
+//car <number>
+//<model>
+//<year of realise>
+//<avalible collors>
+//<cost & currency>
+//
+car 1
+bmw-0507-cool
+2000
+red and blue
+$25000
+
+car 2
+audi-0608-cold
+2004
+red
+$2500
+
+car 3
+volga-0507
+1995
+green
+1500rr
+
+//so, that is all to this time. Good day!

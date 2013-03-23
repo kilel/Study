@@ -1,0 +1,131 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 
+2 2 1 1 1 1 }1 1 0 0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Heading 1" -1 3 1 
+{CSTYLE "" -1 -1 "Times" 1 18 0 0 0 1 2 1 2 2 2 2 1 1 1 1 }1 1 0 0 8 
+4 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" -1 11 1 {CSTYLE "" -1 -1 "Ti
+mes" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }3 3 0 0 0 0 1 0 1 0 2 2 0 1 }
+{PSTYLE "Maple Output" -1 12 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 
+2 2 2 2 2 2 1 1 1 1 }1 3 0 0 0 0 1 0 1 0 2 2 0 1 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 8 "restart;" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 13 "with(linalg);" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#7^r%.BlockDiagonalG%,GramSchmidtG%,JordanBlockG%)LUdeco
+mpG%)QRdecompG%*WronskianG%'addcolG%'addrowG%$adjG%(adjointG%&angleG%(
+augmentG%(backsubG%%bandG%&basisG%'bezoutG%,blockmatrixG%(charmatG%)ch
+arpolyG%)choleskyG%$colG%'coldimG%)colspaceG%(colspanG%*companionG%'co
+ncatG%%condG%)copyintoG%*crossprodG%%curlG%)definiteG%(delcolsG%(delro
+wsG%$detG%%diagG%(divergeG%(dotprodG%*eigenvalsG%,eigenvaluesG%-eigenv
+ectorsG%+eigenvectsG%,entermatrixG%&equalG%,exponentialG%'extendG%,ffg
+ausselimG%*fibonacciG%+forwardsubG%*frobeniusG%*gausselimG%*gaussjordG
+%(geneqnsG%*genmatrixG%%gradG%)hadamardG%(hermiteG%(hessianG%(hilbertG
+%+htransposeG%)ihermiteG%*indexfuncG%*innerprodG%)intbasisG%(inverseG%
+'ismithG%*issimilarG%'iszeroG%)jacobianG%'jordanG%'kernelG%*laplacianG
+%*leastsqrsG%)linsolveG%'mataddG%'matrixG%&minorG%(minpolyG%'mulcolG%'
+mulrowG%)multiplyG%%normG%*normalizeG%*nullspaceG%'orthogG%*permanentG
+%&pivotG%*potentialG%+randmatrixG%+randvectorG%%rankG%(ratformG%$rowG%
+'rowdimG%)rowspaceG%(rowspanG%%rrefG%*scalarmulG%-singularvalsG%&smith
+G%,stackmatrixG%*submatrixG%*subvectorG%)sumbasisG%(swapcolG%(swaprowG
+%*sylvesterG%)toeplitzG%&traceG%*transposeG%,vandermondeG%*vecpotentG%
+(vectdimG%'vectorG%*wronskianG" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 
+1 0 20 "with(LinearAlgebra);" }}{PARA 12 "" 1 "" {XPPMATH 20 "6#7gr%#&
+xG%$AddG%(AdjointG%3BackwardSubstituteG%+BandMatrixG%&BasisG%-BezoutMa
+trixG%/BidiagonalFormG%-BilinearFormG%5CharacteristicMatrixG%9Characte
+risticPolynomialG%'ColumnG%0ColumnDimensionG%0ColumnOperationG%,Column
+SpaceG%0CompanionMatrixG%0ConditionNumberG%/ConstantMatrixG%/ConstantV
+ectorG%%CopyG%2CreatePermutationG%-CrossProductG%-DeleteColumnG%*Delet
+eRowG%,DeterminantG%)DiagonalG%/DiagonalMatrixG%*DimensionG%+Dimension
+sG%+DotProductG%6EigenConditionNumbersG%,EigenvaluesG%-EigenvectorsG%&
+EqualG%2ForwardSubstituteG%.FrobeniusFormG%4GaussianEliminationG%2Gene
+rateEquationsG%/GenerateMatrixG%(GenericG%2GetResultDataTypeG%/GetResu
+ltShapeG%5GivensRotationMatrixG%,GramSchmidtG%-HankelMatrixG%,HermiteF
+ormG%3HermitianTransposeG%/HessenbergFormG%.HilbertMatrixG%2Householde
+rMatrixG%/IdentityMatrixG%2IntersectionBasisG%+IsDefiniteG%-IsOrthogon
+alG%*IsSimilarG%*IsUnitaryG%2JordanBlockMatrixG%+JordanFormG%1Kronecke
+rProductG%(LA_MainG%0LUDecompositionG%-LeastSquaresG%,LinearSolveG%.Ly
+apunovSolveG%$MapG%%Map2G%*MatrixAddG%2MatrixExponentialG%/MatrixFunct
+ionG%.MatrixInverseG%5MatrixMatrixMultiplyG%+MatrixNormG%,MatrixPowerG
+%5MatrixScalarMultiplyG%5MatrixVectorMultiplyG%2MinimalPolynomialG%&Mi
+norG%(ModularG%)MultiplyG%,NoUserValueG%%NormG%*NormalizeG%*NullSpaceG
+%3OuterProductMatrixG%*PermanentG%&PivotG%*PopovFormG%0QRDecomposition
+G%-RandomMatrixG%-RandomVectorG%%RankG%6RationalCanonicalFormG%6Reduce
+dRowEchelonFormG%$RowG%-RowDimensionG%-RowOperationG%)RowSpaceG%-Scala
+rMatrixG%/ScalarMultiplyG%-ScalarVectorG%*SchurFormG%/SingularValuesG%
+*SmithFormG%8StronglyConnectedBlocksG%*SubMatrixG%*SubVectorG%)SumBasi
+sG%0SylvesterMatrixG%/SylvesterSolveG%/ToeplitzMatrixG%&TraceG%*Transp
+oseG%0TridiagonalFormG%+UnitVectorG%2VandermondeMatrixG%*VectorAddG%,V
+ectorAngleG%5VectorMatrixMultiplyG%+VectorNormG%5VectorScalarMultiplyG
+%+ZeroMatrixG%+ZeroVectorG%$ZipG" }}}{SECT 0 {PARA 3 "" 0 "" {TEXT -1 
+0 "" }}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 176 "minus_stb := proc(i,
+ str, stb, k)\nglobal a, n;\nlocal t;\nif (stb = n+1) then return; fi;
+\nt := a[str,stb];\na[str,stb] := t - (a[i,stb])*k;\nminus_stb(i, str,
+ stb+1, k); \nend proc:" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "
+" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 194 "minus_str := proc(i, s
+tr)\nglobal a,n;\nif(str = n+1) then return fi;\nif(a[str,i] = 0) then
+ minus_str(i,str+1); return; fi;\nminus_stb(i, str, i, (a[str,i])/(a[i
+,i]));\nminus_str(i,str+1);\nend proc:" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 153 "swap_s
+tr := proc(i, j, k)\nglobal temp, a,n;\nif(k = n+1) then return; fi;\n
+temp := a[i,k]; a[i,k] := a[j,k]; a[j,k] := temp;\nswap_str(i, j, k+1)
+;\nend proc:" }}{PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 
+"> " 0 "" {MPLTEXT 1 0 135 "search_0 := proc(i, j)\nglobal a,n;\nif(i \+
+= n+1) then return 0; fi;\nif(a[i,j] <> 0) then return i; fi;\nreturn \+
+search_0(i+1, j);\nend proc:" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 
+0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 
+0 "> " 0 "" {MPLTEXT 1 0 281 "gauss_tre := proc(i)\nglobal a, temp,n;
+\nlocal search;\nif(i = n) then print(a); return; fi;\nif(a[i,i] = 0) \+
+then search := search_0(i+1, i);\n  if(search = 0) then gauss_tre(i+1)
+; return; fi;\n  swap_str(i, search, i);\nfi;\nif(i < n) then\nminus_s
+tr(i, i+1);\ngauss_tre(i+1); fi;\nend proc:" }}{PARA 0 "" 0 "" {TEXT 
+-1 0 "" }}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 7 "n := 5;" }}{PARA 
+11 "" 1 "" {XPPMATH 20 "6#>%\"nG\"\"&" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 22 "a := randmatrix(n, n);" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#>%\"aGK%'matrixG6#7'7'\"\"'\"#%*\"\")\"#()!#D7'\"#(*!#i!#h\"#U!#
+O7'\"#j\"#&*\"#$)\"#p\"#n7'\"#v\"#;!#$*!#9!#w7'\"#hF,\"#_!##)!#%)Q(ppr
+int06\"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 7 "b := a:" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 13 "gauss_tre(1);" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6#K%'matrixG6#7'7'\"\"'\"#%*\"\")\"#()!#D7'\"\"!#!
+%XZ\"\"$#!$r&F1#!%HF\"\"##\"%4AF(7'F.F.#\"'(e/&\"%XZ#!',:r\"%!\\*#\"(F
+l:\"F?7'F.F.F.#!)$)fKqF;#\")@.;9F;7'F.F.F.F.#!+ufMi;\")pl/5Q(pprint06
+\"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 18 "b := gausselim(b);" }
+}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"bGK%'matrixG6#7'7'\"\"'\"#%*\"\")
+\"#()!#D7'\"\"!#!%XZ\"\"$#!$r&F3#!%HF\"\"##\"%4AF*7'F0F0#\"'(e/&\"%XZ#
+!',:r\"%!\\*#\"(Fl:\"FA7'F0F0F0#!)$)fKqF=#\")@.;9F=7'F0F0F0F0#!+ufMi;
+\")pl/5Q(pprint06\"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 5 "####2" }}}{EXCHG {PARA 0 "> \+
+" 0 "" {MPLTEXT 1 0 40 "##\342\342\345\361\362\350 \340, b, c, x - \+
+\354\340\362\360\350\366\373 \350\347 \363\361\353\356\342\350\377" }}
+}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 65 "a := randmatrix(5,5):\nb :=
+ randmatrix(5,5):\nc := randmatrix(5,5):" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 233 "find_x := proc()\nglobal a,b,c;\nlocal x;\nif((det(a
+) * det(b) * det(c)) = 0 or coldim(b) <> rowdim(c) or coldim(c) <> col
+dim(a)) \nthen print( \"can not find X\"); return; fi;\nx := inverse((
+b.c).inverse(a));\nprint(x); \nreturn x;\nend proc:" }}{PARA 0 "> " 0 
+"" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 9 "find_
+x();" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#K%'matrixG6#7'7'#!2,$Hsu(*znd
+\"3,fio#y!)=5%#\"3XE_>py&*4E\"4.x(e![Bk0B\"#!3(G0%))>r%GM\"F-#!25,.N3)
+\\RoF*#\"3/jt.$\\%fh;F-7'#!23\"z^mP2LeF*#\"2Z:fG)e62jF*#!2kpp:d*Q6YF*#
+!2cp66$*yx@'F*#\"2X]GJ*QDqYF*7'#!1J7cC$)*Qg(F*#\"3DAF%=$>@%R#F-#\"1#pQ
+oz[zB'F-#!2fhYx6Q)[SF*#\"2\\k;Q54@c)F-7'#\"2r(z#y/+Ul%F*#!3Q&\\Gm!y(y/
+#F-#\"3QvL7!GNE4\"F-#\"29i>HCU/P&F*#!3wKr[Vl-l8F-7'#!2hgmrj@w^$F*#\"0c
+xLwc%>HF*#!2b,Q[B4)[IF*#!2#[&[G_i2'>F*#\"2*=Za'[?vM\"F*Q(pprint06\"" }
+}{PARA 11 "" 1 "" {XPPMATH 20 "6#%\"xG" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 5 "####3" }}}{SECT 0 {PARA 3 "" 0 "" {TEXT -1 0 "" }}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 410 "folk := proc(n)\nlocal a, b
+, i, j, c, g;\ni := 1;\nj := 1;\na := Matrix(n,n, 0);\nwhile i <= n do
+\nj := 1;\nwhile j <= n do\na[i,j] := cat('a', i,j); \nj := j + 1; od;
+\ni := i + 1; od;\nb := a.a;\nc := \{Determinant(a) = 0\};\ng := \{\};
+\ni := 0;\nwhile i < n*n do\nc := c union \{ b[1 + (i - (i mod n))/n, \+
+(i mod n) + 1] = 0\};\ng := g union \{ a[1 + (i - (i mod n))/n, (i mod
+ n) + 1]\};\ni := i + 1; \nod;\nprint(solve(c, g));\nend proc:" }}}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "
+" {MPLTEXT 1 0 8 "folk(3);" }}{PARA 12 "" 1 "" {XPPMATH 20 "6'<+/%$a11
+G,$*&,&*&%$a32G\"\"\"%$a21GF+F+*&%$a33GF+%$a31GF+F+F+F/!\"\"F0/%$a12G,
+$*(F*F+F(F+F/!\"#F0/%$a13G,$*(F.F+F(F+F/F5F0/F,F,/%$a22G*(F*F+F,F+F/F0
+/%$a23G*(F,F+F.F+F/F0/F/F//F*F*/F.F.<+/F%\"\"!/F2F2/F7*(F2F+F.F+F*F0/F
+,FF/F<,$F.F0/F?,$*&F.\"\"#F*F0F0/F/FFFBFC<+FE/F2FF/F7F7FJ/F<FF/F?F?FQ/
+F*FF/F.FF<+FEFS/F7FFF:FUFVFQFWFX<+/F%,$F<F0FGFT/F,,$*&F<FPF2F0F0/F<F</
+F?*(F<F+F7F+F2F0FQFWFX" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" 
+}}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}}{MARK "16 1 0 0" 
+401 }{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }{PAGENUMBERS 0 1 2 33 1 1 }

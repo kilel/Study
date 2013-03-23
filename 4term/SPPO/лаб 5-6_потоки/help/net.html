@@ -1,0 +1,645 @@
+<HTML>
+  <HEAD>
+<title>Теоретическая справка. NET</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</HEAD>
+
+ <BODY background="images\bg2.jpg">
+&nbsp;&nbsp;&nbsp;&nbsp<font id="start"><b>.NET</b></font><br>&nbsp;&nbsp;
+<kbd><a class = "pushLink" href="#thr">[<span>Thread</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#priority">[<span>ThreadPriority</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#state">[<span>ThreadState</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#mutex">[<span>Mutex</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#sem">[<span>Semaphore</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#timer">[<span>Timer</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#monitor">[<span>Monitor</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#dopoln">[<span>Дополнительно</span>]</a></kbd>
+<ul>
+<li class="withborder">
+Пространство имен System.Threading содержит классы и интерфейсы, которые дают возможность программировать в многопоточном режиме (класс работы с потоками Thread, классы синхронизации работы потоков и доступа к данным (Mutex, Monitor, Interlocked, Semaphore, AutoResetEvent и т. д.).</li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="thr"><b>Thread</b></font>
+<ul>
+Создает и контролирует поток, задает приоритет и возвращает статус.<br><br>
+Процесс может создавать один или более потоков для выполнения частей программного кода, связанного с процессом. Следует использовать делегат <font color=blue>ThreadStart</font> или <font color=blue>ParameterizedThreadStart</font> для задания программного кода, управляемого потоком. С помощью делегата <font color=blue>ParameterizedThreadStart</font> можно передавать данные в потоковую процедуру.
+<br><br>
+В течение своего существования поток всегда находится в одном или более состояниях, определенных в классе <font color=blue>ThreadState</font>. Для потока можно запрашивать планирование уровня приоритета, который определяется классом <font color=blue>ThreadPriority</font>, но не гарантируется, что операционная система предоставит его.
+<br><br>
+Метод <font color=blue>GetHashCode</font> предоставляет идентификацию управляемых потоков. В течение жизни поток не будет конфликтовать со значениями, полученными от других потоков, независимо от домена приложения, из которой получается значение.
+<li class="kod"><kbd><pre>
+<font color=blue>using namespace</font> System;
+<font color=blue>using namespace</font> System::Threading;
+<font color=blue>ref class</font> Work
+{
+<font color=blue>public:</font>
+   <font color=blue>static void</font> DoWork()
+   {
+      Console::WriteLine( <font color=red>"Static thread procedure."</font> );
+   }
+
+   <font color=blue>int</font> Data;
+   <font color=blue>void</font> DoMoreWork()
+   {
+      Console::WriteLine(  <font color=red>""Instance thread procedure. Data={0}"</font>, Data );
+   }
+
+};
+
+<font color=blue>int</font> main()
+{   <font color=green>
+   //   Чтобы запустить поток с использованием метода экземпляра для потока
+   //   процедуры, нужно определить объект класса как первый аргумент
+   //   ThreadStart конструктора.
+   //</font>
+   Work^ w = <font color=blue>gcnew</font> Work;
+   w->Data = 42;
+   ThreadStart^ threadDelegate = <font color=blue>gcnew</font> ThreadStart( w, &Work::DoMoreWork );
+   Thread^ newThread = <font color=blue>gcnew</font> Thread( threadDelegate );
+   newThread->Start();
+   <font color=green>
+   // Чтобы запустить поток с помощью статического процедуры, нужно  указать
+   // только адрес процедуры. Это переход от более ранних версий. NET Framework,
+   // который требует два аргумента, первый из которых был нулевым (0).
+   //</font>
+   threadDelegate = <font color=blue>gcnew</font> ThreadStart( &Work::DoWork );
+   newThread = <font color=blue>gcnew</font> Thread( threadDelegate );
+   newThread->Start();<font color=green>
+   // Этот пример кода генерирует следующий вывод (порядок линий может изменяться):
+   // Static thread procedure.
+   // Instance thread procedure. Data=42</font>
+}
+</pre></kbd></li></ul>
+<ul>
+Метод <font color=blue>Start</font> возвращается немедленно, как правило до фактического запуска нового потока. Можно использовать свойства <font color=blue>ThreadState</font> и <font color=blue>IsAlive</font> для определения состояния потока в любой момент, однако эти свойства никогда не должны использоваться для синхронизации действий потоков.
+<br><br>
+<b>Основные методы</b><br><br>
+<font color=blue>Thread::Abort</font>
+<blockquote>Вызывает исключение <font color=blue>ThreadAbortException</font> в вызвавшем его потоке для того, чтобы начать процесс завершения потока. Вызов данного метода обычно завершает поток.</blockquote>
+<font color=blue>Thread::GetData</font> 
+<blockquote>Извлекает значение из заданной области текущего потока, внутри текущей области текущего потока. </blockquote>
+<font color=blue>Thread::GetDomain</font>
+<blockquote>Возвращает текущую область, в которой выполняется текущий поток.</blockquote>
+<font color=blue>Thread::GetType</font>
+<blockquote>Возвращает объект <font color=blue>Type</font> для текущего экземпляра.</blockquote>
+<font color=blue>Thread::Interrupt</font>
+<blockquote>Прерывает работу потока, находящегося в состоянии <font color=blue>WaitSleepJoin</font>. Если этот поток не является заблокированным в данный момент в состоянии ожидания, бездействия или присоединения, его работа будет прервана, когда он начнет блокироваться.</blockquote>
+<font color=blue>Thread::Join</font>
+<blockquote>Блокирует вызывающий поток до завершения потока.</blockquote>
+<font color=blue>Thread::ResetAbort</font>
+<blockquote>Отменяет метод <font color=blue>Abort</font>, запрошенный для текущего потока. Этот метод может быть вызван только кодом с правильными разрешениями. <br><br>
+Если для завершения потока вызван метод <font color=blue>Abort</font>, система создает в нем <font color=blue>ThreadAbortException</font>. <font color=blue>ThreadAbortException</font> — специальное исключение, которое может быть зафиксировано кодом приложения, но создается повторно в конце блока catch, если не вызван метод <font color=blue>ResetAbort</font>. <font color=blue>ResetAbort</font> отменяет запрос на аварийное завершение и предотвращает <font color=blue>ThreadAbortException</font> от завершения потока.<br><br>
+В следующем примере показано аварийное завершение работы потока. Поток, получающий исключение <font color=blue>ThreadAbortException</font>, использует метод <font color=blue>ResetAbort</font> для того, чтобы отменить запрос на аварийное завершение работы и продолжить выполнение.
+<li class="kod"><kbd><pre>
+<font color=blue>using namespace</font> System;
+<font color=blue>using namespace</font> System::Threading;
+<font color=blue>using namespace</font> System::Security::Permissions;
+<font color=blue>ref class</font> ThreadWork
+{
+<font color=blue>public:</font>
+   <font color=blue>static void</font> DoWork()
+   {
+      <font color=blue>try
+      {
+         <font color=blue>for</font> ( <font color=blue>int</font></font> i = 0; i < 100; i++ )
+         {
+            Console::WriteLine( <font color=red>"Thread - working."</font> );
+            Thread::Sleep( 100 );
+
+         }
+      }
+      <font color=blue>catch</font> ( ThreadAbortException^ e ) 
+      {
+         Console::WriteLine( <font color=red>"Thread - caught ThreadAbortException - resetting."</font> );
+         Console::WriteLine( <font color=red>"Exception message: {0}"</font>, e->Message );
+         Thread::ResetAbort();
+      }
+
+      Console::WriteLine( <font color=red>"Thread - still alive and working."</font> );
+      Thread::Sleep( 1000 );
+      Console::WriteLine( <font color=red>"Thread - finished working."</font> );
+   }
+
+};
+<font color=blue>int</font> main()
+{
+   ThreadStart^ myThreadDelegate = <font color=blue>gcnew</font> ThreadStart( ThreadWork::DoWork );
+   Thread^ myThread = <font color=blue>gcnew</font> Thread( myThreadDelegate );
+   myThread->Start();
+   Thread::Sleep( 100 );
+   Console::WriteLine( <font color=red>"Main - aborting my thread."</font> );
+   myThread->Abort();
+   myThread->Join();
+   Console::WriteLine( <font color=red>"Main ending."</font> );
+}
+</pre></kbd></li>
+</blockquote>
+
+<font color=blue>Thread::SetData</font>
+<blockquote>Задает данные в указанной области для текущей области потока, выполняющегося в данный момент. Для улучшения производительности используйте поля, отмеченные атрибутом <font color=blue>ThreadStaticAttribute</font>.</blockquote>
+<font color=blue>Thread::Sleep</font>
+<blockquote>Блокирует текущий поток на заданное количество миллисекунд.</blockquote>
+<font color=blue>Thread::SpinWait</font>
+<blockquote>Вынуждает поток ожидать количество отсчетов, определенное параметром iterations (тип: System::Int32)</blockquote>
+<b>Основные свойства</b><br><br>
+<font color=blue>Thread::CurrentThread</font>
+<blockquote>Возвращает выполняющийся в данный момент поток.</blockquote>
+<font color=blue>Thread::IsAlive</font>
+<blockquote></blockquote>Возвращает значение, показывающее статус выполнения текущего потока.<font color=blue></font>
+<font color=blue>Thread::IsBackground</font>
+<blockquote>Получает или задает значение, показывающее, является ли поток фоновым.</blockquote>
+<font color=blue>Thread::ManagedThreadId</font>
+<blockquote>Возвращает уникальный идентификатор текущего управляемого потока.</blockquote>
+<font color=blue>Thread::Name</font>
+<blockquote>Получает или задает имя потока.</blockquote>
+<font color=blue>Thread::Priority</font>
+<blockquote>Получает или задает значение, указывающее на планируемый приоритет потока.</blockquote>
+<font color=blue>Thread::ThreadState</font>
+<blockquote>Возвращает значение, содержащее состояния текущего потока.</blockquote>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="priority"><b>ThreadPriority</b>
+<ul>
+Класс <font color=blue>ThreadPriority</font> определяет набор всех возможных значений приоритета потока. Приоритеты потоков задают относительный приоритет одного потока по отношению к другому.
+<br><br>
+Каждому потоку присваивается приоритет. Потокам, созданным в среде выполнения, изначально присваивается приоритет <font color=blue>Normal</font>, в в то время как потоки, созданные вне среды выполнения, сохраняют свой предыдущий приоритет при входе в среду выполнения. Получить или установить приоритет потока можно с помощью его свойства <font color=blue>Priority</font>.
+<br><br>
+Возможные значения:<br><br>
+1) Lowest
+<blockquote>Выполнение потока Thread может быть запланировано после выполнения потоков с любыми другими приоритетами.</blockquote>
+2) BelowNormal
+<blockquote>Выполнение потока Thread может быть запланировано после выполнения потоков с приоритетом Normal и до потоков с приоритетом Lowest.</blockquote>
+3) Normal
+<blockquote>Выполнение потока Thread может быть запланировано после выполнения потоков с приоритетом AboveNormal и до потоков с приоритетом BelowNormal. По умолчанию потоки имеют приоритет Normal.</blockquote>
+4) AboveNormal
+<blockquote>Выполнение потока Thread может быть запланировано после выполнения потоков с приоритетом Highest и до потоков с приоритетом Normal.</blockquote>
+5) Highest
+<blockquote>Выполнение потока Thread может быть запланировано до выполнения потоков с любыми другими приоритетами.</blockquote>
+В приведенном примере создаются два потока и приоритет одного из них устанавливается в значение BelowNormal.
+<li class="kod"><kbd><pre>
+Work^ w = <font color=blue>gcnew</font> Work; <font color=green>// создаем объект класса Work</font>
+ThreadStart^ threadDelegate = <font color=blue>gcnew</font> ThreadStart( w, &Work::DoMoreWork );
+Thread^ threadOne = <font color=blue>gcnew</font> Thread( threadDelegate );
+Thread^ threadTwo = <font color=blue>gcnew</font> Thread( threadDelegate );
+threadTwo->Priority = ThreadPriority::BelowNormal; <font color=green>// устанавливаем второму потоку приоритет BelowNormal</font>
+threadOne->Start();
+threadTwo->Start();
+</pre></kbd></li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="state"><b>ThreadState</b>
+<ul>
+Класс <font color=blue>ThreadState</font> определяет набор всех возможных состояний выполнения для потоков. После создания потока и до его завершения он находится по крайней мере в одном из состояний. Потоки, созданные в общеязыковой среде выполнения, изначально находятся в состоянии <font color=blue>Unstarted</font>, в то время как внешние потоки, приходящие в среду выполнения, находятся уже в состоянии <font color=blue>Running</font>. Поток с состоянием <font color=blue>Unstarted</font> переходит в состояние <font color=blue>Running</font> при вызове метода <font color=blue>Start</font>. Не все сочетания значений <font color=blue>ThreadState</font> являются допустимыми; например, поток не может находится одновременно в состояниях <font color=blue>Aborted</font> и <font color=blue>Unstarted</font>.<br><br>
+<b>Члены класса</b><br><br>
+1) Running
+<blockquote>Поток был запущен, он не заблокирован, и нет ожидающего исключения <font color=blue>ThreadAbortException</font>.</blockquote>
+2) StopRequested	
+<blockquote>Поток получает запрос на остановку. Предназначено только для внутреннего использования.</blockquote>
+3) SuspendRequested	
+<blockquote>Запрашивается приостановка работы потока.</blockquote>
+4) Background	
+<blockquote>Поток выполняется как фоновый поток, в противоположность потокам переднего плана. Это состояние управляется заданием свойства <font color=blue>Thread::IsBackground</font>.</blockquote>
+5) Unstarted	
+<blockquote>Метод <font color=blue>Thread::Start</font> не был вызван для потока.</blockquote>
+6) Stopped	
+<blockquote>Поток был остановлен.</blockquote>
+7) WaitSleepJoin
+<blockquote>Поток заблокирован. Это может произойти в результате вызова метода <font color=blue>Thread::Sleep</font> или метода <font color=blue>Thread::Join</font>, в результате запроса блокировки.</blockquote>
+8) Suspended
+<blockquote>Поток был приостановлен.</blockquote>
+9) AbortRequested
+<blockquote>Метод <font color=blue>Thread::Abort</font> был вызван для потока, но поток еще не получил исключение <font color=blue>System.Threading::ThreadAbortException</font>, которое попытается завершить его.</blockquote>
+10) Aborted
+<blockquote>Состояние потока включает в себя значение <font color=blue>AbortRequested</font>, и поток теперь не выполняет работу, но его состояние еще не изменилось на <font color=blue>Stopped</font>.</blockquote>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<b>Синхронизирующие примитивы</b>
+<ul>
+Пространство имен <font color=blue>System.Threading</font> содержит классы синхронизации работы потоков. Это <font color=blue>AutoResetEvent</font>, <font color=blue>EventWaitHandle</font>, <font color=blue>Interlocked</font>, <font color=blue>Monitor</font>, <font color=blue>Mutex</font>, <font color=blue>ReaderWriterLock</font>,  <font color=blue>Semaphore</font>, <font color=blue>WaitHandleCannotBeOpenedException</font> и др. Рассмотрим подробнее некоторые из них.
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="mutex"><b>Mutex</b>
+<ul>
+Класс <font color=blue>Mutex</font> — это примитив синхронизации, который предоставляет эксклюзивный доступ к разделяемому ресурсу только для одного процесса. Если поток получает семафор, второй поток, желающий получить этот семафор, приостанавливается до тех пор, пока первый поток не освободит семафор. <br><br>
+Если поток завершается, владея мьютексом, то мьютекс называется брошенным. Состояние мьютекса задается сигнальным, и мьютекс переходит во владение следующему ожидающему потоку. Брошенный системный мьютекс может свидетельствовать о внезапном прекращении выполнения приложения (например, с помощью диспетчера задач Windows).
+<br><br>
+Мьютексы бывают двух типов: локальные мьютексы (без имени), и именованные системные мьютексы. Локальный мьютекс существует только внутри одного процесса. Он может использоваться любым потоком в процессе, который содержит ссылку на объект <font color=blue>Mutex</font>, представляющий мьютекс. Каждый неименованный объект <font color=blue>Mutex</font> представляет отдельный локальный мьютекс.<br><br>
+Именованные системные мьютексы доступны в пределах всей операционной системы и могут быть использованы для синхронизации действий процессов. Можно создать объект <font color=blue>Mutex</font>, представляющий именованный системный мьютекс, используя конструктор с поддержкой имен. Объект операционной системы может быть создан в то же время, или существовать до создания объекта <font color=blue>Mutex</font>. Можно создать несколько объектов <font color=blue>Mutex</font>, представляющих один и тот же именованный системный мьютекс, и использовать метод <font color=blue>OpenExisting</font> для открытия существующего именованного системного мьютекса.
+<br><br>В данном примере показано, как используется локальный объект Mutex для синхронизации доступа к защищенному ресурсу.
+<li class="kod"><kbd><pre>
+<font color=green>// В отличие от мониторов, мьютекс может быть использован с
+// WaitHandle.WaitAll и WaitAny
+//</font>
+<font color=blue>using namespace</font> System;
+<font color=blue>using namespace</font> System::Threading;
+<font color=blue>const int</font> numIterations = 1;
+<font color=blue>const int</font> numThreads = 3;
+<font color=blue>ref class</font> Test
+{
+<font color=blue>public:</font>
+
+   <font color=green>// Создание нового мьютекса. Созданный поток не владеет мьютексом.
+   //</font>
+   <font color=blue>static</font> Mutex^ mut = <font color=blue>gcnew</font> Mutex;
+   <font color=blue>static</font> void MyThreadProc()
+   {
+      <font color=blue>for</font> ( <font color=blue>int</font> i = 0; i < numIterations; i++ )
+      {
+         UseResource();
+
+      }
+   }
+
+<font color=blue>private:</font>
+
+   <font color=green>// Этот метод представляет собой ресурс, 
+   // который должен быть синхронизирован таким образом, 
+   // что только один поток одновременно может войти.
+   //</font>
+   <font color=blue>static void</font> UseResource()
+   {
+      <font color=green>// Подождем, пока он будет готов для входа
+      //</font>
+      mut->WaitOne();
+      Console::WriteLine( <font color=red>"{0} has entered protected the area"</font>, Thread::CurrentThread->Name );
+
+      Thread::Sleep( 500 );
+      Console::WriteLine( <font color=red>"{0} is leaving protected the area\r\n"</font>, Thread::CurrentThread->Name );
+
+      <font color=green>// Запуск мьютекса
+      //</font>
+      mut->ReleaseMutex();
+   }
+
+};
+<font color=blue>int</font> main()
+{
+
+   <font color=green>// Создание потока, который будет использовать защищенный ресурс
+   //</font>
+   <font color=blue>for</font> ( <font color=blue>int</font> i = 0; i < numThreads; i++ )
+   {
+      Thread^ myThread = <font color=blue>gcnew</font> Thread( gcnew ThreadStart( Test::MyThreadProc ) );
+      myThread->Name = String::Format( <font color=red>"Thread {0}"</font>, i + 1 );
+      myThread->Start();
+
+   }
+}
+</pre></kbd></li>
+</ul>
+
+&nbsp;&nbsp;&nbsp;&nbsp<font id="sem"><b>Semaphore</b></font> 
+<ul>
+Класс <font color=blue>Semaphore</font> для управления доступом к пулу ресурсов. Потоки производят вход в семафор, вызывая метод <font color=blue>WaitOne</font>, унаследованный от класса <font color=blue>WaitHandle</font>, и освобождают семафор вызовом метода <font color=blue>Release</font>.
+<br><br>
+Счетчик на семафоре уменьшается на единицу каждый раз, когда в семафор входит поток, и увеличивается на единицу, когда поток освобождает семафор. Когда счетчик равен нулю, последующие запросы блокируются, пока другие потоки не освободят семафор. Когда семафор освобожден всеми потоками, счетчик имеет максимальное значение, заданное при создании семафора.
+<br><br>
+Гарантированный порядок, в котором бы блокированные потоки входили в семафор, например FIFO или LIFO, отсутствует.
+<br><br>
+Поток может выполнять вход в семафор несколько раз, вызывая многократно метод WaitOne. Чтобы освободить некоторые из этих входов, поток может вызвать перегруженный метод <font color=blue>Release()</font> без параметров несколько раз, или вызвать перегруженный метод <font color=blue>Release(Int32)</font>, указывающий количество освобождаемых входов.
+<br><br>
+Семафоры бывают двух типов: локальные семафоры и именованные системные семафоры. При создании объекта <font color=blue>Semaphore</font> с помощью конструктора, позволяющего передавать параметр с именем семафора, объект связывается с имеющим данное имя семафором операционной системы. Именованные системные семафоры доступны в пределах всей операционной системы и могут быть использованы для синхронизации действий процессов. Можно создать несколько объектов Semaphore, представляющих один и тот же именованный системный семафор, и использовать метод <font color=blue>OpenExisting</font> для открытия существующего именованного системного семафора.
+<br><br>
+Локальный семафор существует только внутри одного процесса. Он может использоваться любым потоком в процессе, имеющим ссылку на локальный объект <font color=blue>Semaphore</font>. Каждый объект <font color=blue>Semaphore</font> является отдельным локальным семафором.
+<br><br>
+В следующем примере кода создается семафор с максимальным значением счетчика равным 3 и исходным значением счетчика равным 0. В примере запускаются пять потоков, которые блокируют ожидание семафора. Главный поток использует перегруженный метод <font color=blue>Release(Int32)</font> для увеличения счетчика семафора до максимального значения, позволяя трем потокам войти в семафор. В каждом потоке используется метод <font color=blue>Thread::Sleep</font> для создания имитирующей работу односекундной задержки, а затем вызывается перегруженный метод <font color=blue>Release()</font> для освобождения семафора. Каждый раз при освобождении семафора отображается предыдущее значение счетчика семафора. Выводимые в консоль сообщения позволяют отслеживать использование семафора. Интервал имитирующей работу задержки немного увеличен для каждого потока, чтобы выходные данные было легче читать.
+<li class = "kod"><pre><kmd>
+<font color=blue>#using</font> &lt;System.dll&gt;
+<font color=blue>using namespace</font> System;
+<font color=blue>using namespace</font> System::Threading;
+
+<font color=blue>public ref class</font> Example
+{
+<font color=blue>private:</font>
+   <font color=green>// Семафор, который имитирует ограниченный пул ресурсов
+   //</font>
+   <font color=blue>static</font> Semaphore^ _pool;
+
+   <font color=green>// Интервал сделает вывод более упорядоченным
+   //</font>
+   <font color=blue>static int</font> _padding;
+
+<font color=blue>public:</font> 
+   <font color=blue>static void</font> Main()
+   {
+ 
+      <font color=green>// Создание семафоров, которые могут удовлетворить 
+      // до трех одновременных запросов. Счетчик семафоров изначально 
+      // принадлежит основному потоку программы.
+      //</font>
+      _pool = <font color=blue>gcnew</font> Semaphore( 0,3 );
+
+       <font color=green>// Создание и запуск 5 потоков
+      //</font>
+      <font color=blue>for</font> ( <font color=blue>int</font> i = 1; i <= 5; i++ )
+      {
+         Thread^ t = <font color=blue>gcnew</font> Thread(<font color=blue>gcnew</font> ParameterizedThreadStart( Worker ) );
+
+         <font color=green>// Запускаем поток, передавая номер
+         //</font>
+         t->Start( i );
+      }
+
+      <font color=green>// Подождите, пока все потоки стартуют, чтобы начать блок семафора	
+      //</font>
+      Thread::Sleep( 500 );
+
+       <font color=green>//Вызов Release(3) приводит счетчик семафора к максимальному значению
+      //</font>
+      Console::WriteLine( L<font color=red>"Main thread calls Release(3)."</font> );
+      _pool->Release( 3 );
+
+      Console::WriteLine( L<font color=red>"Main thread exits."</font> );
+   }
+
+<font color=blue>private:</font>
+   <font color=blue>static void</font> Worker( Object^ num )
+   {
+      <font color=green>// Каждый рабочий поток начинает запрашивать семафор.
+      //</font>
+      Console::WriteLine( L<font color=red>"Thread {0} begins and waits for the semaphore."</font>, num );
+      _pool->WaitOne();
+    
+      <font color=green>// Интервал делает вывод более упорядоченным
+       //</font>
+      <font color=blue>int</font> padding = Interlocked::Add( _padding, 100 );
+
+      Console::WriteLine( L"Thread {0} enters the semaphore.", num );
+
+      <font color=green>// Каждый поток работает недолго,
+      // чтобы сделать вывод более упорядоченным
+      //</font>
+      Thread::Sleep( 1000 + padding );
+
+      Console::WriteLine( L<font color=red>"Thread {0} releases the semaphore."</font>, num );
+      Console::WriteLine( L<font color=red>"Thread {0} previous semaphore count: {1}"</font>,num, _pool->Release() );
+   }
+};
+</kmd></pre></li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="timer"><b>Timer</b></font>
+<ul>
+Класс <font color=blue>Timer</font> предоставляет механизм для выполнения метода в заданные интервалы времени.
+<br><br>
+Следует использовать делегат <font color=blue>TimerCallback</font> для задания метода, который надо выполнить объектом <font color=blue>Timer</font>. Делегат таймера задается при создании объекта таймера и не может изменяться. метод не выполняется в потоке, создавшем таймер; он выполняется в отдельном потоке <font color=blue>ThreadPool</font>, предоставляемом системой.
+<br><br>
+При создании таймера можно задать количество времени, в течение которого ожидать первого выполнения метода (ожидаемое время), и количество времени, в течение которых происходит ожидание между последовательными вызовами (период). Можно изменять эти значения, или отключить таймера используя метод <font color=blue>Change</font>.
+<br><br>
+Когда в таймере больше нет необходимости, следует использовать метод <font color=blue>Dispose</font> для освобождения ресурсов, которые занимает таймер. <br><br>
+В следующем примере кода показаны многие возможности класса <font color=blue>Timer</font>.
+<li class="kod"><pre><kmd>
+<font color=blue>using namespace</font> System;
+<font color=blue>using namespace</font> System::Threading;
+<font color=blue>ref class</font> StatusChecker
+{
+<font color=blue>private:</font>
+   <font color=blue>int</font> invokeCount;
+   <font color=blue>int</font> maxCount;
+
+<font color=blue>public:</font>
+   StatusChecker( <font color=blue>int</font> count )
+      : invokeCount( 0 ), maxCount( count )
+   {}
+
+
+   <font color=green>// Этот метод вызывается по таймеру делегата.</font>
+   <font color=blue>void</font> CheckStatus( Object^ stateInfo )
+   {
+      AutoResetEvent^ autoEvent = dynamic_cast<AutoResetEvent^>(stateInfo);
+      Console::WriteLine( <font color=red>"{0} Checking status {1,2}."</font>, DateTime::Now.ToString(  <font color=red>"h:mm:ss.fff"</font> ), (++invokeCount).ToString() );
+      <font color=blue>if</font> ( invokeCount == maxCount )
+      {
+
+         <font color=green>// Сброс счетчика и основного сигнала</font>
+         invokeCount = 0;
+         autoEvent->Set();
+      }
+   }
+
+};
+
+<font color=blue>int</font> main()
+{
+   AutoResetEvent^ autoEvent = <font color=blue>gcnew</font> AutoResetEvent( <font color=blue>false</font> );
+   StatusChecker^ statusChecker = <font color=blue>gcnew</font> StatusChecker( 10 );
+
+   <font color=green>// Создание делегата, который вызывает методы для таймера</font>
+   TimerCallback^ timerDelegate = <font color=blue>gcnew</font> TimerCallback( statusChecker, &StatusChecker::CheckStatus );
+
+   <font color=green>// Создаем таймер, для которого сигналы вызова делегата CheckStatus 
+   // наступает после одной секунды, и каждую 1/4 секунды после этого.
+   //</font>
+   Console::WriteLine( "{0} Creating timer.\n", DateTime::Now.ToString(  <font color=red>"h:mm:ss.fff"</font> ) );
+   Timer^ stateTimer = <font color=blue>gcnew</font> Timer( timerDelegate,autoEvent,1000,250 );
+
+   <font color=green>// Изменение периода сигнала</font>
+   autoEvent->WaitOne( 5000, <font color=blue>false</font> );
+   stateTimer->Change( 0, 500 );
+   Console::WriteLine( <font color=red>"\nChanging period.\n"</font> );
+
+   <font color=green>// Удаление таймера</font>
+   autoEvent->WaitOne( 5000, <font color=blue>false</font> );
+   stateTimer->~Timer();
+   Console::WriteLine( <font color=red>"\nDestroying timer."</font> );
+}
+</kmd></pre></li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="monitor"><b>Monitor</b></font>
+<ul>
+Класс Monitor контролирует доступ к объектам, предоставляя блокировку объекта одному потоку. Блокировки объектов предоставляют возможность ограничения доступа к части кода, обычно называемой критической секцией. Пока поток владеет блокировкой для объекта, никакой другой поток не может ею завладеть. Можно также использовать Monitor для того, чтобы убедиться, что ни один поток не имеет доступа к секции кода приложения, выполняющейся владельцем блокировки, пока другой поток не будет выполнять код, используя другой объект с блокировкой.<br><br>
+Monitor имеет следующие свойства: 
+<blockquote><pre>
+- cвязывается с объектом по требованию;
+- он несвязан, что означает, что он может быть вызван непосредственно из любого контекста;
+- невозможно создать экземпляр класса Monitor.</pre></blockquote>
+Следующая информация хранится для каждого синхронизированного объекта: 
+<blockquote><pre>
+- cсылка на поток, который в данный момент владеет блокировкой;
+- cсылка на очередь готовности, которая содержит потоки, готовые получить блокировку;
+- cсылка на очередь ожидания, содержащую потоки, ожидающие уведомления 
+  об изменении состояния объекта с блокировкой.</pre></blockquote>
+При выборе объекта для синхронизации следует осуществлять блокировку только скрытых или внутренних объектов. Результатом блокировки внешних объектов могут быть взаимоблокировки, так как несвязанный код может выбрать для блокировки одни и те же объекты для различных целей.<br><br>
+</ul><br><ul>
+Следует использовать методы <font color=blue>Enter</font> и <font color=blue>Exit</font> для того, чтобы пометить начало и конец критической секции. Если критическая секция является набором непрерывных инструкций, тогда блокировка, осуществляемая методом <font color=blue>Enter</font>, гарантирует, что только один поток может выполнять обозначенный код, используя объект с блокировкой. В этом случае рекомендуется поместить эти инструкции в блок <font color=blue>try</font>, а инструкцию <font color=blue>Exit</font> поместить в блок <font color=blue>finally</font>. Эта конструкция обычно используется для синхронизации доступа к статичному методу класса или методу экземпляра класса. Если метод экземпляра требует синхронизации доступа для потоков, он вызывает метод <font color=blue>Enter</font> и соответствующий метод <font color=blue>Exit</font>, используя текущий экземпляр как объект для блокировки. Так как только один поток может держать блокировку текущего экземпляра, этот метод может выполняться только одним потоком одновременно.<br><br>
+<li class="kod"><pre><kmd>
+<font color=blue>public</font>:
+<font color=blue>static void</font> Enter(
+       Object^ obj
+)
+<font color=green>//
+//</font>
+<font color=blue>public</font>:
+<font color=blue>static void</font> Exit(
+       Object^ obj
+)
+</kmd></pre></ul>
+<ul>
+Параметр obj имеет тип: <font color=blue>System::Object</font>. В методе <font color=blue>Monitor::Enter</font> он является объектом, для которого получается блокировка монитора, а в методе <font color=blue>Monitor::Exit</font> объектом, блокировка которого освобождается.<ul></ul>
+Из-за того, что объект, передаваемый инструкции <font color=blue>Exit</font>, отличается от объекта, который передается инструкции <font color=blue>Enter</font>, метод <font color=blue>Monitor</font> выдает исключение <font color=blue>SynchronizationLockException</font>. 
+<br><br>
+Если другой поток выполнил инструкцию <font color=blue>Enter</font> над объектом, но еще не выполнил соответствующий метод <font color=blue>Exit</font>, текущий поток будет заблокирован до того, как другой поток освободит объект. Для одного потока допустимы вызовы <font color=blue>Enter</font> более одного раза без их блокировки; однако должно быть равное количество вызовов <font color=blue>Exit</font> до того, как будут разблокированы другие потоки, ожидающие объекта.
+</ul>
+<ul>
+В следующем примере показано, как использовать метод <font color=blue>Enter</font>.
+<li class="kod"><pre><kmd>
+<font color=blue>using namespace</font> System;
+<font color=blue>using namespace</font> System::Collections;
+<font color=blue>using namespace</font> System::Threading;
+
+<font color=green>// Определение класса</font>
+<font color=blue>public ref class</font> MonitorSample
+{
+<font color=blue>public</font>:
+   MonitorSample();
+   <font color=blue>void</font> AddElement( Object^ qValue );
+   <font color=blue>bool</font> AddElementWithoutWait( Object^ qValue );
+   <font color=blue>bool</font> WaitToAddElement( Object^ qValue, int waitTime );
+   <font color=blue>void</font> DeleteElement( Object^ qValue );
+   <font color=blue>void</font> PrintAllElements();
+
+<font color=blue>private</font>:
+   Queue^ m_inputQueue;
+};
+
+<font color=green>// Определение очереди безопасного доступа потоков</font>
+MonitorSample::MonitorSample()
+{
+   m_inputQueue = <font color=blue>gcnew</font> Queue;
+}
+
+
+<font color=green>// Добавление элемента в очередь и получение блокировки монитором очередного объекта</font>
+<font color=blue>void</font> MonitorSample::AddElement( Object^ qValue )
+{
+
+   <font color=green>// Блокировка очереди.</font>
+   Monitor::Enter( m_inputQueue );
+
+   <font color=green>// Добавление элемента</font>
+   m_inputQueue->Enqueue( qValue );
+
+   <font color=green>// Снятие блокировки</font>
+   Monitor::Exit( m_inputQueue );
+}
+
+<font color=green>// Попробуем добавить элемент в очередь.
+// Добавление элемента в очередь возможно, только если объект очереди разблокирован</font>
+
+<font color=blue>bool</font> MonitorSample::AddElementWithoutWait( Object^ qValue )
+{
+
+   <font color=green>// Определим, есть ли блокировка очереди </font>
+   <font color=blue>if</font> (  !Monitor::TryEnter( m_inputQueue ) )
+      <font color=blue>return false</font>;
+
+   m_inputQueue->Enqueue( qValue );
+   Monitor::Exit( m_inputQueue );
+   <font color=blue>return true</font>;
+}
+
+<font color=green>// Попытка добавить элемент в очередь.
+// Добавление элемента в очередь, если в течение указанного 
+// времени в очереди объект будет разблокирован</font>
+<font color=blue>bool</font> MonitorSample::WaitToAddElement( Object^ qValue, int waitTime )
+{
+
+   <font color=green>// Подождем, пока очередь заблокирована</font>
+   <font color=blue>if</font> (  !Monitor::TryEnter( m_inputQueue, waitTime ) )
+      <font color=blue>return false</font>;
+
+   m_inputQueue->Enqueue( qValue );
+   Monitor::Exit( m_inputQueue );
+   <font color=blue>return true</font>;
+}
+
+<font color=green>// Удаление всех элементов, которые равны данному 
+// объекту и получение блокировки монитора </font>
+<font color=blue>void</font> MonitorSample::DeleteElement( Object^ qValue )
+{
+
+   <font color=green>// Блокировка очереди </font>
+   Monitor::Enter( m_inputQueue );
+   <font color=blue>int</font> counter = m_inputQueue->Count;
+   <font color=blue>while</font> ( counter > 0 )
+   {
+
+      <font color=green>// Проверка каждого элементы </font>
+      Object^ elm = m_inputQueue->Dequeue();
+      <font color=blue>if</font> (  !elm->Equals( qValue ) )
+      {
+         m_inputQueue->Enqueue( elm );
+      }
+
+      --counter;
+   }
+
+   Monitor::Exit( m_inputQueue );
+}
+
+<font color=green>// Вывод всех элементов очереди</font>
+<font color=blue>void</font> MonitorSample::PrintAllElements()
+{
+
+   <font color=green>// Блокировка очереди</font>
+   Monitor::Enter( m_inputQueue );
+   IEnumerator^ elmEnum = m_inputQueue->GetEnumerator();
+   <font color=blue>while</font> ( elmEnum->MoveNext() )
+   {
+
+      <font color=green>// Вывод следующего элемента.</font>
+      Console::WriteLine( elmEnum->Current->ToString() );
+   }
+
+   Monitor::Exit( m_inputQueue );
+}
+
+<font color=blue>int</font> main()
+{
+   MonitorSample^ sample = <font color=blue>gcnew</font> MonitorSample;
+   for ( <font color=blue>int</font> i = 0; i < 30; i++ )
+       sample->AddElement( i );
+   sample->PrintAllElements();
+   sample->DeleteElement( 0 );
+   sample->DeleteElement( 10 );
+   sample->DeleteElement( 20 );
+   sample->PrintAllElements();
+}
+
+</kmd></pre></ul>
+
+
+<ul>
+Метод <font color=blue>Monitor::Wait</font> освобождает блокировку объекта для того, чтобы разрешить другим потокам осуществлять блокировку и получить доступ к объекту. Вызывающий поток ожидает, пока другой поток не произведет доступ к объекту. Для уведомления ожидающих потоков об изменении состояния объекта используются импульсные сигналы.<br><br>
+<b>Список перегрузки</b><br><br>
+1) <font color=blue>Wait (Object)</font>
+<blockquote>
+Освобождает блокировку объекта и блокирует текущий поток до тех пор, пока тот не получит блокировку снова.
+</blockquote>
+2) <font color=blue>Wait (Object, Int32)</font>
+<blockquote>
+Освобождает блокировку объекта и блокирует текущий поток до тех пор, пока тот не получит блокировку снова. Если указанные временные интервалы истекают, поток встает в очередь готовности.</blockquote>
+3) <font color=blue>Wait (Object, TimeSpan)</font>
+<blockquote>Освобождает блокировку объекта и блокирует текущий поток до тех пор, пока тот не получит блокировку снова. Если указанные временные интервалы истекают, поток встает в очередь готовности.</blockquote>
+4) <font color=blue>Wait (Object, Int32, Boolean)</font>
+<blockquote>Освобождает блокировку объекта и блокирует текущий поток до тех пор, пока тот не получит блокировку снова. Если указанные временные интервалы истекают, поток встает в очередь готовности. Этот метод также указывает на наличие завершения области синхронизации для контекста (если в синхронизированном контексте) до получения впоследствии нового состояния ожидания.</blockquote>
+5) <font color=blue>Wait (Object, TimeSpan, Boolean)</font>
+<blockquote>Освобождает блокировку объекта и блокирует текущий поток до тех пор, пока тот не получит блокировку снова. Если указанные временные интервалы истекают, поток встает в очередь готовности. Необязательно выходит из синхронизированного домена для синхронизации контекста до ожидания и получает домен впоследствии.</blockquote>
+Метод <font color=blue>Monitor::Pulse</font> (<font color=blue>Monitor::PulseAll</font>) посылает сигнал одному или более ожидающим потокам. Сигнал уведомляет ожидающий поток о том, что состояние объекта с блокировкой изменилось и владелец блокировки готов освободить ее. Ожидающий поток помещен в очередь готовности объекта, так что в конечном итоге он может получить блокировку для объекта. Когда поток получает блокировку, он может проверить новое состояние объекта для того, чтобы увидеть, было ли достигнуто требуемое состояние.
+<li class="kod"><pre><kmd>
+<font color=blue>public</font>:
+<font color=blue>static void</font> Pulse(
+       Object^ obj
+)
+</kmd></pre></ul>
+<ul>
+Методы <font color=blue>Pulse</font>, <font color=blue>PulseAll</font> и <font color=blue>Wait</font> должны быть вызваны из синхронизированного блока кода. Заметим, Monitor блокирует объекты (со ссылочным типом), а не типы значений.
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="dopoln"><b>Дополнительно</b></font>
+<ul>
+Пространство имен System.Threading содержит еще несколько классов, некоторые из которых являются вспомогательными к вышеописанным. Они также позволяют синхронизировать работу потоков.<br><br>
+1) <font color=blue>AutoResetEvent</font>
+<blockquote>Уведомляет ожидающий поток о том, что произошло событие. Этот класс не может наследоваться.</blockquote>
+2) <font color=blue>EventWaitHandle</font>
+<blockquote>Представляет синхронизированное событие потока.</blockquote>
+3) <font color=blue>Interlocked</font>
+<blockquote>Предоставляет атомарные операции для переменных, общедоступных нескольким потокам.</blockquote>
+4) <font color=blue>ManualResetEvent</font>
+<blockquote>Уведомляет один или более ожидающих потоков о том, что произошло событие. Этот класс не может наследоваться.</blockquote>
+5) <font color=blue>ReaderWriterLock</font>
+<blockquote>Определяет блокировку, которая поддерживает один пишущий поток и несколько читающих.</blockquote>
+6) <font color=blue>ReaderWriterLockSlim</font>
+<blockquote>Представляет блокировку, используемую для управления доступом к ресурсу, которая позволяет нескольким потокам производить считывание или получать монопольный доступ на запись.</blockquote>
+</ul>
+
+<a class = "pushLink" href="#start">[<span>В начало документа</span>]</a><br>
+<center><a class = "pushLink" href="index.html">[<span>Оглавление</span>]</center>
+  </BODY>
+</HTML>

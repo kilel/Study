@@ -1,0 +1,197 @@
+{VERSION 6 0 "IBM INTEL NT" "6.0" }
+{USTYLETAB {CSTYLE "Maple Input" -1 0 "Courier" 0 1 255 0 0 1 0 1 0 0 
+1 0 0 0 0 1 }{CSTYLE "2D Math" -1 2 "Times" 0 1 0 0 0 0 0 0 2 0 0 0 0 
+0 0 1 }{CSTYLE "2D Output" 2 20 "" 0 1 0 0 255 1 0 0 0 0 0 0 0 0 0 1 }
+{PSTYLE "Normal" -1 0 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 
+2 2 1 1 1 1 }1 1 0 0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" -1 
+11 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }3 3 0 
+0 0 0 1 0 1 0 2 2 0 1 }{PSTYLE "Maple Output" -1 12 1 {CSTYLE "" -1 
+-1 "Times" 1 12 0 0 0 1 2 2 2 2 2 2 1 1 1 1 }1 3 0 0 0 0 1 0 1 0 2 2 
+0 1 }{PSTYLE "Maple Plot" -1 13 1 {CSTYLE "" -1 -1 "Times" 1 12 0 0 0 
+1 2 2 2 2 2 2 1 1 1 1 }3 1 0 0 0 0 1 0 1 0 2 2 0 1 }}
+{SECT 0 {EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 8 "restart;" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 12 "with(plots);" }}{PARA 12 "" 1 "" 
+{XPPMATH 20 "6#7en%(animateG%*animate3dG%-animatecurveG%&arrowG%-chang
+ecoordsG%,complexplotG%.complexplot3dG%*conformalG%,conformal3dG%,cont
+ourplotG%.contourplot3dG%*coordplotG%,coordplot3dG%,densityplotG%(disp
+layG%-dualaxisplotG%*fieldplotG%,fieldplot3dG%)gradplotG%+gradplot3dG%
+,graphplot3dG%-implicitplotG%/implicitplot3dG%(inequalG%,interactiveG%
+2interactiveparamsG%.intersectplotG%-listcontplotG%/listcontplot3dG%0l
+istdensityplotG%)listplotG%+listplot3dG%+loglogplotG%(logplotG%+matrix
+plotG%)multipleG%(odeplotG%'paretoG%,plotcompareG%*pointplotG%,pointpl
+ot3dG%*polarplotG%,polygonplotG%.polygonplot3dG%4polyhedra_supportedG%
+.polyhedraplotG%*rootlocusG%,semilogplotG%*setcolorsG%+setoptionsG%-se
+toptions3dG%+spacecurveG%1sparsematrixplotG%)surfdataG%)textplotG%+tex
+tplot3dG%)tubeplotG" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 82 "f :=
+ abs((x+1)^2 - 1); #(x^3 - 4*x)/(3*x^2 - 4); # 1*x^4 - 3*x^3 - 60*x^2 \+
+- x + 1;" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#>%\"fG-%$absG6#,&*$),&%\"x
+G\"\"\"F-F-\"\"#F-F-F-!\"\"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 
+71 "Max := proc(i, j)\nif(i > j) then return i; else return j; fi;\nen
+d proc:" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 71 "Min := proc(i, j
+)\nif(i < j) then return i; else return j; fi;\nend proc:" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 217 "find_max := proc(a, n)\nlocal i, max;\ni := 1;\nmax \+
+:= 10;\nwhile i <= n do if whattype(a[i]) <> \"complex(extended_numeri
+c)\" then if max < evalf(a[i]) then max := evalf(a[i]); fi; fi; i := i
+ + 1; od;\nreturn max;\nend proc:" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 218 "find_min := proc(a, n)\nlocal i, min;\ni := 1;\nmin \+
+:= -10;\nwhile i <= n do if whattype(a[i]) <> \"complex(extended_numer
+ic)\" then if min > evalf(a[i]) then min := evalf(a[i]); fi; fi; i := \+
+i + 1; od;\nreturn min;\nend proc:" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 15 "extrema(f, \{\});" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#
+<#\"\"\"" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG 
+{PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" 
+{MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }}}
+{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 3076 "analize := proc()\nglobal \+
+f;\nlocal extr, graph, razr, pere, all,fail, poitns,  minx, miny, maxx
+, maxy, i, fu, gu, g, dx, k, d, a;\ndx := 0.0001;\nfu := unapply(f, x)
+;\ng := diff(f, x);\ngu := unapply(diff(f, x), x);\nextr := \{evalf(so
+lve(diff(f, x), x))\};\nrazr := allvalues(discont(f, x));\nif(diff(dif
+f(f,x),x) <> 0) then\npere := \{evalf(solve(diff(diff(f,x),x), x))\};
+\nelse pere := \{\};\nfi;\nall := (extr union razr) union pere;\ngraph
+ := \{\};\nfail := \{\};\n# \356\357\360\345\344\345\353\377\345\354 \+
+\357\360\356\361\354\340\362\360\350\342\340\345\354\363\376 \356\341
+\353\340\361\362\374\nminx := -10;\nmaxx := 10;\nminy := -10;\nmaxy :=
+ 10;\nminx := find_min(all, nops(all)) - 10;\nmaxx := find_max(all, no
+ps(all)) + 10;\nall := all minus razr;\ni := 1;\nwhile i <= nops(all) \+
+do fail := fail union \{fu(evalf(all[i]))\}; i := i + 1; od;\nminy := \+
+find_min(all, nops(fail)) - 10;\nmaxy := find_max(all, nops(fail)) + 1
+0;\n\nif iscont(f, x = -infinity..infinity) then ;\n   else\n#\356\357
+\360\345\344\345\353\377\345\354 \362\356\367\352\350 \360\340\347\360
+\373\342\340\ni := 1;\nwhile i <= nops(razr) do\nif (abs(limit(f, x = \+
+razr[i], left)) = infinity) or (abs(limit(f, x = razr[i], right)) = in
+finity) then\n#\362\356\367\352\340 \360\340\347\360\373\342\340 \342
+\362\356\360\356\343\356 \360\356\344\340\ngraph := graph union \{plot
+([ razr[i], t, t = miny..maxy],x = minx..maxx, y = miny..maxy)\};\nfi;
+\ni := i + 1;\nod;\n\n   fi;\n\n#\375\352\361\362\360\345\354\363\354
+\373\ni := 1;\nwhile i <= nops(extr) do\nif (fu(extr[i]) > fu(extr[i] \+
+- dx) and fu(extr[i]) > fu(extr[i] + dx)) or (fu(extr[i]) < fu(extr[i]
+ - dx) and fu(extr[i]) < fu(extr[i] + dx)) then  graph := graph union \+
+\{plot(fu(extr[i]),x = minx..maxx, y = miny..maxy)\}; fi;\ni := i + 1;
+\nod;\n\n#\362\356\367\352\350 \357\345\360\345\343\350\341\340 \350 \+
+\350\347\353\356\354\340\ni := 1;\npere := pere; allvalues(discont(g, \+
+x));\nwhile i <= nops(pere) do\nif (gu(pere[i]) > gu(pere[i] - dx) and
+ gu(pere[i]) > gu(pere[i] + dx)) or (gu(pere[i]) < gu(pere[i] - dx) an
+d gu(pere[i]) < gu(pere[i] + dx)) then \n graph := graph union \{point
+plot([pere[i], fu(pere[i])], color = \"blue\")\}; fi;\ni := i + 1;\nod
+;\n\npere := allvalues(discont(g, x));\nwhile i <= nops(pere) do\ngrap
+h := graph union \{pointplot([pere[i], fu(pere[i])], color = \"blue\")
+\};\ni := i + 1;\nod;\n \n\n#\340\361\361\350\354\357\362\356\362\373
+\n\nk := limit(f/x, x=infinity);\nd := limit(f - k*x, x = infinity);\n
+if(abs(k) = infinity) or (abs(d) = infinity) then ; else \ngraph := gr
+aph union \{plot(k*x + d, x = minx..maxx, y = miny..maxy, color = \"bl
+ack\")\}:\n fi:\n#\362\356\367\352\350 \357\345\360\345\361\345\367
+\345\355\350\377 \361 \356\361\377\354\350 \352\356\356\360\344\350
+\355\340\362\nall := \{evalf(solve(f,x))\};\ni := 1;\nwhile i <= nops(
+all) do\ngraph := graph union \{pointplot([all[i], 0], color = \"blue
+\")\}; i := i + 1;\nod;\nif(abs(limit(f, x = 0, right)) <> infinity) t
+hen \ngraph := graph union \{pointplot([0, limit(f, x = 0, right)], co
+lor = \"blue\")\};\nelse if (abs(limit(f, x = 0, left)) <> infinity) \+
+\nthen graph := graph union \{pointplot([0, limit(f, x = 0, left)], co
+lor = \"blue\")\};\nfi;\nfi;\n\ngraph := graph union \{plot(f,x = minx
+..maxx, y = miny..maxy, color = \"green\")\};\nif(fu(-a) = -fu(a)) the
+n print(\"\355\345\367\345\362\355\340\377\"); else\nif (fu(-a) = fu(a
+)) then print(\"\367\345\362\355\340\377\"); else print(\"\352\360\350
+\342\340\377 \356\341\371\345\343\356 \357\356\353\356\346\345\355\350
+\377\");\nfi;\nfi;\nprint(\"\342\356\347\360\340\361\362\340\345\362 \+
+\355\340 \" , solve(g>0, x));\nprint(\"\363\341\373\342\340\345\362 \+
+\355\340 \" , solve(g<0, x));\nprint(\"\342\373\357\363\352\353\340 \+
+\355\340 \" , solve(diff(g, x)>0, x));\nprint(\"\342\356\343\355\363
+\362\340 \355\340 \" , solve(diff(g, x)<0, x));\n\n\n\ndisplay(graph, \+
+view = [minx..maxx, miny..maxy]);\n\n\n\nend proc:" }}}{EXCHG {PARA 0 
+"> " 0 "" {MPLTEXT 1 0 30 "f := (x^3 - 4*x)/(3*x^2 - 4);;" }}{PARA 11 
+"" 1 "" {XPPMATH 20 "6#>%\"fG*&,&*$)%\"xG\"\"$\"\"\"F+*&\"\"%F+F)F+!\"
+\"F+,&*&F*F+)F)\"\"#F+F+F-F.F." }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 
+1 0 10 "analize();" }}{PARA 11 "" 1 "" {XPPMATH 20 "6#Q8|ey|[z|cy|]y|[
+y|jz~|iy|\\y|dz|`y|^y|iy~|jy|iy|fy|iy|ay|`y|hy|cy|jz6\"" }}{PARA 11 "
+" 1 "" {XPPMATH 20 "6&Q/|]y|iy|by|[z|[y|\\z|]z|[y|`y|]z~|hy|[y~6\"-%*R
+ealRangeG6$,$%)infinityG!\"\"-%%OpenG6#,$*(\"\"#\"\"\"\"\"$F*F2#F1F0F*
+-F&6$F+-F,6#,$*(F0F1F2F*F2F3F1-F&6$F6F)" }}{PARA 11 "" 1 "" {XPPMATH 
+20 "6#Q,|^z|\\y|fz|]y|[y|`y|]z~|hy|[y~6\"" }}{PARA 11 "" 1 "" 
+{XPPMATH 20 "6%Q,|]y|fz|jy|^z|ey|fy|[y~|hy|[y~6\"-%*RealRangeG6$,$%)in
+finityG!\"\"-%%OpenG6#,$*(\"\"#\"\"\"\"\"$F*F2#F1F0F*-F&6$-F,6#\"\"!-F
+,6#,$*(F0F1F2F*F2F3F1" }}{PARA 11 "" 1 "" {XPPMATH 20 "6%Q,|]y|iy|^y|h
+y|^z|]z|[y~|hy|[y~6\"-%*RealRangeG6$-%%OpenG6#,$*(\"\"#\"\"\"\"\"$!\"
+\"F/#F.F-F0-F)6#\"\"!-F&6$-F)6#,$*(F-F.F/F0F/F1F.%)infinityG" }}{PARA 
+13 "" 1 "" {GLPLOT2D 677 513 513 {PLOTDATA 2 "6,-%'POINTSG6$7$$!\"#\"
+\"!$F)F)-%'COLOURG6&%$RGBGF*F*$\"*++++\"!\")-F$6$7$F*$!\"!F)F+-F$6$7$F
+*F*F+-F$6$7$$\"\"#F)F*F+-%'CURVESG6$7S7$$!3Y^#z$Q0qa6!#<$!#?F)7$FD$!3Q
+LLL$Q6G\">!#;7$FD$!3bmm;M!\\p$=FL7$FD$!3ILLL))Qj^<FL7$FD$!3ULLL=Kvl;FL
+7$FD$!3omm;C2G!e\"FL7$FD$!3KLL$3yO5]\"FL7$FD$!38++]nU)*=9FL7$FD$!3FLL$
+3WDTL\"FL7$FD$!3))****\\d(Q&\\7FL7$FD$!3ammmc4`i6FL7$FD$!3CLLLQW*e3\"F
+L7$FD$!3+*******p)>'***FF7$FD$!3Q*******\\5*H\"*FF7$FD$!3m*******H\"3&
+H)FF7$FD$!3gKLL3k(p`(FF7$FD$!3*emmmO;bj'FF7$FD$!3Ilmmm9'=(eFF7$FD$!3o*
+****\\F\\N)\\FF7$FD$!3AnmmmCC(>%FF7$FD$!3O(****\\FRXL$FF7$FD$!3S)****
+\\#=/8DFF7$FD$!31jmm;a*el\"FF7$FD$!3ufmm;Wn(o)!#=7$FD$!3IqLLL$eV(>!#>7
+$FD$\"3<(omm\"f`@')Fiq7$FD$\"3h+++vw%)H;FF7$FD$\"3))pmm;$y*eCFF7$FD$\"
+3P++++9b:LFF7$FD$\"3=,++]5a`TFF7$FD$\"3?-++D\"RV'\\FF7$FD$\"3++++]@fke
+FF7$FD$\"3_ILLL&4Nn'FF7$FD$\"3*=+++],s`(FF7$FD$\"3%[mm;zM)>$)FF7$FD$\"
+3m/+++(fa<*FF7$FD$\"3!=LL$eg`!)**FF7$FD$\"3I++]#G2A3\"FL7$FD$\"3;LLL$)
+G[k6FL7$FD$\"3#)****\\7yh]7FL7$FD$\"3/nmm')fdL8FL7$FD$\"3=nmm,FT=9FL7$
+FD$\"3!QLLe#pa-:FL7$FD$\"3W+++Sv&)z:FL7$FD$\"3#RLL$GUYo;FL7$FD$\"39nmm
+1^rZ<FL7$FD$\"35++]sI@K=FL7$FD$\"3W++]2%)38>FL7$FD$\"#?F)-F,6&F.F/F*F*
+-F@6$7S7$$\"3Y^#z$Q0qa6FFFG7$F\\wFJ7$F\\wFN7$F\\wFQ7$F\\wFT7$F\\wFW7$F
+\\wFZ7$F\\wFgn7$F\\wFjn7$F\\wF]o7$F\\wF`o7$F\\wFco7$F\\wFfo7$F\\wFio7$
+F\\wF\\p7$F\\wF_p7$F\\wFbp7$F\\wFep7$F\\wFhp7$F\\wF[q7$F\\wF^q7$F\\wFa
+q7$F\\wFdq7$F\\wFgq7$F\\wF[r7$F\\wF_r7$F\\wFbr7$F\\wFer7$F\\wFhr7$F\\w
+F[s7$F\\wF^s7$F\\wFas7$F\\wFds7$F\\wFgs7$F\\wFjs7$F\\wF]t7$F\\wF`t7$F
+\\wFct7$F\\wFft7$F\\wFit7$F\\wF\\u7$F\\wF_u7$F\\wFbu7$F\\wFeu7$F\\wFhu
+7$F\\wF[v7$F\\wF^v7$F\\wFav7$F\\wFdvFfv-F@6$7S7$FG$!31mmmmmmmmFF7$FJ$!
+3gWWWWz.wjFF7$FN$!3%=AAsWjJ7'FF7$FQ$!3.xxxF'z(QeFF7$FT$!3WxxxF2^_bFF7$
+FW$!3i)))))QT-wE&FF7$FZ$!31666OfX.]FF7$Fgn$!3ZLLLev%*HZFF7$Fjn$!3'pxxF
+![3ZWFF7$F]o$!3%fmm;>H^;%FF7$F`o$!3E)))))))=.^(QFF7$Fco$!3XxxxF\"['>OF
+F7$Ffo$!3&GLLLBm?L$FF7$Fio$!3\\*******\\.L/$FF7$F\\p$!3u*******4F]w#FF
+7$F_p$!3!RWW%paK7DFF7$Fbp$!3j)))))))yQ=@#FF7$Fep$!35bbbbrGd>FF7$Fhp$!3
+cmmm\"4$=h;FF7$F[q$!3SAAAA33*R\"FF7$F^q$!3zlmm\"48:6\"FF7$Faq$!3+GLL$3
+1oP)Fiq7$Fdq$!3_w)))))Q^'>bFiq7$Fgq$!3_>AAs9*e*GFiq7$F[r$!3QnXWWW>\"e'
+FH7$F_r$\"3Sibb0`%Q(GFiq7$Fbr$\"3)\\LLLeDGV&Fiq7$Fer$\"3C**)))))Q%f'>)
+Fiq7$Fhr$\"30++++Q=06FF7$F[s$\"3eLLL$o8XQ\"FF7$F^s$\"3)RLL$3(zZl\"FF7$
+Fas$\"3')******\\S'[&>FF7$Fds$\"3%oxxx<.XA#FF7$Fgs$\"3[++++0S7DFF7$Fjs
+$\"3)z))))QEyKx#FF7$F]t$\"33ommml[eIFF7$F`t$\"3Fxxx_`%oK$FF7$Fct$\"3IM
+LL3wN2OFF7$Fft$\"3C5666'4;)QFF7$Fit$\"3/mmmTgsoTFF7$F\\u$\"3#)*))))))G
+`_W%FF7$F_u$\"3e!*))))QB/GZFF7$Fbu$\"3vyxx_(*[3]FF7$Feu$\"3U,+++=>m_FF
+7$Fhu$\"3WzxxFuahbFF7$F[v$\"3@BAAAqrDeFF7$F^v$\"3NLLL3pP2hFF7$Fav$\"3A
+MLLe8'pP'FF7$Fdv$\"31mmmmmmmmFF-F,6&F.F*F*F*-F@6$7ip7$FG$!3w<`fyN2AmFF
+7$FJ$!37-Iu'p(RHjFF7$FN$!3o#ft22#eugFF7$FQ$!3GXifp=\"yy&FF7$FT$!3oivc)
+[!*))\\&FF7$FW$!3)*)*f&eo^5@&FF7$FZ$!3ES(HG3&)Q%\\FF7$Fgn$!3#3%pYht)om
+%FF7$Fjn$!3#f&R$4%[&*zVFF7$F]o$!3E%[_=6zL4%FF7$F`o$!3#4\"zv)zzyz$FF7$F
+co$!3]))RZzT&o`$FF7$Ffo$!3!Qh=y&4%>C$FF7$Fio$!3(RKVXugV%HFF7$F\\p$!3S=
+4Ma5vbEFF7$F_p$!3%*[T\\%o`:R#FF7$Fbp$!37in#oC'pt?FF7$Fep$!3#yK<cZ;)*z
+\"FF7$Fhp$!3IB0:O&*ps9FF7$F[q$!3M^@4n0'*p6FF7$F^q$!3/HCe%\\Ai3)Fiq7$Fa
+q$!3iu-+()e2$*QFiq7$$!3uIL$3ioW3#FF$!3W9=-h?qfzF]r7$Fdq$\"3u)GByJj$H\\
+Fiq7$$!3Wj;z>W]d:FF$\"3_O1Tx$p2[(Fiq7$$!3!Qm;HU8\"f9FF$\"35<$H'y4nV6FF
+7$$!3)R;zW#z\"*49FF$\"3$o&*\\/lgZW\"FF7$$!3;k;/ECsg8FF$\"3UHN&yq\"Q!)=
+FF7$$!3MkTgFp_68FF$\"37%fW()yEqd#FF7$$!3_km;H9Li7FF$\"3;:&Qh>UC*QFF7$$
+!3h9z%*zOtP7FF$\"3c#4FB)z!e7&FF7$$!3qk\"H2$f887FF$\"3E`5t\\F1*Q(FF7$$!
+3y9/^\"=Q&)=\"FF$\"3ocD4[2\"GH\"FL7$$!3)[m\"HK/%R;\"FF$\"3i\\XBQ.V!z%F
+L7$$!3)\\\"H2$oU$R6FF$!3gd&3T$o_7HFL7$$!32lT&Q$\\u96FF$!3#H3\"**=+#*H6
+FL7$$!39:aj%=Z,4\"FF$!3KTJQvXJ]qFF7$$!3ClmTN%\\b1\"FF$!3\")>IGD$*HS^FF
+7$$!3M:z>'o^4/\"FF$!37tH7#*p!=0%FF7$$!3Vl\"zp$RN;5FF$!3+!='R$H9mM$FF7$
+$!3?bTgx=c<**Fiq$!31BJye+6^GFF7$$!35cmT&Q%er'*Fiq$!3_m$>aZkF[#FF7$$!3#
+zlT5SH'z\"*Fiq$!3uEd,*pF*o>FF7$Fgq$!3[/Y2*R4Vi\"FF7$$!3R)****\\7bDW%Fi
+q$!3]f`.*3?r&\\Fiq7$F[r$!3?kSFdKuu>F]r7$$\"32vmmT+07UFiq$\"3_#Qt3aMIk%
+Fiq7$F_r$\"3%eDY$)oVie\"FF7$$\"3g>+v=ZM,\"*Fiq$\"3<$zKpE6a!>FF7$$\"3-_
+L$3_`6e*Fiq$\"3?V.U<!R)pBFF7$$\"3D=](=#z0@)*Fiq$\"3al9AP!\\Wp#FF7$$\"3
+Xo;HKi415FF$\"3OU$QD7r/7$FF7$$\"32NeRsm3I5FF$\"3@]bT,$3lq$FF7$$\"3q,+]
+7r2a5FF$\"3O:8&f&*\\qc%FF7$$\"3KoTg_v1y5FF$\"3]Yl*R#)\\*ffFF7$$\"3$\\L
+3F*z0-6FF$\"3[SdyD')48')FF7$$\"3c,D\"GV[g7\"FF$\"3ISI)4oB#p:FL7$$\"3=o
+m\"H()Q+:\"FF$\"3i&yQqqxIb*FL7$$\"3![$3-8$HS<\"FF$!3A%H'*4sV$zAFL7$$\"
+3S,]7`(>!)>\"FF$!3x3j!G(>$\\+\"FL7$$\"3/o\"HK>5?A\"FF$!3g()QK\\^k#Q'FF
+7$$\"3mMLLL1+Y7FF$!3\"ev\">m\"\\xj%FF7$$\"3G,vVt5**p7FF$!32g3a$3k\\h$F
+F7$$\"3!zmTN^\")RH\"FF$!3AR(f[7o6%HFF7$$\"3`Mek`>(zJ\"FF$!3Yw@4C*QDY#F
+F7$$\"39,+v$Ri>M\"FF$!3NSL?<%zS5#FF7$$\"3QM$eRFV**Q\"FF$!35<\"))>%ek+;
+FF7$$\"3jnm;aT#zV\"FF$!3[59h;NNh7FF7$$\"37MLe9f)Q`\"FF$!3G=y=1)e6E)Fiq
+7$Fbr$!3M[74?=6<bFiq7$$\"3CNL$e*HTW?FF$\"3bmXQ[_k+VF]r7$Fer$\"35:a-!H4
+\"fNFiq7$Fhr$\"3[9I(\\?33+)Fiq7$F[s$\"35`_F45e_6FF7$F^s$\"3kut%z^$[l9F
+F7$Fas$\"3_=&plW#=(z\"FF7$Fds$\"3'G\\\"y#y&>(3#FF7$Fgs$\"3aGL;&\\K;R#F
+F7$Fjs$\"3!Q:838SVm#FF7$F]t$\"3!=LDY$30gHFF7$F`t$\"3<z'*G2[dOKFF7$Fct$
+\"397L[*3vU_$FF7$Fft$\"3GP0<P#=X!QFF7$Fit$\"3giA7M*Qq4%FF7$F\\u$\"3-3g
+n]_4yVFF7$F_u$\"3;4()>#Rc\\m%FF7$Fbu$\"3Su\"QL[z*[\\FF7$Feu$\"3SBnZhdi
+4_FF7$Fhu$\"3>'*4!H::!3bFF7$F[v$\"3#oTs:)RjudFF7$F^v$\"3YcG-d*o'egFF7$
+Fav$\"3[d0v8zKIjFF7$Fdv$\"3w<`fyN2AmFF-F,6&F.F*F/F*-%+AXESLABELSG6%%\"
+xG%\"yG-%%FONTG6#%(DEFAULTG-%%VIEWG6$;FHFevFf[n" 1 2 0 1 10 0 2 9 1 4 
+2 1.000000 45.000000 45.000000 0 0 "Curve 1" "Curve 2" "Curve 3" "Curv
+e 4" "Curve 5" "Curve 6" "Curve 7" "Curve 8" }}}}{EXCHG {PARA 0 "> " 
+0 "" {MPLTEXT 1 0 0 "" }}}{EXCHG {PARA 0 "> " 0 "" {MPLTEXT 1 0 0 "" }
+}}}{MARK "13 0 0" 3064 }{VIEWOPTS 1 1 0 1 1 1803 1 1 1 1 }
+{PAGENUMBERS 0 1 2 33 1 1 }

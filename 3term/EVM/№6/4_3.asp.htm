@@ -1,0 +1,580 @@
+<html><head>
+  
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+  <title>Методы решения математических задач в Maple. Исследование функции</title>
+  <meta name="Description" content="учебное пособие: Методы решения математических задач в Maple">
+  <meta name="Keywords" content="Maple, Мэпл, maple, мэпл, методы решения математических задач в Maple, Исследование функции">
+  <link rel="stylesheet" href="4_3.asp_files/default2.css" type="text/css">
+  </head><body>
+  <div align="center">
+<noscript><img src="http://counter.rambler.ru/top100.cnt?163151" alt="" width="1" height="1" border="0"></noscript> <!-- end of Top100 code -->
+<table border="0" cellpadding="0" cellspacing="0" height="120" width="740">
+<tbody><tr><!-- begin of Top100 code --> <script id="top100Counter" type="text/javascript" src="4_3.asp_files/top100.gif"></script></tr>
+  <tr> 
+    <td colspan="2" align="center" background="4_3.asp_files/224_1.gif" height="66" valign="bottom" width="740">
+<a href="http://www.exponenta.ru/default.asp" title="Образовательный математический сайт">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</a>
+    </td>
+  </tr>
+  <tr> 
+    <td align="right" background="4_3.asp_files/224_30.gif" height="20" valign="bottom" width="611">
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="anormal" href="http://matlab.exponenta.ru/default.php" target="_blank">Matlab</a>
+<font color="#6c0036">&nbsp;|&nbsp;</font>
+      <a class="anormal" href="http://www.exponenta.ru/soft/Mathemat/Mathemat.asp">Mathematica</a> 
+<font color="#6c0036">&nbsp;|&nbsp;</font>
+      <a class="anormal" href="http://www.exponenta.ru/soft/Mathcad/Mathcad.asp">Mathcad</a>
+<font color="#6c0036">&nbsp;|&nbsp;</font>
+      <a class="anormal" href="http://www.exponenta.ru/soft/Maple/Maple.asp">Maple</a>  
+<font color="#6c0036">&nbsp;|&nbsp;</font>
+      <a class="anormal" href="http://www.exponenta.ru/soft/Statist/Statist.asp">Statistica</a> 
+<font color="#6c0036">&nbsp;|&nbsp;</font>
+      <a class="anormal" href="http://www.exponenta.ru/soft/Others/Others.asp">Другие пакеты</a>
+    </td>
+ <td align="left" height="20" valign="bottom" width="129"><a href="http://www.exponenta.ru/search/"><img src="4_3.asp_files/224_31.gif" alt="Поиск по сайту" border="0" height="20" width="129"></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center" background="4_3.asp_files/224_21.gif" height="19" valign="top" width="740">
+      <a class="navbar" href="http://www.exponenta.ru/educat/class/class.asp">Internet-класс</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://www.exponenta.ru/educat/class/courses/student/courses.asp">Примеры</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://www.exponenta.ru/educat/systemat/systemat.asp">Методики</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://www.exponenta.ru/educat/referat/referat.asp">Банк задач</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://forum.exponenta.ru/"> Форум</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://www.exponenta.ru/educat/free/free.asp">Download</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://www.exponenta.ru/educat/links/links.asp">Ссылки</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://www.exponenta.ru/educat/competit/competit.asp">Конкурсы</a>
+<font color="white">&nbsp;|&nbsp;</font>
+      <a class="navbar" href="http://edu.allsoft.ru/" target="_blank">Edu.allsoft.ru</a>
+    </td>
+  </tr>
+<tr>
+    <td colspan="2" align="right" background="4_3.asp_files/224_22.gif" height="15" valign="bottom" width="740">
+<!-- <a class="anormal" href="/journal/" target="_blank"><strong>Научно-практический
+    журнал &quot;Exponenta Pro. Математика в приложениях&quot;. Вышел 2/2004 номер журнала</strong></a> -->
+    </td>
+  </tr>
+<tr>
+<td colspan="2" height="2" width="740"><br>
+<!--<marquee behavior="scroll" direction="left" scrollamount="1" scrolldelay="30" truespeed style="color: #0000FF"><a href="http://allsoft.ru/ads/re.php?id=7376" target="_blank">Семинар 23 сентября в Москве - Расширенные возможности моделирования в COMSOL Multiphysics</a></marquee></td>-->
+</td></tr>
+</tbody></table>
+</div>
+  <div align="center">
+  <table border="0" cellpadding="0" cellspacing="0" height="120" width="740">
+  <tbody><tr>
+  <td class="head" width="100%"><b>Методы решения математических задач в Maple<br>С. Е. Савотченко, Т.Г. Кузьмичева</b></td>
+  </tr>
+  <tr>
+   <td class="text1" width="100%"><p align="right"><a href="http://www.exponenta.ru/educat/systemat/systemat.asp">Вернуться</a>
+   на страницу &lt;Методические разработки&gt;<br>
+   <a href="http://www.exponenta.ru/educat/systemat/savotchenko/default.asp">В начало</a></p>
+
+<h2>§4.3 Исследование функции</h2>
+<p></p>
+<p>Исследование функции необходимо начинать с нахождения ее области
+определения, но, к сожалению, это трудно автоматизируемая операция.
+Поэтому при рассмотрении этого вопроса приходится решать неравенства
+(см. тему II). Однако, ответить на вопрос, определена ли функция на
+всей числовой оси, или нет, можно исследовав ее на непрерывность.</p>
+<p>&nbsp;</p>
+<b><u></u></b><p><b><u>Непрерывность функции и точки разрыва.</u></b></p><b><u></u></b><u></u>
+<p>Проверить непрерывность функции <i>f</i>(<i>x</i>) на заданном промежутке [<i>x</i><sub>1</sub>,<i>x</i><sub>2</sub>] можно с помощью команды <b>iscont(f,x=x1..x2)</b>. Если функция <b>f</b> непрерывна на этом интервале, то в поле вывода появится ответ <i>true</i> – (истина); если функция <b>f</b> не является непрерывной на этом интервале, то в поле вывода появится ответ <i>false</i> – (ложь). В частности, если задать интервал <b>x=-infinity..+infinity</b>, то функция <b>f</b> будет проверяться на всей числовой оси. В этом случае, если будет получен ответ <i>true,</i>
+то можно сказать, что функция определена и непрерывна на всей числовой
+оси. В противном случае следует искать точки разрыва. Это можно сделать
+двумя способами:</p>
+<ol>
+
+<p></p><li>с помощью команды <b>discont(f,x)</b>, где <b>f</b> – функция, исследуемая на непрерывность, <b>x</b> – переменная. Эта команда пригодна для нахождения точки разрыва первого и второго родов.</li><p></p>
+<p></p><li>с помощью команды <b>singular(f,x)</b>, где <b>f</b> – функция, <b>x</b>
+– переменная. Эта команда годится для нахождения точек разрыва второго
+рода как для вещественных значений переменной, так и для комплексных. </li><p></p></ol>
+
+<p>Перед использованием этих команд их следует обязательно загрузить из стандартной библиотеки <b>readlib(name)</b>, где <b>name </b>– имя любой из указанных выше команд. </p>
+<p>Обе эти команды выдают результаты в виде перечисления точек разрыва в фигурных скобках. Тип такой записи называется <i>set</i>. Для того, чтобы в дальнейшем можно было использовать полученные значения точек разрыва, следует из типа <i>set</i> с помощью команды <b>convert</b> перевести их в обычный числовой тип.</p>
+<p></p>
+<h2>Задание 3.1.</h2>
+<ol>
+
+<li>Найдите точки разрыва функции <img src="4_3.asp_files/Image247.gif" align="absmiddle" height="37" width="53"></li>
+<p>&gt; <b>readlib(iscont): readlib(discont):</b></p>
+<b></b><p>&gt; <b>iscont(exp(1/(x+3)),x=-infinity..+infinity);</b></p>
+<b></b><i><p align="center">false</p>
+</i><p>Это означает, что функция не является непрерывной. Поэтому следует найти точки разрыва с помощью команды: </p>
+<p>&gt; <b>discont(exp(1/(x+3)),x);</b></p>
+<b></b><p align="center">{-3}</p>
+<p>Ответ наберите в текстовом режиме в новой строке: </p>
+<p>“Точка разрыва <i>x</i>=<font face="Symbol">-</font>
+3.”</p>
+<li>Найти точки разрыва функции <img src="4_3.asp_files/Image248.gif" align="absmiddle" height="34" width="69"></li></ol>
+
+<p>&gt; <b>readlib(singular):</b></p>
+<b></b><p>&gt; <b>iscont(tan(x/(2-x)),x=-infinity..infinity);</b></p>
+<b></b><i><p align="center">false</p>
+</i><p>&gt; <b>singular(tan(x/(2-x)),x);</b></p>
+<b></b><p align="center">{<i>x</i>=2},{<i>x</i>=2<img src="4_3.asp_files/Image249.gif" align="absmiddle" height="37" width="93">}</p><dir>
+
+<p>Здесь _<i>N</i> – целые числа. Ответ наберите в текстовом режиме в новой строке: </p></dir>
+
+<p>“Точки разрыва: <i>x</i>=2 и <i>x</i>=2<font face="Symbol">p</font>
+(2<i>n</i>+1)/(<font face="Symbol">p</font>
+(2<i>n</i>+1)-2).”</p>
+<p>&nbsp;</p>
+<b><u></u></b><p><b><u>Экстремумы. Наибольшее и наименьшее значение функции.</u></b></p>
+<b><u></u></b><u></u><p>В <i>Maple </i>для исследования функции на экстремум имеется команда <b>extrema(f,{cond},x,’s’)</b> , где <b>f </b> - функция, экстремумы которой ищутся, в фигурных скобках <b>{cond}</b> указываются ограничения для переменной, <b>х</b> – имя переменной, по которой ищется экстремум, в апострофах <b>’s’</b>
+– указывается имя переменной, которой будет присвоена координата точки
+экстремума. Если оставить пустыми фигурные скобки {}, то поиск
+экстремумов будет производиться на всей числовой оси. Результат
+действия этой команды относится к типу <i>set</i>. Пример:</p>
+<p>&gt; <b>readlib(extrema):</b></p>
+<b></b><p>&gt; <b>extrema(arctan(x)-ln(1+x^2)/2,{},x,’x0’);x0;</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image250.gif" align="absmiddle" height="34" width="76"></p>
+<p align="center">{{<i>x</i>=1}}</p>
+<p>В первой строке вывода приводится экстремум функции, а во второй строке вывода – точка этого экстремума. </p>
+<p>К сожалению, эта команда не может дать ответ на вопрос, какая из
+точек экстремума есть максимум, а какая – минимум. Для нахождения
+максимума функции <i>f</i>(<i>x</i>) по переменной <i>х</i> на интервале <img src="4_3.asp_files/Image251.gif" align="absmiddle" height="17" width="64"> используется команда <b>maximize(f,x,x=x1..x2),</b> а для нахождения минимума функции <i>f</i>(<i>x</i>)<i> </i>по переменной <i>х</i> на интервале <img src="4_3.asp_files/Image252.gif" align="absmiddle" height="17" width="64"> используется команда <b>minimize(f, x, x=x1..x2)</b>. Если после переменной указать <b>’infinity’ </b>или интервал </p>
+<b></b><p><b>x=-infinity..+infinity</b>, то команды <b>maximize</b> и <b>minimize</b>
+будут искать, соответственно, максимумы и минимумы на всей числовой оси
+как во множестве вещественных чисел, так и комплексных. Если такие
+параметры не указывать, то поиск максимумов и минимумов будет
+производиться только во множестве вещественных чисел. Пример:</p>
+<p>&gt; <b>maximize(exp(-x^2),{x});</b></p>
+<b></b><p align="center">1</p>
+<p>Недостаток этих команд в том, что они выдают только значения функции
+в точках максимума и минимума, соответственно. Поэтому для того, чтобы
+полностью решить задачу об исследовании функции <i>y=f</i>(<i>x</i>) на экстремумы с указанием их характера (max или min) и координат (<i>x</i>, <i>y</i>) следует сначала выполнить команду:</p>
+<p>&gt; <b>extrema(f,{},x,’s’);s;</b></p>
+<b></b><p>а затем выполнить команды <b>maximize(f,x); minimize(f,x). </b>После этого будут полностью найдены координаты всех экстремумов и определены их характеры (max или min). </p>
+<p>Команды <b>maximize</b> и <b>minimize</b> быстро находят абсолютные экстремумы, но не всегда пригодны для нахождения локальных экстремумов. Команда <b>extrema</b>
+вычисляет так же критические точки, в которых функция не имеет
+экстремума. В этом случае экстремальных значений функции в первой
+строке вывода будет меньше, чем вычисленных критических точек во второй
+строке вывода. Выяснить характер найденного экстремума функции <i>f</i>(<i>x</i>)<i> </i>в точке <i>x</i>=<i>x</i><sub>0</sub> можно, если вычислить вторую производную в этой точке и по ее знаку сделать вывод: если <img src="4_3.asp_files/Image253.gif" align="absmiddle" height="20" width="62">, то в точке <i>x</i><sub>0</sub> будет min, а если <img src="4_3.asp_files/Image254.gif" align="absmiddle" height="20" width="62"> <font face="Symbol">-</font>
+ то max.</p>
+<p>В последней версии пакета аналитических вычислений <i>Maple</i> 6 описанный выше недостаток команд <b>maximize</b> и <b>minimize</b>
+устранен. Координаты точек максимума или минимума можно получить, если
+в параметрах этих команд после переменной записать через запятую новую
+опцию <b>location</b>. В результате в строке вывода после самого
+максимума (минимума) функции будут в фигурных скобках указаны
+координаты точек максимума (минимума). Например:</p>
+<p>&gt; <b>minimize(x^4-x^2, x, location);</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image255.gif" align="absmiddle" height="34" width="21">, {<img src="4_3.asp_files/Image256.gif" align="absmiddle" height="38" width="108">, <img src="4_3.asp_files/Image257.gif" align="absmiddle" height="38" width="98">}</p>
+<p>В строке вывода получились координаты минимумов и значения функции в этих точках. </p>
+<p>Команды <b>extrema</b>,<b> maximize</b> и <b>minimize </b>обязательно должны быть загружены из стандартной библиотеки командой <b>readlib(name)</b>, где <b>name</b> – имя загружаемой команды. </p>
+
+<h2>Задание 3.2.</h2>
+<ol>
+
+<li>Найти max и min <img src="4_3.asp_files/Image258.gif" align="absmiddle" height="34" width="236">.</li></ol>
+
+<p>&gt; <b>readlib(extrema):</b></p>
+<b></b><p>&gt; <b>y:=(x^2-1/2)*arcsin(x)/2+x*sqrt(1-x^2)/4-</b></p>
+<p><b>Pi*x^2/12:</b></p>
+<b></b><p>&gt; <b>extrema(y,{},x,'s');s;</b></p>
+<p align="center"><b><img src="4_3.asp_files/Image259.gif" align="absmiddle" height="34" width="106"></b></p>
+<p align="center"><b><img src="4_3.asp_files/Image260.gif" align="absmiddle" height="34" width="101"></b></p>
+<b></b><p>После выполнения этих команд найдены экстремумы функции и точки экстремумов. Порядок следования <i>x</i>–координат
+экстремумов во второй строке вывода соответствует порядку следования
+значений экстремумов в первой строке вывода. Таким образом, найдены
+экстремумы в точках (0,0) и (1/2, –<font face="Symbol">p</font>
+/24+<img src="4_3.asp_files/Image261.gif" align="absmiddle" height="22" width="38">). Осталось выяснить, какая из них является максимумом, а какая – минимумом. Для этого используйте команды <b>maximize</b> и <b>minimize</b>.</p>
+<p>&gt; <b>readlib(maximize):readlib(minimize):</b></p>
+<b></b><p>&gt; <b>ymax:=maximize(y,{x});</b></p>
+<p align="center"><b><img src="4_3.asp_files/Image262.gif" align="absmiddle" height="18" width="58"></b></p>
+<b></b><p>&gt; <b>ymin:=minimize(y,{x});</b></p>
+<p align="center"><b><img src="4_3.asp_files/Image263.gif" align="absmiddle" height="34" width="128"></b></p>
+<b></b><p>Ответ наберите в текстовом режиме в новой строке: </p>
+<p>“Экстремумы: <img src="4_3.asp_files/Image264.gif" align="absmiddle" height="19" width="116">, <img src="4_3.asp_files/Image265.gif" align="absmiddle" height="24" width="201">.”</p>
+<p><img src="4_3.asp_files/Image266.gif" align="absmiddle" height="22" width="21">Для набора математических символов и греческих букв в текстовом режиме следует нажать кнопку со значком суммы на <i>Панели инструментов</i>. В появившейся строке ввода формул ниже <i>Панели инструментов</i> следует набирать обычные команды <i>Maple</i>,<i> </i>после чего нажать <i>Enter</i>. Например, для отображения формулы <img src="4_3.asp_files/Image267.gif" align="absmiddle" height="22" width="21"> следует набрать в строке ввода формул sqrt(3). </p>
+<p><img src="4_3.asp_files/Image268.gif" align="absmiddle" height="27" width="23">Для возвращения в текстовый режим снова следует нажать на кнопку с буквой “<b>Т</b>”. </p>
+<p>Поэтому порядок набора второй формулы в ответе такой: </p>
+
+<ul>
+<p></p><li>находясь в текстовом режиме, набрать: miny(x)=y(1/2)= ;</li><p></p>
+<p></p><li><img src="4_3.asp_files/Image266.gif" align="absmiddle" height="24" width="23">нажать на кнопку </li><p></p></ul>
+
+<p></p>
+
+<ul>
+<p></p><li>в строке ввода формул набрать: -Pi/24+sqrt(3)/16</li><p></p>
+<p></p><li>нажать <i>Enter</i>; </li><p></p></ul>
+
+<p align="center"><img src="4_3.asp_files/Image269.gif" align="absmiddle"></p>
+
+<ul>
+<p></p><li>вернуться в текстовый режим. </li><p></p></ul>
+
+<ol>
+
+<p></p><li>Найдите наибольшее и наименьшее значение <img src="4_3.asp_files/Image270.gif" align="absmiddle" height="24" width="81"> на интервале <img src="4_3.asp_files/Image271.gif" align="absmiddle" height="17" width="48">. Наберите:</li><p></p>
+<p>&gt; <b>f:=x^2*ln(x):</b></p>
+<b></b><p>&gt; <b>maximize(f,{x},{x=1..2});</b></p>
+<p align="center"><b><img src="4_3.asp_files/Image272.gif" align="absmiddle" height="18" width="40"></b></p>
+<b></b><p>&gt; <b>minimize(f,{x},{x=1..2}):simplify(%);</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image273.gif" align="absmiddle" height="34" width="52"></p>
+<p>Ответ наберите в текстовом режиме в новой строке:</p>
+<p>”Наибольшее значение: <img src="4_3.asp_files/Image274.gif" align="absmiddle" height="18" width="97">, наименьшее значение <img src="4_3.asp_files/Image275.gif" align="absmiddle" height="18" width="101">“.</p>
+<p></p><li>Найти экстремумы функции <img src="4_3.asp_files/Image276.gif" align="absmiddle" height="41" width="64"></li></ol>
+ и установить их характер с помощью второй производной. Наберите:<p></p><dir>
+
+<p>&gt; <b>restart:y:=x^3/(4-x^2): readlib(extrema):</b></p>
+<p><b>readlib(maximize): readlib(minimize):</b></p>
+<b></b><p>&gt; <b>extrema(y,{},x,'s');s;</b></p>
+<b></b><p align="center">{<img src="4_3.asp_files/Image277.gif" align="absmiddle" height="24" width="65">}</p>
+<p align="center">{{<i>x</i>=0},{<img src="4_3.asp_files/Image278.gif" align="absmiddle" height="22" width="49">},{<img src="4_3.asp_files/Image279.gif" align="absmiddle" height="22" width="57">}}</p></dir>
+
+<p>Получено два экстремума и три критические точки. Исследование можно продолжить с помощью второй производной: </p><dir>
+
+<p>&gt; <b>d2:=diff(y,x$2): x:=0: d2y(x):=d2;</b></p>
+<b></b><p align="center">d2y(0):=0</p>
+<p>&gt; <b>x:=2*sqrt(3):d2y(x):=d2;</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image280.gif" align="absmiddle" height="34" width="110"></p>
+<p>&gt; <b>x:=-2*sqrt(3):d2y(x):=d2;</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image281.gif" align="absmiddle" height="34" width="109"></p>
+<p>Так как <img src="4_3.asp_files/Image282.gif" align="absmiddle" height="20" width="53">, то в точке <i>x</i>=0 нет экстремума; так как <img src="4_3.asp_files/Image283.gif" align="absmiddle" height="24" width="70">, то в точке <img src="4_3.asp_files/Image284.gif" align="absmiddle" height="22" width="49"> будет max; так как <img src="4_3.asp_files/Image285.gif" align="absmiddle" height="24" width="78">, то в точке <img src="4_3.asp_files/Image286.gif" align="absmiddle" height="22" width="57"> будет min. Перейдите в текстовый режим и запишите ответ в виде: </p>
+<p>“Максимум в точке (<img src="4_3.asp_files/Image287.gif" align="absmiddle" height="24" width="78">), минимум в точке (<img src="4_3.asp_files/Image288.gif" align="absmiddle" height="24" width="78">)”. </p>
+<p></p></dir>
+
+<b><u></u></b><p><b><u>Исследование функции по общей схеме.</u></b></p>
+<ol>
+
+<b><u></u></b><u></u><p></p><li>Область определения функции <i>f</i>(<i>x</i>)<i> –</i> полностью может быть указана после исследования функции на непрерывность.</li><p></p>
+<li>Непрерывность и точки разрыва функции <i>f</i>(<i>x</i>) исследуются по схеме:</li>
+<p>&gt; <b>iscont(f, x=-infinity..infinity);</b></p>
+<b></b><p>&gt; <b>d1:=discont(f,x);</b></p>
+<b></b><p>&gt; <b>d2:=singular(f,x);</b></p>
+<b></b><p>В результате наборам переменным <b>d1</b>и <b>d2</b> будут присвоены значения <i>x</i>-координат в точках разрыва 1 и 2-го родов (если они будут найдены).</p>
+<p></p><li>Асимптоты. Точки бесконечных разрывов определяют вертикальные асимптоты графика <i>f</i>(<i>x</i>). Уравнение вертикальной асимптоты имеет вид:</li><p></p>
+<p>&gt; <b>yr:=d2;</b></p>
+<b></b><p>Поведение функции <i>f</i>(<i>x</i>) на бесконечности характеризуется наклонными асимптотами (если они есть). Уравнение наклонной асимптоты <i>y=kx+b</i>, где коэффициенты вычисляются по формулам:</p>
+<p align="center"><img src="4_3.asp_files/Image289.gif" align="absmiddle" height="36" width="88"> и <img src="4_3.asp_files/Image290.gif" align="absmiddle" height="28" width="117">.</p>
+<p>Аналогичные формулы для <img src="4_3.asp_files/Image291.gif" align="absmiddle" height="14" width="49">. Поэтому нахождение наклонных асимптот можно провести по следующей схеме: </p>
+<p>&gt; <b>k1:=limit(f(x)/x, x=+infinity);</b></p>
+<b></b><p>&gt; <b>b1:=limit(f(x)-k1*x, x=+infinity);</b></p>
+<b></b><p>&gt; <b>k2:=limit(f(x)/x, x=-infinity);</b></p>
+<b></b><p>&gt; <b>b2:=limit(f(x)-k2*x, x=-infinity);</b></p>
+<b></b><p>Часто оказывается, что <b>k1=k2</b> и <b>b1=b2</b>, в этом случае будет одна асимптота при <img src="4_3.asp_files/Image292.gif" align="absmiddle" height="14" width="49"> и при <img src="4_3.asp_files/Image293.gif" align="absmiddle" height="14" width="49">. С учетом этого составляется уравнение асимптоты </p>
+<p>&gt; <b>yn:=k1*x+b1;</b></p>
+<b></b><p></p><li>Экстремумы. Исследование функции <i>f</i>(<i>x</i>) на экстремумы можно проводить по схеме:</li><p></p></ol>
+
+<p>&gt; <b>extrema(f(x), {}, x, ’s’);</b></p>
+<b></b><p>&gt; <b>s;</b></p>
+<b></b><p>&gt; <b>fmax:=maximize(f(x), x);</b></p>
+<b></b><p>&gt; <b>fmin:=minimize(f(x), x);</b></p>
+<b></b><p>После выполнения этих команд будут найдены координаты (<i>x</i>, <i>y</i>) всех максимумов и минимумов функции <i>f</i>(<i>x</i>).</p>
+
+<p>&nbsp;</p>
+<b><u></u></b><p><b><u>Построение графика.</u></b></p><b><u></u></b><u></u>
+<p>Построение графика функции <i>f</i>(<i>x</i>)<i> </i>– это окончательный этап исследования функции. На рисунке помимо графика исследуемой функции <i>f</i>(<i>x</i>)
+должны быть нанесены все ее асимптоты пунктирными линиями, подписаны
+координаты точек max и min. Приемы построения графиков нескольких
+функций и нанесения надписей были рассмотрены в теме III.</p>
+
+<h2>Задание 3.3.</h2>
+<ol>
+
+<p></p><li>Провести полное исследование функции <img src="4_3.asp_files/Image294.gif" align="absmiddle" height="44" width="89">
+по общей схеме. Сначала перейдите в текстовый режим и наберите
+“Исследование функции: “. Затем вернитесь в режим командной строки и
+наберите команды:</li><p></p>
+<p>&gt; <b>f:=x^4/(1+x)^3:</b></p>
+<b></b><p>В текстовом режиме наберите “Непрерывность функции”. В режиме командной строки и наберите:</p>
+<p>&gt; <b>readlib(iscont): readlib(discont): </b></p>
+<p><b>readlib(singular):</b></p>
+<b></b><p>&gt; <b>iscont(f, x=-infinity..infinity);</b></p>
+<b></b><i><p align="center">false</p>
+</i><p>Это означает, что функция не является непрерывной. Перейдите в
+текстовый режим и наберите “Нахождение точек разрыва”. Вернитесь в
+режим командной строки и наберите:</p>
+<p>&gt; <b>discont(f,x);</b></p>
+<b></b><p align="center">{-1}</p>
+<p>Конвертировать полученное значение точки разрыва типа <i>set</i> в число можно командой <b>convert</b>, добавив вторую опцию, например, <b>`+`</b>. Обратите внимание на обратные кавычки, которые набираются клавишей, расположенной выше клавиши табуляции.</p>
+<p>&gt; <b>xr:=convert(%,`+`);</b></p>
+<b></b><i></i><p align="center"><i>xr</i>:= <font face="Symbol">-</font>
+1</p>
+<p>Перейдите в текстовый режим и наберите: “Получена точка бесконечного разрыва <i>x</i>=<font face="Symbol">-</font>
+1”. С новой строки наберите: “Нахождение асимптот.”. Перейдите на новую строку и наберите “Уравнение вертикальной асимптоты: <i>x</i>=<font face="Symbol">-</font>
+1” (это можно сделать, поскольку вертикальные асимптоты возникают в
+точках бесконечного разрыва). С новой строки наберите: “Коэффициенты
+наклонной асимптоты:”. Перейдите в режим командной строки и наберите:</p>
+<p>&gt; <b>k1:=limit(f/x, x=+infinity);</b></p>
+<b></b><i></i><p align="center"><i>k1 </i>:=1</p>
+<p>&gt; <b>b1:=limit(f-k1*x, x=+infinity);</b></p>
+<b></b><i></i><p align="center"><i>b1 </i>:= <font face="Symbol">-</font>
+3</p>
+<p>&gt; <b>k2:=limit(f/x, x=-infinity);</b></p>
+<b></b><i></i><p align="center"><i>k2 </i>:=1</p>
+<p>&gt; <b>b2:=limit(f-k2*x, x=-infinity);</b></p>
+<b></b><i></i><p align="center"><i>b2 </i>:= <font face="Symbol">-</font>
+3</p>
+<p>В этом случае коэффициенты наклонных асимптот при <img src="4_3.asp_files/Image295.gif" align="absmiddle" height="14" width="49"> и <img src="4_3.asp_files/Image296.gif" align="absmiddle" height="14" width="49">
+оказались одинаковыми. Поэтому перейдите в текстовый режим и наберите
+“Уравнение наклонной асимптоты:”. Затем в новой строке прейдите в режим
+командной строки и наберите: </p>
+<p>&gt; <b>y=k1*x+b1;</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image297.gif" align="absmiddle" height="18" width="53"></p>
+<p>В текстовом режиме наберите “Нахождение экстремумов”. В новой строке наберите команды:</p>
+<p>&gt; <b>readlib(extrema): readlib(maximize): </b></p>
+<p><b>readlib(minimize):</b></p>
+<b></b><p>&gt; <b>extrema(f,{},x,'s');s;</b></p>
+<b></b><p align="center">{<img src="4_3.asp_files/Image298.gif" align="absmiddle" height="34" width="34">, 0}</p>
+<p align="center">{{<i>x</i>= <font face="Symbol">-</font>
+4},{<i>x</i>=0}}</p>
+<p>Поскольку функция имеет разрыв, то при поиске максимума и минимума
+следует указать интервал, в который не должна входить точка разрыва.</p>
+<p>&gt; <b>fmax:=maximize(f,{x},{x=-infinity..-2});</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image299.gif" align="absmiddle" height="34" width="80"></p>
+<p>&gt; <b>fmin:=minimize(f,{x},{x=-1/2..infinity});</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image300.gif" align="absmiddle" height="18" width="54"></p>
+<p>В текстовом режиме наберите результат исследования в виде: </p>
+<p>“Максимум в точке (<font face="Symbol">-</font>
+4, <font face="Symbol">-</font>
+256/27); минимум в точке (0, 0).”</p>
+<p></p><li>Построить график функции <img src="4_3.asp_files/Image301.gif" align="absmiddle" height="24" width="78"></li></ol>
+и ее асимптоту, указать координаты точек экстремума. Оформление каждого
+этапа исследования функции проделать также как и при выполнении
+предыдущего задания. Самостоятельно загрузите из стандартной библиотеки
+все необходимые команды.<p></p>
+<p>&gt; <b>restart: y:=arctan(x^2):</b></p>
+<b></b><p>&gt; <b>iscont(y, x=-infinity..infinity);</b></p>
+<b></b><i><p align="center">true</p>
+</i><p>&gt; <b>k1:=limit(y/x, x=-infinity);</b> </p>
+<i></i><p align="center"><i>k1</i>:=0</p>
+<p>&gt; <b>k2:=limit(y/x, x=+infinity);</b></p>
+<b></b><i></i><p align="center"><i>k2</i>:=0</p>
+<p>&gt; <b>b1:=limit(y-k1*x, x=-infinity); </b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image302.gif" align="absmiddle" height="34" width="52"></p>
+<p>&gt; <b>b2:=limit(y-k1*x, x=+infinity);</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image303.gif" align="absmiddle" height="34" width="53"></p><dir>
+
+<p>&gt; <b>yh:=b1;</b> </p>
+<p align="center"><img src="4_3.asp_files/Image304.gif" align="absmiddle" height="34" width="54"></p></dir>
+
+<p>&gt; <b>extrema(y,{},x,'s');s;</b></p>
+<b></b><p align="center">{0}</p>
+<p align="center">{{<i>x</i>=0}}</p>
+<p>&gt; <b>ymax:=maximize(y,{x}); ymin:=minimize(y,{x});</b></p>
+<p align="center"><b><img src="4_3.asp_files/Image305.gif" align="absmiddle" height="16" width="49"></b></p>
+<p align="center"><b><img src="4_3.asp_files/Image306.gif" align="absmiddle" height="18" width="56"></b></p>
+<b></b><p>&gt; <b>with(plots): yy:=convert(y,string):</b></p>
+<b></b><p>&gt; <b>p1:=plot(y,x=-5..5, linestyle=1, thickness=3, </b></p>
+<p><b>color=BLACK):</b></p>
+<b></b><p>&gt; <b>p2:=plot(yh,x=-5..5, linestyle=1,thickness=1):</b></p><dir>
+<dir>
+
+<b></b><p>&gt; <b>t1:=textplot([0.2,1.7,"Асимптота:"], </b></p>
+<p><b>font=[TIMES, BOLD, 10], align=RIGHT):</b></p>
+<b></b><p>&gt; <b>t2:=textplot([3.1,1.7,"y=Pi/2"],</b></p>
+<p><b>font=[TIMES, ITALIC, 10], align=RIGHT):</b></p></dir>
+</dir>
+
+<b></b><p>&gt; <b>t3:=textplot([0.1,-0.2,"min:(0,0)"], </b></p>
+<p><b>align=RIGHT):</b></p>
+<b></b><p>&gt; <b>t4:=textplot([2,1,yy], font=[TIMES, ITALIC,</b></p>
+<p><b>10], align=RIGHT):</b></p>
+<b></b><p>&gt; <b>display([p1,p2,t1,t2,t3,t4]);</b></p>
+<b></b><p align="center"><img src="4_3.asp_files/Image307.gif" align="absmiddle" height="213" width="264"></p>
+
+
+  <br>
+<p align="right"><a href="http://www.exponenta.ru/educat/systemat/savotchenko/4_4.asp">Далее</a><br><br></p>
+  <p align="right">
+    <a href="http://www.exponenta.ru/educat/systemat/savotchenko/default.asp">В начало</a><br>
+    <a href="http://www.exponenta.ru/educat/systemat/systemat.asp">Вернуться</a>
+    на страницу &lt;Методические разработки&gt;
+   </p>
+   </td>
+  </tr>
+  </tbody></table>
+  <center>
+<!-- Система проверки орфографии E-mail кодируется для предотвращения спама. Не пугайтесь.-->
+<iframe id="orphus" src="4_3.asp_files/orphus.htm" frameborder="0" height="0" scrolling="no" width="0"></iframe>
+
+
+<table bgcolor="white" border="0" cellpadding="0" cellspacing="0" width="740">
+  <tbody><tr>
+    <td align="center" height="30" valign="bottom" width="740">
+      <a href="http://www.exponenta.ru/map.asp" class="blackbold"> Карта сайта</a>
+     | <a href="http://www.exponenta.ru/default.asp" class="blackbold"> На первую страницу</a>
+     | <a href="http://www.exponenta.ru/search/" class="blackbold"> Поиск</a> 
+     | <a href="http://www.exponenta.ru/connect/project.asp" class="blackbold">О проекте</a> 
+     | <a href="http://www.exponenta.ru/connect/collabor.asp" class="blackbold">Сотрудничество</a> 
+	<!-- | <a href="/connect/connect.asp" class="blackbold">Обратная связь</a> -->
+     | <a href="mailto:info@exponenta.ru" class="blackbold">e-mail</a> 
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle" width="740">
+	<!--<a href="/journal" class="blackbold" target=_blank>Exponenta Pro</a> | -->
+	<a href="http://allsoft.ru/program_page.php?grp=41330" class="blackbold" target="_blank">Антивирус Касперского</a> | 
+	<a href="http://matlab.exponenta.ru/" class="blackbold" target="_blank">Matlab</a> | 
+	<a href="http://edu.allsoft.ru/" class="blackbold" target="_blank">Edu.allsoft.ru</a> | 
+	<a href="http://it-academy.ru/" class="blackbold" target="_blank">IT.Academy.Ru</a> | 
+	<a href="http://msdnaa.allsoft.ru/" class="blackbold" target="_blank">Подписка на MSDN для вузов</a>
+	</td></tr>
+  <tr>
+    <td align="center" height="40" valign="middle">
+<br>
+<table width="100%">
+<tbody><tr>
+<td>
+<p align="left">
+<font style="font-size: 8pt;"><b>Исправляем ошибки:</b> Нашли опечатку? Выделите ее мышкой и нажмите Ctrl+Enter</font></p>
+</td>
+<td><p align="right"><a href="http://www.exponenta.ru/connect/banners.asp">
+<font style="font-size: 8pt;">Наши баннеры</font></a></p>
+</td>
+</tr>
+</tbody></table>
+
+<hr>
+<p>
+</p></td>
+  </tr>
+
+</tbody></table>
+
+
+<table border="0" width="740">
+  <tbody><tr>
+    <td width="10%"><table border="0" width="100%">
+      <tbody><tr>
+        <td width="56%"><p align="left"><font size="-2"><a href="http://www.exponenta.ru/connect/copyright.asp">Copyright © 2000-2009.
+        Компания AXOFT. Все права защищены.</a></font></p>
+        <p><font style="font-size: 8pt;">Дата последнего обновления
+        информации на сайте: 07.10.09<br>
+        Сайт начал работу 01.09.00</font> </p></td>
+        <td width="44%"><p align="right"><a href="http://www.axoft.ru/" target="_blank"><img src="4_3.asp_files/Axoft_logo.png" alt="Дистрибуция лицензионного программного обеспечения" border="0" height="35" width="100"></a></p></td>
+      </tr>
+    </tbody></table>
+<p align="center">
+
+<!--url's used in the movie-->
+
+
+<!-- Temporary banner -->
+
+<!-- <a href="http://www.softline.ru/vacancy_category.asp?catalog%5Fname=SoftLine&category%5Fname=%CD%E0%EF%F0%E0%E2%EB%E5%ED%E8%E5+SAP&Page=1" target="_blank"><img src="/images/221_1.gif" 
+width="468" height="60" border="0" alt="softline"></a> -->
+
+<!--text used in the movie-->
+
+<script language="Javascript" type="text/javascript" src="4_3.asp_files/newban.gif"></script>
+
+</p><center><a href="http://www.daripodarki.ru/" target="_blank"><strong>подарки – подарочные сертификаты</strong></a></center>
+
+
+<!--<a href="http://softline.ru/vacancy.asp?catalog%5Fname=SoftLine&product%5Fid=Vacancy%2D10405" target="_blank"><img src="http://allsoft.ru/banners/php.jpg" border="0" width="468" height="60" alt="Ищем PHP программистов!"></a>
+
+<a href="http://www.softline.ru/vacancy_category_root.asp?catalog%5Fname=SoftLine&category%5Fname=%C2%E0%EA%E0%ED%F1%E8%E8&Page=1" target="_blank"><img src="/images/ver81_1.gif" border="0"></a>
+
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" width="468" height="60" id="new_expN2" align="middle">
+<param name="allowScriptAccess" value="sameDomain" />
+<param name="movie" value="/new_expN2.swf" />
+<param name="quality" value="high" />
+<param name="bgcolor" value="#ffffff" />
+<embed src="/new_expN2.swf" quality="high" bgcolor="#ffffff" width="468" height="60" name="new_expN2" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+</object>
+-->
+
+
+
+<p></p>
+
+<p>&nbsp;</p>
+
+<noindex>
+<div align="center">
+<p>
+
+<!--LiveInternet counter--><script language="JavaScript"><!--
+document.write('<a href="http://www.liveinternet.ru/click" '+
+'target=_blank><img src="http://counter.yadro.ru/hit?t38.3;r'+
+escape(document.referrer)+((typeof(screen)=='undefined')?'':
+';s'+screen.width+'*'+screen.height+'*'+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+';u'+escape(document.URL)+
+';'+Math.random()+
+'" title="LiveInternet" '+
+'border=0 width=31 height=31></a>')//--></script><a href="http://www.liveinternet.ru/click" target="_blank"><img src="4_3.asp_files/hit.gif" title="LiveInternet" border="0" height="31" width="31"></a><!--/LiveInternet-->
+
+
+
+<!--Rating@Mail.ru COUNTER--> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <script language="JavaScript"><!--
+d=document;a='';a+=';r='+escape(d.referrer)
+js=10//--></script><script language="JavaScript1.1"><!--
+a+=';j='+navigator.javaEnabled()
+js=11//--></script><script language="JavaScript1.2"><!--
+s=screen;a+=';s='+s.width+'*'+s.height
+a+=';d='+(s.colorDepth?s.colorDepth:s.pixelDepth)
+js=12//--></script><script language="JavaScript1.3"><!--
+js=13//--></script><script language="JavaScript"><!--
+d.write('<a href="http://top.mail.ru/jump?from=96686"'+
+' target=_top><img src="http://top.list.ru/counter'+
+'?id=96686;t=239;js='+js+a+';rand='+Math.random()+
+'" alt="Рейтинг@Mail.ru"'+' border=0 height=31 width=88></a>')
+if(js>11)d.write('<'+'!-- ')//--></script><a href="http://top.mail.ru/jump?from=96686" target="_top"><img src="4_3.asp_files/counter.gif" alt="Рейтинг@Mail.ru" border="0" height="31" width="88"></a><!-- <noscript><a
+target=_top href="http://top.mail.ru/jump?from=96686"><img
+src="http://top.list.ru/counter?js=na;id=96686;t=239"
+border=0 height=31 width=88
+alt="Рейтинг@Mail.ru"></a></noscript><script language="JavaScript"><!--
+if(js>11)d.write('--'+'>')//-->
+<!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<!-- begin of Top100 logo --> <a href="http://top100.rambler.ru/home?id=163151"><img src="4_3.asp_files/banner-88x31-rambler-black2.gif" alt="Rambler's Top100" border="0" height="31" width="88"></a> <!-- end of Top100 logo -->
+</p></div>
+
+    </noindex></td>
+  </tr>
+</tbody></table>
+</center>
+<script type="text/javascript">
+
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+</script><script src="4_3.asp_files/ga.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+try {
+
+var pageTracker = _gat._getTracker("UA-8620903-5");
+
+pageTracker._trackPageview();
+
+} catch(err) {}</script>
+  </div></body></html>

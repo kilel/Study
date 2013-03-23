@@ -1,0 +1,597 @@
+<HTML>
+  <HEAD>
+<title>Теоретическая справка. API</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</HEAD>
+
+ <BODY background="images\bg2.jpg">
+&nbsp;&nbsp;&nbsp;&nbsp<font id="start"><b>WinAPI</b></font><br>&nbsp;&nbsp;
+<kbd><a class = "pushLink" href="#sinh">[<span>Синхронизация</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#func">[<span>Фукции ожидания</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#events">[<span>События</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#timer">[<span>Ожидаемые таймеры</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#sem">[<span>Семафоры</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#mutex">[<span>Мьютексы</span>]</a>&nbsp;&nbsp;</kbd><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp<font><b>Основные функции работы с потоками</b></font><br>
+<ul>
+Функция <font color=blue>CreateThread</font> создает для процесса новый поток. Созданный поток должен определить начальный адрес кода, с которого новый поток должен исполняться. Как правило, начальный адрес - это название функции, определенной в коде программы. Эта функция получает единственный параметр и возвращает значение типа DWORD. Процесс может иметь одновременно несколько потоков, выполняющих ту же самую функцию.
+<li class="kod"><kbd><pre>
+DWORD dwThreadId, dwThrdParam = 1;
+HANDLE hThread;
+  
+hThread = CreateThread(
+
+NULL,         <font color=green>// атрибуты безопасности по умолчанию</font>
+0,            <font color=green>// размер стека используется по умолчанию</font>
+ThreadFunc,   <font color=green>// функция потока</font>
+&dwThrdParam, <font color=green>// аргумент функции потока</font>
+0,            <font color=green>// флажки создания используются по умолчанию</font>
+&dwThreadId); <font color=green>// возвращает идентификатор потока</font>
+
+CloseHandle( hThread );<font color=green>// функция CloseHandle закрывает дескриптор открытого объекта</font>
+</pre></kbd></li></ul>
+<ul>
+Cоздать поток можно также путем вызова функции <font color=blue>CreateRemoteThread</font>. Функция <font color=blue>CreateRemoteThread</font> создает поток, который запускается в виртуальном адресном пространстве другого процесса.
+<li class="kod"><kbd><pre>
+HANDLE CreateRemoteThread(
+
+HANDLE hProcess,                         <font color=green>// дескриптор процесса</font>
+LPSECURITY_ATTRIBUTES lpThreadAttributes,<font color=green>// дескриптор защиты (SD)</font>
+SIZE_T dwStackSize,                      <font color=green>// размер начального стека</font>
+LPTHREAD_START_ROUTINE lpStartAddress,   <font color=green>// функция потока</font>
+LPVOID lpParameter,                      <font color=green>// аргументы потока</font>
+DWORD dwCreationFlags,                   <font color=green>// параметры создания</font>
+LPDWORD lpThreadId                       <font color=green>// идентификатор потока</font>
+
+); 
+</pre></kbd></li></ul>
+<ul>
+Параметры:<br><br>
+1) hProcess
+<blockquote>Дескриптор процесса, в котором поток должен быть создан. Дескриптор должен иметь права доступа PROCESS_CREATE_THREAD, PROCESS_QUERY_INFORMATION, PROCESS_VM_OPERATION, PROCESS_VM_WRITE и PROCESS_VM_READ.</blockquote>
+2) lpThreadAttributes
+<blockquote>Указатель на структуру SECURITY_ATTRIBUTES, которая определяет дескриптор безопасности для нового потока и обуславливает, могут ли дочерние процессы наследовать возвращенный дескриптор. Если lpThreadAttributes имеет значение ПУСТО (NULL), поток получает заданный по умолчанию дескриптор безопасности, и он не может быть унаследован. Списки контроля доступа (ACL) в заданном по умолчанию дескрипторе безопасности для потока поступают из первичного маркера или маркера заимствования прав создателя.</blockquote>
+3) dwStackSize
+<blockquote>Начальный размер стека, в байтах. Система округляет это значение до самой близкой страницы. Если это значение нулевое, новый поток использует по умолчанию размер стека исполняемой программы.</blockquote>
+4) lpStartAddress
+<blockquote>Указатель на определяемую программой функцию типа LPTHREAD_START_ROUTINE, код которой исполняется потоком и обозначает начальный адрес потока в удаленном процессе. Функция должна существовать в удаленном процессе.</blockquote>
+5) lpParameter
+<blockquote>Указатель на переменную, которая передается в функцию потока.</blockquote>
+6) dwCreationFlags
+<blockquote>Флажки, которые управляют созданием потока. Если установлен флажок CREATE_SUSPENDED, создается поток в состоянии ожидания и не запускается до тех пор, пока не будет вызвана функция ResumeThread,. Если это значение нулевое, поток запускается немедленно после создания.</blockquote>
+7) lpThreadId
+<blockquote>Указывает на переменную, которая принимает идентификатор потока. Если этот параметр имеет значение ПУСТО (NULL), идентификатор потока не возвращается.</blockquote>
+Функция <font color=blue>CreateRemoteThread</font> заставляет новый поток начать выполнение в адресном пространстве заданного процесса. Поток имеет доступ ко всем объектам, открытым процессом.<br><br>
+Если функция завершается успешно, величина возвращаемого значения - дескриптор нового потока.
+Если функция завершается ошибкой, величина возвращаемого значения - ПУСТО (NULL). Чтобы получить дополнительные данные об ошибках, вызовите <font color=blue>GetLastError</font>.<br><br>
+Функция <font color=blue>GetLastError</font> извлекает значение кода последней ошибки вызывающего потока. Код последней ошибки сохраняется при посредстве базового компонента потока. Многие потоки не записывают поверх друг друга коды последней ошибки.
+<li class="kod"><kbd>
+DWORD GetLastError(VOID); 
+</kbd></li></ul>
+<ul>
+Функция <font color=blue>ExitThread</font> заканчивает работу потока.
+<li class="kod"><kbd><pre>
+VOID ExitThread(
+
+DWORD dwExitCode <font color=green>// код выхода для этого потока</font>
+
+);
+</kbd></pre></li></ul>
+<ul>
+Параметр dwExitCode определяет код выхода для вызывающего потока. Используйте функцию <font color=blue>GetExitCodeThread</font>, чтобы получить код выхода из потока.
+<li class="kod"><kbd><pre>
+BOOL GetExitCodeThread(
+
+HANDLE hThread,    <font color=green>// дескриптор потока</font>
+
+LPDWORD lpExitCode <font color=green>// статус завершения</font>
+
+);
+</kbd></pre></li></ul>
+<ul>
+Параметры <br><br>
+1) hThread
+<blockquote>Дескриптор потока.<br>
+Windows NT /2000/XP: дескриптор должен иметь право доступа THREAD_QUERY_INFORMATION.</blockquote>
+2) lpExitCode
+<blockquote>Указатель на переменную, которая получает состояние завершения потока.</blockquote>
+Функция <font color=blue>TerminateThread</font> также завершает работу потока.
+<li class="kod"><kbd><pre>
+BOOL TerminateThread(
+
+HANDLE hThread,  <font color=green>// дескриптор потока</font>
+
+DWORD dwExitCode <font color=green>// код завершения для потока</font>
+
+);
+</kbd></pre></li></ul>
+<ul>
+Функция <font color=blue>ThreadProc</font> - определяемая программой функция, которая служит как начальный адрес для потока. Определяется этот адрес при вызове функции <font color=blue>CreateThread</font> или <font color=blue>CreateRemoteThread</font>. Тип LPTHREAD_START_ROUTINE определяет указатель на эту функцию повторного вызова. <font color=blue>ThreadProc</font> является символом - заместителем для определяемого программой имени функции.
+<li class="kod"><kbd><pre>
+DWORD WINAPI ThreadProc( 
+
+LPVOID lpParameter   <font color=green>// данные потока </font>
+
+);
+</kbd></pre></li></ul>
+<ul>
+Параметр lpParameter - данные потока пересылаемые в функцию, которая используя параметр lpParameter функции <font color=blue>CreateThread</font> или <font color=blue>CreateRemoteThread</font>. Функция должна возвратить значение, которое указывает ее успех или неудачу.<br><br>
+Функция <font color=blue>GetThreadPriority</font> извлекает значение приоритета для определяемого потока. Это значение, вместе с классом приоритета процесса потока, обуславливает уровень базового приоритета потока.
+<li class="kod"><kbd><pre>
+<font color=blue>int</font> GetThreadPriority(
+
+HANDLE hThread <font color=green>// дескриптор потока</font>
+
+);
+</kbd></pre></li></ul>
+<ul>
+Дескриптор должен иметь право доступа THREAD_QUERY_INFORMATION.<br><br>
+Если функция завершается успешно, величина возвращаемого значения - уровень приоритета потока. Если функция завершается с ошибкой, величина возвращаемого значения - THREAD_PRIORITY_ERROR_RETURN.<br><br>
+Приоритеты	
+<pre>
+<font color=red>THREAD_PRIORITY_ABOVE_NORMAL	</font>
+Приоритет на 1 пункт выше класса приоритета
+<font color=red>
+THREAD_PRIORITY_BELOW_NORMAL</font>	
+Приоритет на 1 пункт ниже класса приоритета.
+<font color=red>
+THREAD_PRIORITY_HIGHEST	</font>
+Приоритет на 2 пункта выше класса приоритета.
+<font color=red>
+THREAD_PRIORITY_IDLE</font>	
+Базовый приоритет 1 для IDLE_PRIORITY_CLASS, BELOW_NORMAL_PRIORITY_CLASS, 
+NORMAL_PRIORITY_CLASS, ABOVE_NORMAL_PRIORITY_CLASS или HIGH_PRIORITY_CLASS 
+процессов и базовый приоритет 16 для процессов REALTIME_PRIORITY_CLASS.
+<font color=red>
+THREAD_PRIORITY_LOWEST</font>	
+Приоритет на 2 пункта ниже класса приоритета.
+<font color=red>
+THREAD_PRIORITY_NORMAL	</font>
+Обозначает нормальный приоритет для класса приоритета.
+<font color=red>
+THREAD_PRIORITY_TIME_CRITICAL	</font>
+Уровень базового приоритета 15 для процессов IDLE_PRIORITY_CLASS, 
+BELOW_NORMAL_PRIORITY_CLASS, NORMAL_PRIORITY_CLASS, 
+ABOVE_NORMAL_PRIORITY_CLASS или HIGH_PRIORITY_CLASS, и уровень 
+базового приоритета 31 для процессов REALTIME_PRIORITY_CLASS.  
+</pre>
+Функция <font color=blue>SetThreadPriority</font> устанавливает значение приоритета для заданного потока. Это значение, вместе с классом приоритета процесса потока, обуславливает базовый уровень приоритета потока.
+<li class="kod"><kbd><pre>
+BOOL SetThreadPriority(
+
+HANDLE hThread, <font color=green>// дескриптор потока</font>
+
+int nPriority   <font color=green>// уровень приоритета потока</font>
+
+);</kbd></pre></li></ul>
+<ul>
+Если функция завершается успешно, величина возвращаемого значения - не ноль.<br>
+Если функция завершается с ошибкой, величина возвращаемого значения - ноль. Чтобы получить дополнительные данные об ошибках, вызовите <font color=blue>GetLastError</font>.<br><br>
+Каждый поток имеет базовый уровень приоритета, определяемый значением приоритета потока и классом приоритета его процесса. Система использует базовый уровень приоритета всех исполняемых потоков, чтобы установить, который поток получает следующий квант процессорного времени. Потокам устанавливается очередность обслуживания циклическим способом в каждом уровне приоритета, и только тогда, когда нет никаких выполняемых потоков на более высоком уровне, происходит диспетчеризация потоков на более низком уровне.<br><br>
+Функция <font color=blue>OpenThread</font> открывает объект существующего потока.
+<li class="kod"><kbd><pre>
+HANDLE OpenThread(
+
+DWORD dwDesiredAccess, <font color=green>// право доступа</font>
+BOOL bInheritHandle,   <font color=green>// опции наследования дескриптора</font>
+DWORD dwThreadId       <font color=green>// идентификатор потока</font>
+
+);</kbd></pre></li></ul>
+<ul>
+Параметры<br><br>
+1) dwDesiredAccess
+<blockquote>Доступ к объекту потока. Этот параметр может состоять из одного или нескольких прав доступа потока.<br>
+Windows NT/2000/XP: Это право доступа проверяется у любого дескриптора безопасности потока.</blockquote>
+2) bInheritHandle
+<blockquote>Если этот параметр является ИСТИНА (TRUE), новый процесс наследует дескриптор. 
+<br>Если этот параметр - ЛОЖЬ (FALSE), дескриптор не наследуется.</blockquote>
+3) dwThreadId
+<blockquote>Идентификатор открытого потока.</blockquote>
+Если функция завершается успешно, величина возвращаемого значения - открытый дескриптор заданного процесса.<br>
+Если функция завершается с ошибкой, величина возвращаемого значения равна ПУСТО (NULL). <br><br>
+Функция <font color=blue>ResumeThread</font> проверяет счет времени приостановки работы подчиненного потока. Если счет времени приостановки работы равен 0, поток в настоящее время не приостановлен. Иначе, счет времени приостановки работы подчиненного потока уменьшается. Если итоговое значение - 0, то выполнение подчиненного потока продолжается.
+<li class="kod"><kbd><pre>
+DWORD ResumeThread(
+
+HANDLE hThread     <font color=green>// дескриптор потока</font>
+
+);</kbd></pre></li></ul>
+<ul>
+Функция <font color=blue>SuspendThread</font> приостанавливает работу заданного потока.
+<li class="kod"><kbd><pre>
+DWORD SuspendThread(
+
+HANDLE hThread <font color=green>// дескриптор потока</font>
+
+);</kbd></pre></li></ul>
+<ul>
+Если функция завершается успешно, выполнение заданного потока приостанавливается, а счет времени приостановки работы потока увеличивается. Приостановка потока заставляет его прекратить выполнять код (приложение) в непривилегированном (пользовательском) режиме.
+Функция <font color=blue>Sleep</font> Приостанавливает выполнение текущего потока на заданный промежуток времени. Похожая функция <font color=blue>SleepEx</font> также приостанавливает работу текущего потока, пока не выполнено заданное условие.<br><br>
+Функция приостанавливает исполнение текущего потока до тех пор, пока не произойдет одно из ниже перечисленного:<br>
+<pre>
+- Вызывается функция повторного вызова, завершившая ввод-вывод
+- Асинхронный вызов процедуры (APC) ставится в очередь потока.
+- Истекает минимальный интервал времени перерыва
+</pre>
+<li class="kod"><kbd><pre>
+DWORD SleepEx(
+
+DWORD dwMilliseconds, <font color=green>// интервал времени блокировки, в миллисекундах</font>
+
+BOOL bAlertable       <font color=green>// опция досрочного завершения</font>
+
+);
+</kbd></pre></li></ul>
+<ul>
+Параметры<br><br>
+1) dwMilliseconds
+<blockquote>Минимальное время интервала, в миллисекундах, на которое должна произойти приостановка исполнения кода.
+<br>
+Значение нуля заставляет поток оставить остаток своего кванта машинного времени любому другому потоку равного приоритета, который является готовым запуститься. Если других потоков равного приоритета, готовых запуститься нет, функция немедленно возвращает значение и поток продолжает исполнение кода.
+<br>
+Значение БЕСКОНЕЧНО (INFINITE) вызывает бесконечную задержку.</blockquote>
+2) bAlertable
+<blockquote>Устанавливает, может ли функция завершить работу досрочно в результате окончания ввода-вывода функцией повторного вызова или APC. Если bAlertable имеет значение ЛОЖЬ (FALSE), функция не возвращает значения до тех пор, пока не истечет период времени блокировки. Если происходит обратный вызов завершения ввода-вывода, функция не возвращает значения, и завершение ввода-вывода функцией не выполняется.
+<br><br>
+Если bAlertable имеет значение ИСТИНА (TRUE) и поток, который обратился к этой функции является тем же самым потоком, который вызвал расширенную функцию ввода-вывода (<font color=blue>ReadFileEx</font> или <font color=blue>WriteFileEx</font>), функция возвращает значение тогда, когда или истек период времени блокировки, или когда происходит окончание ввода-вывода функцией повторного вызова. Если происходит завершения ввода-вывода функцией обратного вызова, вызывается функция завершающая ввод-вывод. </blockquote>
+Величина возвращаемого значения - ноль, если заданный интервал времени истек.
+<br>
+Величина возвращаемого значения является WAIT_IO_COMPLETION, если функция возвратила значение в результате одного или нескольких завершений ввода-вывода функцией повторного вызова. <br><br>
+Функция <font color=blue>SwitchToThread</font> аналогична функциям <font color=blue>Sleep</font> и <font color=blue>SleepEx</font>, за исключением того, что невозможно определять интервал бездействия. Функция заставляет вызывающий поток передать выполнение другому потоку, который является готовым запуститься на текущем процессоре. Поток для передачи выбирает операционная система.
+<li class="kod"><kbd><pre>
+BOOL SwitchToThread(VOID);
+</kbd></pre></li></ul>
+<ul>
+Далее перечислены еще несколько функций работы с потоками с кратким описанием:
+<font color=blue>AttachThreadInput</font><br>	
+Подключает обрабатывающий механизм ввода данных одного потока к такому же механизму другого потока. 
+<br><br>
+<font color=blue>GetCurrentThreadId</font><br>	
+Извлекает идентификатор вызывающего потока. 
+<br><br>
+<font color=blue>GetExitCodeThread</font><br>	
+Извлекает данные о состоянии завершения заданного потока. 
+<br><br>
+<font color=blue>GetThreadTimes</font><br>
+Извлекает данные о синхронизирующей информации для заданного потока. 
+<br><br>
+<font color=blue>SetThreadIdealProcessor</font>	<br>
+Устанавливает предпочтительный процессор для потока. 
+<br><br>
+<font color=blue>SwitchToThread	</font><br>
+Заставляет вызывающий поток передать выполнение кода другому потоку, 
+который является готовым запуститься на текущем процессоре. 
+<br><br>
+<font color=blue>TlsAlloc	</font><br>
+Назначает индекс локальной памяти потока (TLS). 
+<br><br>
+<font color=blue>TlsFree</font>	<br>
+Освобождает индекс локальной памяти потока (TLS). 
+<br><br>
+<font color=blue>WaitForInputIdle</font><br>	
+Ждет до тех пор, пока заданный процесс не дождется ввода 
+данных пользователем без задержки ввода данных, или пока 
+не истечет время задержки.
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="sinh"><b>Синхронизация</b></font><br>
+<ul>
+Имеется ряд объектов (буфера консольного ввода данных, события, мьютексы, процессы и т.д), дескрипторы которых могут быть использованы, чтобы синхронизировать многопоточную работу. Состояние каждого из этих объектов является, или сигнальным, или не сигнальным. Когда определяется дескриптор любого из этих объектов при вызове одной из функций ожидания (wait functions), исполнение вызывающего потока блокируется до тех пор, пока состояние заданного объекта не становится сигнальным.<br><br>
+Дескрипторы процессов и потоков подают сигнал тогда, когда процесс или поток заканчивает свою работу. Это позволяет процессу, например, создавать дочерний процесс, и затем заблокировать свое собственное выполнение, до тех пор, пока новый процесс не закончит свою работу.
+<br><br>
+Другие объекты полезны при защите совместно используемых ресурсов от одновременного обращения к ним. Например, каждый из множества потоков может иметь дескриптор объекта мьютекс (флажка блокировки). Перед обращением к совместно используемому ресурсу, потоки должны вызвать одну из функций ожидания (wait functions), чтобы дождаться сигнального состояния мьютекса. Когда мьютекс становится сигнальным то, только одному ожидающему потоку разрешается обратиться к ресурсу. Состояние мьютекса немедленно сбрасывается в не сигнальное, так что любые другие ожидающие потоки остаются заблокированными. Когда поток завершает работу с ресурсом, он должен переключить мьютекс в сигнальное состояние, чтобы дать возможность другим потокам обратиться к ресурсу.
+<br><br>
+Для потоков единственного процесса, объекты критической секции программы обеспечивают более эффективное средство синхронизации, чем мьютексы. Критическая секция программы используется подобно мьютексу, чтобы включать один поток на время использования защищенного ресурса. Поток может использовать функцию <font color=blue>EnterCriticalSection</font>, чтобы запросить монопольное использование критической секции программы. Если секция уже принадлежит другому потоку, поток, который её затребовал, блокируется.
+<li class="kod"><kbd><pre>
+VOID EnterCriticalSection(
+  LPCRITICAL_SECTION lpCriticalSection  <font color=green>// указатель на объект критической секции</font>
+);
+</kbd></pre></li></ul>
+<ul>
+Потоки отдельно взятого процесса могут использовать объект критической секции для синхронизации взаимоблокировки. Процесс несет ответственность за распределение памяти, используемой объектом критической секции, который это может сделать, объявляя переменную типа CRITICAL_SECTION. Перед использованием критической секции, некий поток процесса должен вызвать функцию <font color=blue>InitializeCriticalSection</font> или <font color=blue>InitializeCriticalSectionAndSpinCount</font>, чтобы инициализировать объект.
+<br><br>
+После того, как поток получит в монопольное использование критическую секцию, он может делать дополнительные вызовы функций <font color=blue>EnterCriticalSection</font>, не блокируя исполнение своего кода. Это предохраняет поток от самоблокировки во время ожидания критической секции, которой он уже владеет.
+<br><br>
+Любой поток процесса может использовать функцию <font color=blue>DeleteCriticalSection</font>, чтобы освободить системные ресурсы, которые были распределены, когда объект критической секции был инициализирован. После того, как эта функция вызвалась, объект критической секции больше не может использоваться для синхронизации.
+<br><br>
+Если работа потока завершается в то время, когда он имеет в монопольном использовании критическую секцию, состояние критической секции - неопределеное.
+<br><br>
+Если критическая секция удаляется, в то время, когда она все еще находится в монопольном использовании, состояние потоков, ожидающих монопольного использования удаленной критической секции становится неопределеным.
+<br><br>
+Поток может использовать функцию <font color=blue>TryEnterCriticalSection</font>, чтобы запросить монопольное использование критической секции программы, без блокировки после отказа на её получение. После того, как поток получает монопольное использование, он свободен в использовании защищенного ресурса. Выполнение других потоков процесса не затрагивается, если они не пытаются входить в ту же самую критическую секцию программы.
+<li class="kod"><kbd><pre>
+BOOL TryEnterCriticalSection(
+  LPCRITICAL_SECTION lpCriticalSection   <font color=green>// указатель на объект критической секции</font>
+);</kbd></pre></li></ul>
+<ul>
+Функция <font color=blue>WaitForInputIdle</font> ждет до тех пор, пока заданный процесс не дождется ввода данных пользователем, без задержки ввода, или до тех пор, пока не истечет интервал блокировки по времени.
+<li class="kod"><kbd><pre>
+DWORD WaitForInputIdle(
+
+HANDLE hProcess,     <font color=green>// дескриптор процесса</font>
+
+DWORD dwMilliseconds <font color=green>// интервал задержки, в миллисекундах</font>
+
+);
+</kbd></pre></li></ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="func"><b>Использование фукций ожидания</b></font>
+<ul>
+Однообъектные функции <font color=blue>SignalObjectAndWait</font>, <font color=blue>WaitForSingleObject</font>  и <font color=blue>WaitForSingleObjectEx</font> требуют дескриптора одного объекта синхронизации. Эти функции возвращают значение тогда, когда происходит одно из ниже перечисленного:<pre>
+- указанный объект находится в сигнальном состояние. 
+- интервал времени простоя истекает. Интервал времени простоя может бытьустановлен в  INFINITE (БЕСКОНЕЧНО), чтобы определить, что ожидание будет непрерывным.</pre>
+<li class="kod"><kbd><pre>
+DWORD WaitForSingleObject( 
+
+HANDLE hObject, 	<font color=green>// дескриптор объекта</font>
+
+DWORD dwMilliseconds	<font color=green>// время в миллисекундах</font>
+);	
+</kbd></pre></li></ul>
+<ul>
+Пример, иллюстрирующий, как вызывать <font color=blue>WaitForSingleObject</font> co значением таймаута, отличным от INFINITE 
+<li class="kod"><kbd><pre>
+DWORD dw = WaitForSlngleObject(hProcess, 5000); 
+
+<font color=blue>switch</font> (dw) 
+{ 
+<font color=blue>case</font> WAIT_OBJECT_0: 
+<font color=green>// процесс завершается </font>
+<font color=blue>break</font>; 
+
+<font color=blue>case</font> WAIT_TIMEOUT: 
+<font color=green>// процесс не завершился в течение 5000 мс </font>
+<font color=blue>break</font>; 
+
+<font color=blue>case</font> WAIT_FAILED:
+<font color=green>// неправильный вызов функции (неверный описатель) </font>
+<font color=blue>break</font>; 
+}
+</kbd></pre></li></ul>
+<ul>
+Функция <font color=blue>WaitForMultipleObjects</font> аналогична <font color=blue>WaitForSingleObject</font> c тем исключением, что позволяет ждать освобождения сразу нескольких объектов или какого-то одного из списка объектов: 
+<li class="kod"><kbd><pre>
+DWORD WaitForMultipleObjects( 
+
+DWOHD dwCount, 		 <font color=green>// количество объектов ядра  </font>
+
+CONST HANDLE* phObjects, <font color=green>// указатель на массив описателей объектов ядра </font>
+
+BOOL fWaitAll, 		 <font color=green>// если TRUE - функция не даст потоку возобновить свою работу, </font>
+			 <font color=green>// пока не освободятся все объекты.  </font>
+
+DWORD dwMilliseconds	 <font color=green>// время в миллисекундах </font>
+);
+</kbd></pre></li></ul>
+<ul>
+Возвращаемое значение функции <font color=blue>WaitForSingleObject</font> сообщает, почему возобновилос выполнение вызвавшего ее потока. Если Вы передали TRUE в параметре fWaitAll и все объекты перешли в свободное состояние, функция возвращает значение WAIT_OB JECT_0. Если fWaitAll приравнен FALSE, она возвращает управление, как только освобождается любой из объектов. <br><br>
+Если требуется выяснить, какой именно объект освободился в этом случае возвращается значение от WAIT_OBJECT_0 до WAIT_OBJECT_0 + dwCount - 1. Иначе говоря, если возвращаемое значение не равно WAIT_TIMEOUT или WAIT_FAILED, вычтите из него значение WAlT_OBJECT_0, и вы получите индекс в массиве описателей, на который указывает второй параметр функции <font color=blue>WaitForSingleObject</font>. Индекс подскажет, какой объект перешел в незанятое состояние. Например:
+<li class="kod"><kbd><pre>
+HANDLE h[3]; 
+h[0] = hProcess1; 
+h[1] = hProcess2; 
+h[2] = hProcess3, 
+
+DWORD dw = WaitForMultipleObjects(3, h, FALSE, 5000); 
+
+<font color=blue>switch</font>  (dw) 
+{ 
+
+<font color=blue>case</font>  WAIT_FAILED: 
+<font color=green>// неправильный вызов функции (неверный описатель) </font>
+<font color=blue>break</font> ; 
+
+<font color=blue>case</font>  WAIT_TIMEOUT: 
+<font color=green>// ни один из объектов не освободился в течение 5000 мс </font>
+<font color=blue>break</font> ; 
+
+<font color=blue>case</font>  WAIT_OBJECTJ) + 0:
+<font color=green>// завершился процесс, идентифицируемый h[0], 
+//т.e. описателем (hProcess1) </font>
+<font color=blue>break</font> ; 
+
+<font color=blue>case</font>  WATT_OBJECT_0 + 1: 
+<font color=green>// завершился процесс, идентифицируемый h[1],
+// т.e. описателем (hProcess2) </font>
+<font color=blue>break</font> ; 
+
+<font color=blue>case</font>  WAIT_OBJECT_0 + 2: 
+<font color=green>// завершился процесс, идентифицируемый h[2],
+// т.e. описателем (hProcess3) </font>
+<font color=blue>break</font> ; 
+}
+</kbd></pre></li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="events"><b>События</b></font>
+<ul>
+События содержат счетчик числа пользователей (как и все объекты ядра) и две булевы переменные: одна сообщает тип данного объекта-события, другая — его состояние (свободен или занят). 
+<br><br>
+События просто уведомляют об окончании какой-либо операции. Объекты-собы тия бывают двух типов: со сбросом вручную (manual-reset events) и с автосбросом (auto-reset events). Первые позволяют возобновлять выполнение сразу нескольких ждущих потоков, вторые — только одного. 
+<br><br>
+Объекты-события обычно используют в том случае, когда какой-то поток выполняет инициализацию, а затем сигнализирует другому потоку, что тот может продол жить работу. Инициализирующий поток переводит объект "событие» в занятое состо яние и приступает к своим операциям. Закончив, он сбрасывает событие в свободное состояние. Тогда другой поток, который ждал перехода события в свободное состояние, пробуждается и вновь становится планируемым. 
+<br><br>
+Объект ядра "событие" создается функцией <font color=blue>CreateEvent</font>:
+<li class="kod"><kbd><pre>
+HANDLE CreateEvent( 
+
+PSECURITY_ATTRIBUTES psa, 
+
+BOOL fManualReset, 	<font color=green>// сообщает системе о создатнии события
+                   	// со сбросом вручную (TRUE) или с автосбросом (FALSE)</font>
+
+BOOL fInitialState,	<font color=green>// определяет начальное состояние события — 
+			// свободное (TRUE) или занятое (FALSE).</font>
+PCTSTR pszName
+);
+</kbd></pre></li></ul>
+<ul>
+После того как система создает объект событие, <font color=blue>CreateEvent</font> возвращает описатель события, специфичный для конкретного процесса. Потоки из других процессов могут получить доступ к этому объекту: <pre>
+1) вызовом <font color=blue>CreateEvent</font> с тем же параметром pszName;
+2) наследованием описателя; 
+3) применением функции <font color=blue>DuplicateHandle</font>; 
+4) вызовом  <font color=blue>OpenEvent</font> c передачей в параметре pszName
+   имени, совпадающего с указанным в аналогичном параметре функции  <font color=blue>CreateEvent</font>. </pre>
+   
+Вот что представляет собой функция  <font color=blue>OpenEvent</font>.
+<li class="kod"><kbd><pre>
+HANDLE OpenEvent( DWORD fdwAccess, BOOL fInhent, PCTSTR pszName); 
+</kbd></pre></li></ul><ul>
+Ненужный объект ядра следует закрыть вызовом CloseHandle Создав событие, вы можете напрямую управлять его состоянием. Чтобы перевести его в свободное состояние, вызываеем: 
+<li class="kod"><kbd><pre>
+BOOL SetEvenT(HANDLE hEvenеt); 
+</kbd></pre></li></ul><ul>
+А чтобы поменять его на занятое 
+<li class="kod"><kbd><pre>
+BOOL ResetEvent(HANDLE hEvent);</kbd></pre></li></ul><ul>
+<font color=blue>PulseEvent</font> освобождает событие и тут жс переводит его обратно в занятое состояние; ее вызов равнозначен последовательному вызову <font color=blue>SelEvent</font> и <font color=blue>ResetEvent</font>. Если Вы вызываете <font color=blue>PulseEvent</font> для события со сбросом вручную, любые потоки, ждущие этот объект; становятся планируемыми. При вызове этой функции применительно к событию с автосбросом пробуждается только одип из ждущих потоков. А если ни один из потоков не ждет объект-событие, вызов функции не дает никакого эффекта.
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id = "timer"><b>Ожидаемые таймеры</b></font>
+<ul>
+Чтобы создать ожидаемый таймер, достаточно вызвать функцию <font color=blue>CreateWaitableTimer</font>. 
+<li class="kod"><kbd><pre>
+HANDLE CreateWaitableTimer( PSECURITY_ATTRIBUTES psa, BOOL fManualReset, PCTSTR pszName); 
+</kbd></pre></li></ul><ul>
+Параметр psa является указателем на структуру SECURITY_ATTRIBUTES. Если Вы хотите, чтобы объекту ядра были присвоены атрибуты защиты по умолчанию (что чаще всего и бывает), передайте в этом параметре NULL. A чтобы дочерние процессы смогли наследовать описатель этого объекта, определите структуру SECURI TY_ATTRIBUTES и инициализируйте ее элемент hlnherttHandle значением TRUE.<br><br>
+Любой процесс может получить свой («процессо-зависимый») описатель существующего объекта "ожидаемый таймер", вызвав <font color=blue>OpenWaitableTimer</font>. 
+<li class="kod"><kbd><pre>
+HANDLE OpenWaitableTirrer( DWORD dwDesiredAccess, BOOL bInheritHandle, PCTSTR pszName); 
+</kbd></pre></li></ul><ul>
+По аналогии с событиями параметр fManualReset определяет тип ожидаемого таймера: со сбросом вручную или с автосбросом. Когда освобождается таймер со сбросом вручную, возобновляется выполнение всех потоков, ожидавших этот объект, а когда в свободное состояние переходит таймер с автосбросом — лишь одного из потоков. 
+<br><br>
+Ожидаемый таймер всегда создается в занятом состоянии. Чтобы сообщить таймеру, в какой момент он должен перейти в свободное состояние, вызовите функцию <font color=blue>SetWaitableTimer</font>. 
+<li class="kod"><kbd><pre>
+BOOL SetWaitableTimer( 
+
+HANDLE hTimer, 			<font color=green>// определяет нужный таймер</font>
+
+const LARGE_INTEGER *pDueTime, 	<font color=green>// задает, когда таймер должен 
+				// сработать в первый раз</font>
+
+LONG lPeriod, 			<font color=green>// определяет, насколько часто 
+				// это должно происходить в дальнейшем</font>
+
+PTIMERAPCROUTINE pfnCompletionRoutine,
+ 
+PVOID pvArgToCotnpletionRoutine, 
+
+BOOL fResume			<font color=green>// полезен для машин, использующих режим сна
+				// обычно в нем передают FALSE</font>
+);
+</kbd></pre></li></ul><ul>
+Обычно нужно, чтобы таймер сработал только раз — через определенное (абсолютное или относительное) время перешел в свободное состояние и уже больше никогда не срабатывал Для этого достаточно передать 0 в параметре lPeriod. Затем можно либо вызвать <font color=blue>CloseHandle</font>, чтобы закрыть таймер, либо перенастроить таймер повторным вызовом <font color=blue>SetWattableTimer</font> с другими параметрами.
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="sem"><b>Семафоры</b></font>
+<ul>
+Объект ядра «семафор» создается вызовом <font color=blue>CreateSemapbore</font> 
+<li class="kod"><kbd><pre>
+HANDLE CreateSemaphore( PSECURITY_ATTRIBUTE psa, LONG lInitialCount, LONG lMaximumCount, PCTRTR pszName) 
+</kbd></pre></li></ul><ul>
+Любой процесс может получить свой («процессо-зависимый») описатель существующего объекта «семафор», вызвав <font color=blue>OpenSemaphore</font>. 
+<li class="kod"><kbd><pre>
+HANDLE OpenSemaphore( DWORD fdwAccess, BOOL bInhentHandle, PCTSTR pszName); 
+</kbd></pre></li></ul><ul>
+Параметр lMaximumCount сообщает системе максимальное число ресурсов, обрабатываемое приложением, поскольку это 32-битное значение со знаком, предельное число ресурсов может достигать 2 147 483 647. Параметр lInitiа1Соипt указывает, сколько из этих ресурсов доступно изначально (на данный момент). <br><br>
+Поток получаст доступ к ресурсу, вызывая одну из Wait-функций и передавая ей описатель семафора, который охраняет этот ресурс. Wait-функция проверяет у семафора счетчик текущего числа ресурсов, если его значение больше 0 (семафор свободен), уменьшает значение этого счетчика на 1, и вызывающий поток остается планируемым.
+<br><rb>Очень важно, что семафоры выполняют эту операцию проверки и присвоения на уровне атомарного доступа; иначе говоря, когда вы запрашиваете у семафора какой-либо ресурс, операционная система проверяет, доступен ли этот ресурс, и, если да, уменьшает счетчик текущего числа ресурсов, не позволяя вмешиваться в эту операцию другому потоку. Только после того, как счетчик ресурсов будет уменьшен на 1, доступ к ресурсу сможет запросить другой поток 
+<br><br>
+Если Wait-функция определяет, что счетчик текущего числа ресурсов равен 0 (семафор занят), система переводит вызывающий поток в состояние ожидания. Когда другой поток увеличит значение этого счетчика, система вспомнит о ждущем потоке и снова начнет выделять ему процессорное время (а он, захватив ресурс, уменьшит значение счетчика на 1). 
+<br><br>
+Поток увеличивает значение счетчика текущего числа ресурсов, вызывая функцию <font color=blue>ReleaseSemaphore</font>:
+<li class="kod"><kbd><pre>
+BOOL ReleaseSemaphore( 
+HANDLE hSem, 
+LONG lReleaseCount, 	
+PLONG plPreviousCount
+);
+</kbd></pre></li></ul><ul>
+Она просто складывает величину lReleaseCount со значением счетчика текущего числа ресурсов. Обычно в параметре lReleaseCount передают 1, но это вовсе не обязательно. Функция возвращает исходное значение счетчика ресурсов в *plPreviousCount. Если это значение не интересует, то передайте в параметре plPreviousCount значение NULL.<br><br>
+Классический пример использования семафора -  это очередь элементов, которую обрабатывают несколько потоков. Потоки "разбирают" элементы из очереди. Если очередь пуста, потоки должны "спать", ожидая появления новых элементов. Для учета элементов в очереди используется семафор.
+<li class="kod"><kbd><pre>
+<font color=blue>class</font> CMyQueue
+{
+HANDLE m_hSemaphore; <font color=green>// семафор для учета элементов очереди</font> 
+...
+<font color=green>// описание других объектов для хранения элементов очереди</font> 
+...
+<font color=blue>public</font>:
+CMyQueue()
+{
+	<font color=green>// начальное значение счетчика = 0</font> 
+	m_hSemaphore = CreateSemaphore(NULL, 0, 1000, NULL); 
+
+<font color=green>// максимальное значение = 1000
+// инициализация других объектов
+...</font> 
+}
+~CMyQueue()
+{
+CloseHandle( m_hSemaphore);
+<font color=green>// удаление других объектов</font> 
+...
+}
+<font color=blue>void</font> AddItem(void * NewItem)
+{
+<font color=green>// добавляем элемент в очередь
+// увеличиваем счетчик семафора на 1
+//</font> 
+ReleaseSemaphore(m_hSemaphore,1, NULL);
+}
+<font color=blue>void</font> GetItem(void * Item)
+{
+<font color=green>// если очередь пуста, то потоки, вызвавшие этот метод,
+// будут находиться в ожидании...
+//</font> 
+WaitForSingleObject(m_hSemaphore,INFINITE);
+ 
+<font color=green>// удаляем элемент из очереди</font> 
+}
+};
+</kbd></pre></li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="mutex"><b>Мьютексы</b></font>
+<ul>
+Для использования объекта-мьютекса один из процессов должен сначала создать его вызовом <font color=blue>CreateMutex</font>: 
+<li class="kod"><kbd><pre>
+HANDLE CreateMutex( PSECURITY_ATTRIBUTES psa, BOOL fIniLialOwner, PCTSTR pszName); 
+</kbd></pre></li></ul><ul>
+Параметр fInitialOwner определяет начальное состояние мъютекса. Если в нем передается FALSE (что обычно и бывает), если объект-мьютекс не принадлежит ни одному из потоков и поэтому находится в свободном состоянии. При этом его идентификатор потока и счетчик рекурсии равны 0. Если же в нем передается TRUE, идентификатор потока, принадлежащий мьютексу, приравнивается идентификатору вызывающего потока, а счетчик рекурсии получает значение 1. Поскольку теперь идентификатор потока отличен от 0, мьютекс изначально находится в занятом состоянии.<br><br>
+Любой процесс может получить свой («процессо-зависимый») описатель существующего объекта «мьютекс», вызвав <font color=blue>OpenMutex</font>: 
+<li class="kod"><kbd><pre>
+HANDLE OpenMutex( DWORD fdwAccess, 800L bInheritHandle, PCTSTR pszName);</kbd></pre></li></ul><ul>
+Когда поток, занимающий ресурс, заканчивает с ним работать, он должен освободить мьютекс вызовом функции <font color=blue>ReleaseMutex</font>: 
+<li class="kod"><kbd><pre>
+BOOL ReleaseMutex(HANDLE hMutex); 
+</kbd></pre></li></ul><ul>
+Эта функция уменьшает счстчик рекурсии в объекте-мьютексе на 1. Если данный объект передавался во владение потоку неоднократно, поток обязан вызвать <font color=blue>ReleaseMutex</font> столько раз, сколько необходимо для обнуления счетчика рекурсии. Как только счетчик станет равен 0, псременная, хранящая идентификатор потока, тоже обнулится, и объект-мьютекс освободится. После этого система проверит, ожидают ли 
+освобождения мьютекса какие-нибудь другие потоки. Если да, система «по-честному» выберет один из ждущих потоков и передаст ему во владение объект-мьютекс.<br><br>
+Рассмотрим пример использования мьютекса:
+<li class="kod"><kbd><pre>
+HANDLE hMutex;
+
+<font color=blue>int</font> main()
+{
+hMutex = CreateMutex( NULL, FALSE, NULL); <font color=green>// Создаем мьютекс в свободном состоянии</font>
+...
+<font color=green>// Создание потоков, и т.д.
+//</font>
+...
+}
+BOOL WriteToBuffer()
+{
+DWORD dwWaitResult;
+
+<font color=green>// ждем освобождения мьютекса перед тем как обратиться к буферу</font>
+//
+dwWaitResult = WaitForSingleObject( hMutex, 5000L); <font color=green>// 5 секунд на таймаут</font>
+ 
+<font color=blue>if</font> (dwWaitResult == WAIT_TIMEOUT) <font color=green>// таймаут, мьютекс за это время не освободился</font>
+{
+<font color=blue>return</font> FALSE; 
+}
+<font color=blue>else</font> 	<font color=green>// мьютекс освободился, и наш поток его занял, можно работать</font>
+{
+Write_to_the_buffer().
+...
+ReleaseMutex(hMutex); 	<font color=green>// освобождаем мьютекс</font>
+}
+<font color=blue>return</font> TRUE;
+}
+</kbd></pre></li>
+</ul>
+<a class = "pushLink" href="#start">[<span>В начало документа</span>]</a><br>
+<center><a class = "pushLink" href="index.html">[<span>Оглавление</span>]</center>
+  </BODY>
+</HTML>

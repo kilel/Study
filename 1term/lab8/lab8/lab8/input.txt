@@ -1,0 +1,19 @@
+ ww
+-welcome to the textbourd of our club. here you can find a lot of information about cars.
+
+model bmw-0507-cool
+year 2000
+color red and blue
+cost $25000
+
+model audi-0608-cold
+year 2004
+color red
+cost $2500
+
+model volga-0507
+year 1995
+color green
+cost 1500r
+
+so, that is all to this time. Good day!

@@ -1,0 +1,255 @@
+<HTML>
+  <HEAD>
+<title>Теоретическая справка. Класс</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</HEAD>
+
+ <BODY background="images\bg2.jpg">
+&nbsp;&nbsp;&nbsp;&nbsp<font id="start"><b>Класс</b></font>
+<br>&nbsp;&nbsp;
+<kbd><a class = "pushLink" href="#ref">[<span>Ссылочный тип класса</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#property">[<span>Свойства (property)</span>]</a>&nbsp;&nbsp;<a class = "pushLink" href="#del">[<span>События и делегаты</span>]</a></kbd>
+<ul>
+<li class="withborder"><b>Класс</b> — это конструктор, который позволяет создавать свои собственные пользовательские типы путем группирования переменных других типов, методов и событий. Класс определяет данные и поведение типа.</li>
+</ul>
+<ul>
+Классы объявляются с помощью ключевого слова <font color=blue><kbd>class</kbd></font>.
+Ключевому слову <font color=blue><kbd>class</kbd></font> предшествует уровень доступа. Имя класса указывается после ключевого слова <font color=blue><kbd>class</kbd></font>. Оставшаяся часть определения является телом класса, в котором задаются данные и поведение. Поля, свойства, методы и события в классе обозначаются термином члены класса. 
+<br><br>Класс определяет тип объекта. Объект — это конкретная сущность, основанная на классе и иногда называемая экземпляром класса.
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="ref"><b>Cсылочный тип (reference type) класса</b></font>
+<ul>
+Различаются 2 категории типов данных: типы значений (value type), которые хранят данные непосредственно, и ссылочные типы (reference type), которые хранят ссылку на значение.<br><br>
+
+<kbd><font color=blue>ref class</font></kbd> - ссылочный тип класса. Объявление ссылочного класса:<br><br>
+
+<li class="kod"><kbd><font color=blue>public</font> ref <font color=blue>class</font> A {};</kbd></li></ul>
+<ul>
+В C++ класс разделяется на управляемый и неуправляемый. Управляемые классы должны быть обозначены ключевым словом <kbd>ref</kbd> для ссылочного типа и <kbd>value</kbd> для типа значение. Типы значений обычно хранятся в стеке, управляемые ссылочные типы - в управляемой куче, неуправляемые ссылочные типы - в неуправляемой куче.
+<li class="kod">
+<kbd>ref <font color=blue>class</font> MyClass <font color=green>// управляемый ссылочный тип</font><br>
+{<br>
+};<br>
+value <font color=blue>class</font> MyClass <font color=green>// управляемый тип значение</font><br>
+{<br>
+};<br>
+<font color=blue>class</font> MyClass <font color=green>// неуправляемый класс</font><br>
+{<br>
+};</kbd><br>
+</li></ul>
+<ul>
+Для выделения памяти в управляемой куче C++ имеет оператор <font color=blue>gcnew</font>.
+<li class="kod"><kbd>
+MyClass^ obj = <font color=blue>gcnew</font> MyClass ;
+</kbd></li></ul>
+<ul>Маркер ^ (управляемый указатель) используется для указания того факта, что obj является дескриптором для объекта ссылочного класса типа MyClass, размещенного в управляемой куче.<br><br>
+В неуправляемой куче память выделяется оператором <font color=blue><kbd>new</kbd></font>. В этом случае * - неуправляемый указатель.
+<li class="kod"><kbd>
+MyClass* obj = <font color=blue>new</font> MyClass ;
+</kbd></li><br>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="property"><b>Свойства (property)</b></font>
+<ul>
+В общем случае, свойство - это пара функций, одна из которых отвечает за установку некоторого значения (set), а другая за его считывание (get). Такое решение позволяет, во-первых, обеспечить инкапсуляцию данных и защиту их от неправомерного доступа, а во-вторых, обеспечить целостность данных. Необходимость использования свойств возникает тогда, когда при изменении некоторого параметра требуется произвести ещё некоторые действия.<br><br>
+Функцию как метод следует применять тогда, когда она делает больше, чем доступ к объекту в памяти и возвращение этого значения или при выполнении действия,оказывающего влияние на состояние текущего объекта.<br><br>
+Наиболее простой и самый распространённый способ обеспечения инкапсуляции в C++ заключается в написании пары функций типа get_Value() и set_Value() для каждого параметра. 
+<li class="kod"><kbd><pre>
+<font color=blue>class</font> CValue
+{
+<font color=blue>private:</font>
+    <font color=blue>int</font> m_value;
+<font color=blue>public:</font>
+    <font color=blue>int</font> get_Value()
+    {
+        <font color=blue>return</font> m_value;    
+    }
+    <font color=blue>void</font> set_Value(<font color=blue>int</font> value)
+    {
+        m_value = value;    
+    }
+};
+</pre></kbd></li></ul>
+<ul>
+В этом случае для обращения к такому "свойству" программист должен написать вызов соответствующей функции.<br><br>
+Хорошо это или плохо, но современные средства разработки "приучили" многих к использованию свойств в операторах присваивания и вообще обращению с ними, как с переменными-членами. Учитывая это, разработчики Visual C++ добавили в синтаксис языка несколько "Microsoft Specific" конструкций. В частности, модификатор <font color=blue><kbd>__declspec</kbd></font> получил дополнительный параметр <kbd>property</kbd>. Теперь в классе можно объявить "виртуальную" переменную и связать её с соответствующими функциями. Теперь класс может выглядеть примерно так:
+<li class="kod"><kbd><pre>
+<font color=blue>class</font> CValue
+{
+<font color=blue>private:</font>
+    <font color=blue>int</font> m_value;
+<font color=blue>public:</font>
+    <font color=blue>__declspec</font>(property(get=get_Value, put=put_Value)) <font color=blue>int</font> Value;
+    <font color=blue>int</font> get_Value()
+    {
+         <font color=blue>return</font> m_value;      <font color=green>// Или более сложная логика</font>
+    }
+    <font color=blue>void</font> set_Value(<font color=blue>int</font> value)
+    {
+        m_value = value;      <font color=green>// Или более сложная логика</font>
+    }
+};
+</pre></kbd></li></ul>
+<ul>
+Строчка сразу за <font color=blue><kbd>public:</kbd></font> объявляет "виртуальную" переменную типа <font color=blue><kbd>int</kbd></font>, при обращении к которой фактически будут вызваться функции. С этим классом можно будет работать примерно так:
+<li class="kod"><kbd><pre>
+CValue val;
+val.Value = 50;       <font color=green>// На самом деле вызов set_Value()</font>
+<font color=blue>int</font> z = val.Value;    <font color=green>// На самом деле вызов get_Value()</font>
+</pre></kbd></li></ul>
+<ul>
+Рассмотрим еще один пример, не использующий ключевое слово <font color=blue><kbd>__declspec</kbd></font>:
+<li class="kod"><kbd><pre>
+<font color=blue>public ref class</font> Person
+{
+<font color=blue>private:</font>
+    String^ firstname;
+<font color=blue>public:</font>
+    property String^ Firstname
+    {
+        String^ get()
+        {
+            <font color=blue>return</font> firstname;
+        }
+        <font color=blue>void</font> set(String^ value)
+        {
+            firstname = value;
+        }
+    }
+property String^ Lastname;
+};
+</pre></kbd></li></ul>
+<ul>
+Следующий пример иллюстрирует правильное использование свойств и методов:
+<li class="kod"><kbd><pre>
+ <font color=blue>class</font> Connection 
+    { 
+       <font color=green>// Следующие три члена являются свойствами, поэтому они могут быть установлены в любом порядке</font>
+       <font color=blue>string</font> DNSName  {get{};set{};} 
+       <font color=blue>string</font> UserName {get{};set{};} 
+       <font color=blue>string</font> Password {get{};set{};} 
+       <font color=green>// Следующий член является методом, поэтому порядок расположения важен</font>
+       <font color=green>// Этот метод не может быть выполнен, только после установления свойств</font>
+       <font color=blue>bool</font> Execute (); 
+    } 
+</pre></kbd></li></ul>
+<ul>
+Также возможно определять индексаторы для отдельных свойств:
+<li class="kod"><kbd><pre>
+ <font color=blue>public</font> ref <font color=blue>class</font> Class1
+{
+ <font color=blue>public:</font>
+    array <font color=blue>&lt;int&gt;</font>^ arr;
+    Class1()
+    {
+        arr =  <font color=blue>gcnew</font> array <font color=blue>&lt;int&gt;</font>(5);
+    }
+    property  <font color=blue>int</font> Property[int</font>] <font color=green>// индексированное свойство</font>
+    {
+         <font color=blue>int</font> get (<font color=blue>int</font> index) 
+        { 
+             <font color=blue>return</font> arr[index];
+        }
+         <font color=blue>void</font> set (<font color=blue>int</font> index, <font color=blue>int</font> value)
+        {
+            arr[index] = value;
+        }
+    }
+};
+</pre></kbd></li>
+</ul>
+&nbsp;&nbsp;&nbsp;&nbsp<font id="del"><b>Cобытия и делегаты</b></font>
+<ul>
+Событие представляет собой сообщение, посылаемое объектом, чтобы сигнализировать о совершении какого-либо действия. Это действие может быть вызвано в результате взаимодействия с пользователем, например при нажатии кнопки мыши, или может быть обусловлено логикой работы программы. Объект, вызывающий событие, называется отправителем события. Объект, который захватывает событие и реагирует на него, называется получателем события.
+<br><br>
+События применяются довольно широко. Примером могут служить всевозможные библиотеки, реализующие графический интерфейс пользователя. К сожалению исторически сложилось так, что в C++ нет событий. Поэтому при необходимости разработчики реализуют их на уровне библиотеки.
+<br><br>
+При обмене событиями классу отправителя событий не известен объект или метод, который будет получать (обрабатывать) сформированные отправителем события. Необходимо, чтобы между источником и получателем события имелся посредник (или механизм подобный указателю). Так определяется специальный тип - делегат, обеспечивающий функциональные возможности указателя функции.
+<br><br>
+Делегат является классом, который может хранить ссылку на метод. В отличие от других классов класс делегата имеет подпись и может хранить ссылки только на методы, соответствующие этой подписи. Таким образом, делегат эквивалентен строго типизированному указателю функции или обратному вызову. 
+<br></ul>
+<IMG SRC="images/image_6.gif">
+<br>
+<ul>
+В языке C# делегат выполняет роль аналогичную указателю на функцию в С++.<br><br>
+Делегаты бывают разных типов. Тип делегата определяется типоv и количеством параметов и типом возвращаемого значения. Это значит, что если, например, делегат типа <font color=blue><kbd>void</kbd></font> и у него только один параметр типа <font color=blue><kbd>int</kbd></font>, то в такой делегат мы можем записать только функцию типа <font color=blue><kbd>void</kbd></font> и с одним единственым параметроам типа <font color=blue><kbd>int</kbd></font>. Во-вторых, делегаты, в отличие от указателей на функции языка C++, предcтавляют из себя безопасные типы данных.
+<br><br>
+Вот пример делегата:
+<li class="kod"><kbd><pre>
+<font color=blue>using</font> System;
+<font color=blue>namespace</font> test
+{
+    <font color=green>//Объявление делегата.</font>
+    <font color=blue>delegate float</font> MyFunc(<font color=blue>float</font> x);
+    //Класс для тестирования делегата.
+    <font color=blue>class</font> Test
+    {
+        <font color=green>//Первая функция.</font>
+        <font color=blue>static float</font> f1(<font color=blue>float</font> x)
+        {
+            <font color=blue>return</font> x;
+        }
+        <font color=green>//Вторая функция.</font>
+        <font color=blue>static float</font> f2(<font color=blue>float</font> x)
+        {
+            <font color=blue>return</font> x*x;
+        }
+        <font color=green>//Третья функция.</font>
+        <font color=blue>static float</font> f3(<font color=blue>float</font> x)
+        {
+             <font color=blue>return</font> ( <font color=blue>float</font>)Math.Sqrt(x);
+        }
+        <font color=green>//Метод Main.</font>
+        <font color=blue>static void</font>  Main()
+        {
+            <font color=green>//Создаем экземпляр делегата.</font>
+            MyFunc f = <font color=blue>new</font>  MyFunc(f1);
+             <font color=blue>int</font>  a; <font color=green>//Ответ пользователя.</font>
+            Console.WriteLine("Выберите функцию:\n1.f1=x.\n2.f2=x*x.\n3.f3=sqrt(x).");
+            
+	    <font color=green>//Преобразуем ответ пользователя к типу Int32</font>
+            a= <font color=blue>Int32.Parse</font>(Console.ReadLine());
+            <font color=blue>switch</font>(a)
+            {
+                <font color=blue>case</font>  1:
+                    <font color=green>//Записываем в делегат 1-ю функцию.</font>
+                    f=<font color=blue> new</font>  MyFunc(f1);
+                    <font color=blue>break</font> ;
+                <font color=blue>case</font>  2:
+                    <font color=green>//Записываем в делегат 2-ю функцию.</font>
+                    f= <font color=blue>new</font>  MyFunc(f2);
+                    <font color=blue>break</font> ;
+                <font color=blue>case</font>  3:
+                    <font color=green>//Записываем в делегат 3-ю функцию.</font>
+                    f=<font color=blue> new</font>  MyFunc(f3);
+                    <font color=blue>break</font> ;
+            }
+             <font color=green>//Печатаем результат.</font>
+            <font color=blue>int</font>  x=4;
+            Console.WriteLine("f({0})={1}", x, f(x));
+        }
+    }
+}
+</pre></kbd></li></ul>
+<ul>
+В этой программе мы сначала объявляем делегат:
+<li class="kod"><kbd>
+<font color=blue>delegate float</font> MyFunc(<font color=blue>float</font> x);
+</kbd></li></ul>
+<ul>
+Синаксис объявления делегата такой – сначала пишем ключевое слово <font color=blue><kbd>delegate</kbd></font>, затем – тип возвращаемого значения (<font color=blue><kbd>float</kbd></font> в нашем примере), потом – произвольное имя делегата (у нас это MyFunc), после которого в круглых скобках перечисляем параметры (у нас только один параметр типа <font color=blue><kbd>float</kbd></font>). Объявленный делегат появится на вкладке ClassView (со специальным значком для делегатов).<br><br>
+
+Далее мы в нашем тестовом классе объявляем несколько методов – f1, f2 и f3. Все эти методы имеют тип <font color=blue><kbd>float</kbd></font> и один параметр типа <font color=blue><kbd>float</kbd></font> (как и у делегата MyFunc). Функции делают свой подсчет по-разному – первая просто возвращает параметр, вторая – квадрат параметра, третья – корень из параметра.<br><br>
+Далее мы в методе Main создаем экземпляр нашего делегата и в зависимости от ответа пользователя записываем в него f1, f2 или f3. Потом в строке мы выводим значение делегата при некотором x (равном 4 в нашем примере). Вернее сказать, мы выводим не значение делегата, а значение функции, которую мы записали в делегат.
+<li class="kod"><kbd><pre>
+Consоle.WritеLinе("f({0})={1}", x, f(x));
+</pre></kbd></li></ul>
+<ul>
+В .NET Framework определены (как абстрактные классы) два типа делегатов — System::Delegate и System::MulticastDelegate. Эти два типа делегатов используются как базовые классы для одноадресных (или делегатов единственного приведения — single-cast) и многоадресных (или групповых — multicast) делегатов соответственно. 
+<br><br>
+Одноадресный делегат связывает указатель на метод с методом одного управляемого объекта, тогда как многоадресный делегат связывает указатель на метод с одним или несколькими методами управляемого объекта. Вызов одноадресного делегата приводит к вызову только одного метода, а при вызове многоадресного делегата может выполняться неограниченное количество методов. В связи с тем, что многоадресный делегат можно использовать и для вызова одного метода, одноадресная форма делегата является излишней. Обычно в программах используются лишь многоадресные делегаты. 
+<br><br>
+Встретив в программе ключевое слово <font color=blue><kbd>_delegate</kbd></font> компилятор создает особый управляемый класс, производный от System::MulticastDelegate. Конструктор этого класса имеет два аргумента: указатель на экземпляр управляемого класса (который равен нулю, если делегат связывает статический метод), и сам метод, вызываемый с помощью делегата.
+</ul>
+<a class = "pushLink" href="#start">[<span>В начало документа</span>]</a><br>
+<center><a class = "pushLink" href="index.html">[<span>Оглавление</span>]</center>
+  </BODY>
+</HTML>

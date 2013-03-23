@@ -1,0 +1,153 @@
+#logo
+{
+width: 100%;
+position: absolute;
+left: 0mm;
+height: 17.5mm;
+background-color: #ffefee;
+top: 5mm;
+}
+#panel_span
+{
+	position: absolute;
+	top: -1mm;
+	left: 1mm;
+}
+#body-space
+{
+	
+	color: #FFF;
+	background-color: none;
+	position: absolute;
+	top: 22.5mm;
+	left: 0mm;
+	/*width: 100%;*/
+	right:0mm;
+}
+body
+{
+	background-color: #FFF;
+	color = #000000;
+	font-family: arial;
+	font-size: 14;
+	text-align: left;
+}
+a
+{
+	color: #000;
+}
+div.one a 
+{
+	text-decoration: none;
+}
+
+.one
+{
+	background-color: none;
+	white-space: nonwarp;
+	position: absolute;
+	left: 5mm;
+	width: 450px;
+	height: 18mm;
+	z-index: 5;
+}
+.two
+{
+	background-color: none;
+	position: absolute;
+	
+	width: 100%;
+	height: 18mm;
+	z-index: 4;
+	text-align: right;
+}
+a.logo
+{
+	font-size: 15mm;
+	text-align: left;
+}
+a.info
+{
+	color: blue;
+	font-size: 14pt;
+	
+}
+a.info:hover
+{
+	text-decoration: underline;
+	color: red;
+}
+#user-info
+{	
+	background-color: #efefef;
+	line-height:1.5 em;
+	padding: 10px;
+	position: absolute;
+	left: 0pt;
+	top: 0pt;
+	width: 150px;
+	/*height: 400px;*/
+	color: #000;
+	
+}
+
+#main-info
+{
+	background-color: none;
+	padding-top: 10px;
+	padding-left: 20px;
+	background-color: #FFF;
+	overflow: visible;
+	text-align: left;
+	position: absolute;
+	left: 170px;
+	top: 0px;
+	
+	z-index: 10;
+	color: #000;
+}
+.main_content_text
+{
+	background-color: none;
+	text-align: left;
+	color: #000;
+	width: inherit;
+}
+
+.main_content_img
+{
+	background-color: none;
+	text-align: center;
+	width: inherit;
+	
+}
+
+div.main_content_text em
+{
+	font-size: 13pt;
+	font-weight: bold;
+	color: #ce8c11;
+}
+div.main_content_text em a
+{
+color: inherit;
+}
+
+#podval
+{
+	font-size: 8pt;
+	position: absolute;
+	width: 400pt;
+	background-color: #efefef;
+}
+#miniClocks
+{
+	position: absolute;
+	z-index: 25;
+}
+
+#voting
+{
+	font-size: smaller;
+	color: green;
+}
