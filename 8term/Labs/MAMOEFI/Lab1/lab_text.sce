@@ -136,7 +136,6 @@ x = [
  //task 8
  r_private = zeros(k,1);
  for i = 2:(k+1)
-     
      //mnk y, x without x[i]
      // mnk x[i] from all x's
      //korr between them

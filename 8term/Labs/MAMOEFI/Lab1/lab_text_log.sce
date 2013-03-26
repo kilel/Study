@@ -93,19 +93,11 @@ x = [
  s2R = TSS/(k-1);
  //task 4
  avg_x = (ones(1,n)*x/n);
- temp_avg_x = x;
- for i = 1:n
-     temp_avg_x(i,:) = temp_avg_x(i, :) - avg_x;
- end
- temp_x = 1:(k+1);
- for i = 1:(k+1)
-     temp_x(i) = temp_avg_x(:, i)'*temp_avg_x(:, i);
- end
- temp_x = sqrt(temp_x);
+
  s_beta2 = diag((x'*x)^-1);
  
- t_stat_b = abs(b./sqrt(s_beta2)/s);
- t_krit = 2.001;
+ t_stat_b = abs(exp(b)./sqrt(s_beta2)/s);
+ t_krit = log(2.001);
  b_not_null = t_stat_b > t_krit;
  
  //task 5
@@ -137,10 +129,6 @@ x = [
  //task 8
  r_private = zeros(k,1);
  for i = 2:(k+1)
-     
-     //mnk y, x without x[i]
-     // mnk x[i] from all x's
-     //korr between them
      temp_x = x;
      temp_x(:, i:i) = [];
           temp_korr = y;
