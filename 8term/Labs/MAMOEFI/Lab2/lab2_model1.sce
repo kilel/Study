@@ -72,34 +72,33 @@ x = [
 [1, 3, 4, 102.8, 32.6, 15.5, 0, 1, 6, 35.2];
 [1, 4, 4, 119.1, 42.5, 9.4, 0, 1, 6, 40.8]
  ];
- 
-
-     
  //task 1;
  y = x(:,k+2);
  x = x(:,1:(k+1));
+ 
+ ///model definition
+ x(:, 8:9) = [];
+ x(:, 5) = [];
+ x(:, 2:3) = [];
+ ///
+ t = size(x);
+ n = t(1);
+ k = t(2) - 1;
  b = (x'*x)^(-1)*x'*y;
- 
- function [b] = getRegression(x,y)
-     b = (x'*x)^(-1)*x'*y;
- endfunction
  //task 2
- function [R2] = getR(x,y)
-     b = getRegression(x,y);
-     temp_y = x*b - y;
-     ESS = temp_y'*temp_y;
-     avg_y = (y'*ones(n,1))/n;
-     temp_y = x*b - avg_y;
-     RSS = temp_y'*temp_y;
-     TSS = RSS + ESS;
-     R2 = 1 - ESS/TSS;
-     R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
-     s2 = ESS/(n-k);
-     s = sqrt(s2); 
-     s2R = TSS/(k-1);
- endfunction
+ temp_y = x*b - y;
+ ESS = temp_y'*temp_y;
+ avg_y = (y'*ones(n,1))/n;
+ temp_y = x*b - avg_y;
+ RSS = temp_y'*temp_y;
+ TSS = RSS + ESS;
+ R2 = 1 - ESS/TSS
+ R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
  
-
+ //task 3
+ s2 = ESS/(n-k);
+ s = sqrt(s2); 
+ s2R = TSS/(k-1);
  //task 4
  avg_x = (ones(1,n)*x/n);
  temp_avg_x = x;
@@ -164,29 +163,5 @@ x = [
      D2 = temp_y2' * temp_y2/n  - sum(temp_y2)*sum(temp_y2)/n/n;
      r_private(i-1) = temp_korr/sqrt(D1*D2);
  end
-
- //lab2
- //task 1 check if there exists a mk
- //in the paper
- det_r = det(r_xx);
- det_xx = det(x'*x);
- eignvalue_x = spec(x'*x);
  
-
-     
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 

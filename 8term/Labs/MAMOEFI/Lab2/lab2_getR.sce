@@ -74,7 +74,6 @@ x = [
  ];
  
 
-     
  //task 1;
  y = x(:,k+2);
  x = x(:,1:(k+1));
@@ -84,7 +83,10 @@ x = [
      b = (x'*x)^(-1)*x'*y;
  endfunction
  //task 2
- function [R2] = getR(x,y)
+ function [R2_korr] = getR(x,y)
+     t = size(x);
+     n = t(1);
+     k = t(2) - 1;
      b = getRegression(x,y);
      temp_y = x*b - y;
      ESS = temp_y'*temp_y;
@@ -96,88 +98,50 @@ x = [
      R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
      s2 = ESS/(n-k);
      s = sqrt(s2); 
-     s2R = TSS/(k-1);
+     //s2R = TSS/(k-1);
  endfunction
  
-
- //task 4
- avg_x = (ones(1,n)*x/n);
- temp_avg_x = x;
- for i = 1:n
-     temp_avg_x(i,:) = temp_avg_x(i, :) - avg_x;
- end
- temp_x = 1:(k+1);
- for i = 1:(k+1)
-     temp_x(i) = temp_avg_x(:, i)'*temp_avg_x(:, i);
- end
- temp_x = sqrt(temp_x);
- s_beta2 = diag((x'*x)^-1);
- 
- t_stat_b = abs(b./sqrt(s_beta2)/s);
- t_krit = 2.001;
- b_not_null = t_stat_b > t_krit;
- 
- //task 5
- F_model =  R2/(1-R2) * (n-k-1)/(k);
- F_krit = 3.053;
- model_not_bad = F_model > F_krit;
- 
- //task 6
- b_min_val_abs = t_krit * sqrt(s_beta2) * s;
- 
- //task 7
- Dx = ones(1,n) * (x.*x)/n - avg_x.*avg_x;
- Dy = sum(y.*y)/n - avg_y^2;
- r_xx = zeros(k, k);
- for i = 2:(k+1)
-     for j = 2:(k+1)
-         temp_avg_x1x2 = sum(x(:, i).*x(:, j))/n - avg_x(i)*avg_x(j)  ;
-         //disp(temp_avg_x1x2);
-         r_xx(i-1,j-1) = temp_avg_x1x2/sqrt(Dx(i)*Dx(j));
-     end
- end
- 
- r_xy = zeros(1,k);
- for i = 2:(k+1)
-    temp_avg_xy = sum(x(:, i).*y)/n - avg_x(i)*avg_y;
-    r_xy(i-1) = temp_avg_xy /sqrt(Dy * Dx(i));
- end    
- 
- //task 8
- r_private = zeros(k,1);
- for i = 2:(k+1)
-     //mnk y, x without x[i]
-     // mnk x[i] from all x's
-     //korr between them
-     temp_x = x;
-     temp_x(:, i:i) = [];
-          temp_korr = y;
-     temp_b = (temp_x' * temp_x)^(-1) * temp_x' * temp_korr;
-     temp_y1 = temp_x * temp_b - temp_korr;
-     //
-     temp_korr = x(:,i);
-     temp_b = (temp_x' * temp_x)^(-1) * temp_x' * temp_korr;
-     temp_y2 = temp_x * temp_b - temp_korr;
-     //
-     temp_korr = temp_y1' * temp_y2/n  - sum(temp_y1)*sum(temp_y2)/n/n;
-     D1 = temp_y1' * temp_y1/n  - sum(temp_y1)*sum(temp_y1)/n/n;
-     D2 = temp_y2' * temp_y2/n  - sum(temp_y2)*sum(temp_y2)/n/n;
-     r_private(i-1) = temp_korr/sqrt(D1*D2);
- end
 
  //lab2
  //task 1 check if there exists a mk
  //in the paper
- det_r = det(r_xx);
- det_xx = det(x'*x);
- eignvalue_x = spec(x'*x);
+ //det_r = det(r_xx);
+ //det_xx = det(x'*x);
+ //eignvalue_x = spec(x'*x);
+// r = 0;
+// for i = 2:(k+1)
+//     t = x(:, 4);
+//     t(:, 2) = x(:, 6);
+//     t(:, 3) = x(:, 7);
+//     t(:, 4) = x(:, i);
+//     if i == 4  then continue; end
+//     if i == 7  then continue; end
+//     if i == 6  then continue; end
+//     r(i-1) = getR(t, y);
+// end
  
+ r = 0;
+ x(:, 9) = [];
+ x(:, 8) = [];
+ x(:, 6) = [];
+ x(:, 5) = [];
+ x(:, 2) = [];
+ for i = 2:(k+1)
+     t = x;
+     t(:, i) = [];
 
-     
-     
+     r(i-1) = getR(t, y);
+ end
 
 
+r = 0;
+t = x(:, 1);
+ for i = 2:(k+1)
+     t(:, 2) = x(:, i);
+     //if i == 4  then continue; end
 
+     r(i-1) = getR(t, y);
+ end
 
 
 

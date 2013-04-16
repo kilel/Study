@@ -72,34 +72,33 @@ x = [
 [1, 3, 4, 102.8, 32.6, 15.5, 0, 1, 6, 35.2];
 [1, 4, 4, 119.1, 42.5, 9.4, 0, 1, 6, 40.8]
  ];
- 
-
-     
  //task 1;
  y = x(:,k+2);
  x = x(:,1:(k+1));
+ 
+ ///model definition
+ x(:, 8:9) = [];
+ x(:, 5:6) = [];
+ x(:, 1) = [];
+ ///
+ t = size(x);
+ n = t(1);
+ k = t(2) - 1;
  b = (x'*x)^(-1)*x'*y;
- 
- function [b] = getRegression(x,y)
-     b = (x'*x)^(-1)*x'*y;
- endfunction
  //task 2
- function [R2] = getR(x,y)
-     b = getRegression(x,y);
-     temp_y = x*b - y;
-     ESS = temp_y'*temp_y;
-     avg_y = (y'*ones(n,1))/n;
-     temp_y = x*b - avg_y;
-     RSS = temp_y'*temp_y;
-     TSS = RSS + ESS;
-     R2 = 1 - ESS/TSS;
-     R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
-     s2 = ESS/(n-k);
-     s = sqrt(s2); 
-     s2R = TSS/(k-1);
- endfunction
+ temp_y = x*b - y;
+ ESS = temp_y'*temp_y;
+ avg_y = (y'*ones(n,1))/n;
+ temp_y = x*b - avg_y;
+ RSS = temp_y'*temp_y;
+ TSS = RSS + ESS;
+ R2 = 1 - ESS/TSS
+ R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
  
-
+ //task 3
+ s2 = ESS/(n-k);
+ s = sqrt(s2); 
+ s2R = TSS/(k-1);
  //task 4
  avg_x = (ones(1,n)*x/n);
  temp_avg_x = x;
@@ -164,29 +163,91 @@ x = [
      D2 = temp_y2' * temp_y2/n  - sum(temp_y2)*sum(temp_y2)/n/n;
      r_private(i-1) = temp_korr/sqrt(D1*D2);
  end
-
- //lab2
- //task 1 check if there exists a mk
- //in the paper
- det_r = det(r_xx);
- det_xx = det(x'*x);
- eignvalue_x = spec(x'*x);
  
-
+ 
+ 
+ 
+ function [rankor] = getRank(vect, val)
+     eps = 0.001;
+     k = size(vect);
+     n = k(2) * k(1);
+     vect = gsort(vect);
+     for i = 1:n
+         if abs(vect(i) - val) < eps then
+             j = i+1;
+             try
+             while abs(vect(j) - val) < eps do j = j + 1;
+             end
+         catch
+             end
+             j = j-1;
+             rankor = (j+i)/2.;
+             break;
+         end
+         rankor = -1;
+     end
      
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ endfunction
+ 
+ function [ESS] = getESS(x, y)
+     t = size(x);
+     n = t(1);
+     k = t(2) - 1;
+     b = (x'*x)^(-1)*x'*y;
+     temp_y = x*b - y;
+     ESS = temp_y'*temp_y;
+ endfunction
+ 
+ function [model_F] = getFStat(x,y)
+     t = size(x);
+     n = t(1);
+     k = t(2) - 1;
+     b = (x'*x)^(-1)*x'*y;
+     temp_y = x*b - y;
+     ESS = temp_y'*temp_y;
+     avg_y = (y'*ones(n,1))/n;
+     temp_y = x*b - avg_y;
+     RSS = temp_y'*temp_y;
+     TSS = RSS + ESS;
+     R2 = 1 - ESS/TSS
+     R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
+     model_F =  R2/(1-R2) * (n-k-1)/(k);
+ endfunction
+ 
+ //spirman
+ tx = x(:, 3); //x3
+ ty = abs(x*b - y)
+ p_spirman = 0;
+ for i = 1:n do
+     p_spirman = p_spirman + (getRank(tx, tx(i)) - getRank(ty, ty(i)))^2;
+ end
+ p_spirman =  p_spirman*6 / (n^3 - n);
+ t_spirman = abs(p_spirman)*sqrt(n-2)/(1 - p_spirman^2);
+ t_spirman_krit = t_krit;   
+ spirman_significent = t_spirman > t_spirman_krit;     
+ 
+ //
+ 
+ tx1 = x(1:n/3 , :);
+ ty1 = y(1:n/3);
+ tx2 = x(2*n/3:n, :);
+ ty2 = y(2*n/3:n);
+ goldfeldt_F = getESS(tx1, ty1)/ getESS(tx2, ty2);
+ goldfeldt_krit = 2.2
+ goldfeldt_is_geter = goldfeldt_F > goldfeldt_krit;
+ 
+ //
+ 
+ b = (x'*x)^(-1)*x'*y;
+ e = abs(y - x*b);
+ white_F = getFStat(x, e);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
