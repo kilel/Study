@@ -79,7 +79,7 @@ x = [
  ///model definition
  x(:, 8:9) = [];
  x(:, 5:6) = [];
- x(:, 1) = [];
+ x(:, 2) = [];
  ///
  t = size(x);
  n = t(1);
@@ -214,6 +214,64 @@ x = [
      model_F =  R2/(1-R2) * (n-k-1)/(k);
  endfunction
  
+ function [outArray]=sort(data, sortCol)
+     outArray = [];
+     cnt = 1;
+     while 1 > 0 do
+         s = size(data);
+         s = s(1);
+         if s == 0 then break; end
+         Max = data(1, sortCol);
+         maxi = 1;
+         for i = 1:s
+             if  Max < data(i, sortCol) then
+                 Max = data(i, sortCol);
+                 maxi = i;
+             end
+         end
+         outArray(cnt, :) = data(maxi, :);
+         cnt = cnt + 1;
+         data(maxi, :) = [];
+     end
+ endfunction
+ 
+ function [out]=getTStat(x, y, numCol)
+     
+     t = size(x);
+     n = t(1);
+     k = t(2) - 1;
+     b = (x'*x)^(-1)*x'*y;
+     temp_y = x*b - y;
+     ESS = temp_y'*temp_y;
+     avg_y = (y'*ones(n,1))/n;
+     temp_y = x*b - avg_y;
+     RSS = temp_y'*temp_y;
+     TSS = RSS + ESS;
+     R2 = 1 - ESS/TSS
+     R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
+     
+     //task 3
+     s2 = ESS/(n-k);
+     s = sqrt(s2); 
+//     s2R = TSS/(k-1);
+     //task 4
+     avg_x = (ones(1,n)*x/n);
+     temp_avg_x = x;
+     for i = 1:n
+         temp_avg_x(i,:) = temp_avg_x(i, :) - avg_x;
+     end
+     temp_x = 1:(k+1);
+     for i = 1:(k+1)
+         temp_x(i) = temp_avg_x(:, i)'*temp_avg_x(:, i);
+     end
+     temp_x = sqrt(temp_x);
+     s_beta2 = diag((x'*x)^-1);
+     
+     t_stat_b = abs(b./sqrt(s_beta2)/s);
+     out = t_stat_b;
+     
+ endfunction 
+
  //spirman
  tx = x(:, 3); //x3
  ty = abs(x*b - y)
@@ -227,7 +285,13 @@ x = [
  spirman_significent = t_spirman > t_spirman_krit;     
  
  //
- 
+ x_orig = x;
+ //
+ tx = x;
+ tx(:, 5) = y - x*b;
+ tx = sort(tx, 5);
+ x = tx;
+ x(:, 5) = [];
  tx1 = x(1:n/3 , :);
  ty1 = y(1:n/3);
  tx2 = x(2*n/3:n, :);
@@ -237,16 +301,139 @@ x = [
  goldfeldt_is_geter = goldfeldt_F > goldfeldt_krit;
  
  //
+ x = x_orig;
  
  b = (x'*x)^(-1)*x'*y;
+ e = y - x*b;
+ tx = x(:, 2)^2; // x2
+ tx(:, 2 ) = x(:, 3)^2 // x3
+ tx(:, 3 ) = x(:, 3).*x(:, 2) // x2x3
+ white_F = getFStat(tx, e);
+ 
+ //
+ 
+ best = -1;
+ besti = -1;
+ b = (x'*x)^(-1)*x'*y;
  e = abs(y - x*b);
- white_F = getFStat(x, e);
+ for gam = 1:50
+     tx =  x(:, 1);
+     tx(:, 2) = x(:, 3)^gam; // x3
+     temp = getTStat(tx, e, 2);
+     temp = temp(2)
+     if temp > best then
+         best = temp;
+         besti = gam;
+     end
+     tx(:, 2) = x(:, 3)^(1/gam); // x3
+     temp = getTStat(tx, e, 2);
+     temp = temp(2)
+     if temp > best then
+         best = temp;
+         besti = 1/gam;
+     end
+ end
  
+ tx =  x(:, 1);
+ tx(:, 2) = x(:, 3)^besti; // x3
+ glaizer_f = getFStat(tx, e);
  
+ //
  
+ sigma_eps2 =  tx*((tx' * tx)^(-1) * tx' * e );
+ x(:, 3) = x(:, 3)  ./ sqrt(sigma_eps2);
+ x(:, 1) = x(:, 1)  ./ sqrt(sigma_eps2);
+ x(:, 2) = x(:, 2)  ./ sqrt(sigma_eps2);
+ x(:, 4) = x(:, 4)  ./ sqrt(sigma_eps2);
  
+ ////
+ ///
+ ///
+ ///
+ ///
  
+ t = size(x);
+ n = t(1);
+ k = t(2) - 1;
+ b = (x'*x)^(-1)*x'*y;
+ //task 2
+ temp_y = x*b - y;
+ ESS = temp_y'*temp_y;
+ avg_y = (y'*ones(n,1))/n;
+ temp_y = x*b - avg_y;
+ RSS = temp_y'*temp_y;
+ TSS = RSS + ESS;
+ R2 = 1 - ESS/TSS
+ R2_korr = 1 - (n-1)/(n-k-1)*(1-R2);
  
+ //task 3
+ s2 = ESS/(n-k);
+ s = sqrt(s2); 
+ s2R = TSS/(k-1);
+ //task 4
+ avg_x = (ones(1,n)*x/n);
+ temp_avg_x = x;
+ for i = 1:n
+     temp_avg_x(i,:) = temp_avg_x(i, :) - avg_x;
+ end
+ temp_x = 1:(k+1);
+ for i = 1:(k+1)
+     temp_x(i) = temp_avg_x(:, i)'*temp_avg_x(:, i);
+ end
+ temp_x = sqrt(temp_x);
+ s_beta2 = diag((x'*x)^-1);
+ 
+ t_stat_b = abs(b./sqrt(s_beta2)/s);
+ t_krit = 2.001;
+ b_not_null = t_stat_b > t_krit;
+ 
+ //task 5
+ F_model =  R2/(1-R2) * (n-k-1)/(k);
+ F_krit = 3.053;
+ model_not_bad = F_model > F_krit;
+ 
+ //task 6
+ b_min_val_abs = t_krit * sqrt(s_beta2) * s;
+ 
+ //task 7
+ Dx = ones(1,n) * (x.*x)/n - avg_x.*avg_x;
+ Dy = sum(y.*y)/n - avg_y^2;
+ r_xx = zeros(k, k);
+ for i = 2:(k+1)
+     for j = 2:(k+1)
+         temp_avg_x1x2 = sum(x(:, i).*x(:, j))/n - avg_x(i)*avg_x(j)  ;
+         //disp(temp_avg_x1x2);
+         r_xx(i-1,j-1) = temp_avg_x1x2/sqrt(Dx(i)*Dx(j));
+     end
+ end
+ 
+ r_xy = zeros(1,k);
+ for i = 2:(k+1)
+    temp_avg_xy = sum(x(:, i).*y)/n - avg_x(i)*avg_y;
+    r_xy(i-1) = temp_avg_xy /sqrt(Dy * Dx(i));
+ end    
+ 
+ //task 8
+ r_private = zeros(k,1);
+ for i = 2:(k+1)
+     //mnk y, x without x[i]
+     // mnk x[i] from all x's
+     //korr between them
+     temp_x = x;
+     temp_x(:, i:i) = [];
+          temp_korr = y;
+     temp_b = (temp_x' * temp_x)^(-1) * temp_x' * temp_korr;
+     temp_y1 = temp_x * temp_b - temp_korr;
+     //
+     temp_korr = x(:,i);
+     temp_b = (temp_x' * temp_x)^(-1) * temp_x' * temp_korr;
+     temp_y2 = temp_x * temp_b - temp_korr;
+     //
+     temp_korr = temp_y1' * temp_y2/n  - sum(temp_y1)*sum(temp_y2)/n/n;
+     D1 = temp_y1' * temp_y1/n  - sum(temp_y1)*sum(temp_y1)/n/n;
+     D2 = temp_y2' * temp_y2/n  - sum(temp_y2)*sum(temp_y2)/n/n;
+     r_private(i-1) = temp_korr/sqrt(D1*D2);
+ end
  
  
  
