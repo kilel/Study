@@ -1,0 +1,54 @@
+> restart;
+> c1 := 2 * y1:
+> c2 := 1/2 * y2^2:
+> mc1 := diff(c1, y1):
+> mc2 := diff(c2, y2):
+> p := 40 - y1 - y2:
+> PR1 := p*y1 - c1:
+> PR2 := p*y2 - c2:
+> PR := PR1 + PR2:
+> 
+> ####################
+> #####  Ki.lel  #####
+> ####################
+> 
+> #Task 1. Kurno model.
+> solve({diff(PR1, y1)=0,diff(PR2, y2)=0});
+
+                        {y1 = 74/5, y2 = 42/5}
+
+> #Task 2.
+> y2_dep_y1 := rhs((solve({diff(PR2, y2)=0}, y2))[1]): #y2(y1)
+> t2OpF := (unapply(PR1, y1, y2))(y1, y2_dep_y1):
+> temp := rhs(maximize(t2OpF, location)[2][1][1][1]):
+> y1 = temp; y2 = (unapply(y2_dep_y1, y1))(temp);
+
+                              y1 = 37/2
+
+
+                              y2 = 43/6
+
+> #Task 3.
+> p_dep_y1 := (unapply(p, y1, y2))(y1, y2_dep_y1): #p(y1)
+> y1_dep_p := solve(P = p_dep_y1, y1):
+> temp := rhs(maximize(P*y1_dep_p - (unapply(c1, y1))(y1_dep_p), location)[2][1][1][1]):
+> temp2 := (unapply(y1_dep_p, P))(temp):
+> y1 = temp2;
+> y2 = (unapply(y2_dep_y1, y1))(temp2);
+
+                              y1 = 37/2
+
+
+                              y2 = 43/6
+
+> #Task 4. Bertran model
+> solve({p = mc1, mc1 = mc2});
+
+                          {y1 = 36, y2 = 2}
+
+> #Task 5. Kartel
+> maximize(PR, location);
+
+                   363, {[{y1 = 17, y2 = 2}, 363]}
+
+> 
