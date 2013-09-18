@@ -1,5 +1,10 @@
 #include "../include/BigInt.h"
 namespace long_math {
+
+BigInt *ZERO = new BigInt(0);
+BigInt *ONE = new BigInt(1);
+BigInt *TWO = new BigInt(2);
+
 BigInt::BigInt() : BigInt(0) {
 }
 
@@ -24,6 +29,14 @@ BigInt::BigInt(int value) {
 BigInt::~BigInt() {
     innerData->clear();
     delete innerData;
+}
+
+BigInt::BigInt(BigIntData& source) {
+    innerData = new BigIntData(0);
+    this->sign = 1;
+    for(BigIntData::iterator it = source.begin(); it != source.end(); ++it) {
+        innerData->push_back(*it);
+    }
 }
 
 BigInt::BigInt(const BigInt& source) {
@@ -78,7 +91,7 @@ BigInt* BigInt::shift(int digits) {
 }
 
 BigInt* BigInt::add(BigInt& value) {
-    if(value.sign != this->sign){
+    if(value.sign != this->sign) {
         BigInt *tempVal = new BigInt(value);
         tempVal->sign *= -1;
         this->sub(*tempVal);
@@ -114,7 +127,7 @@ BigInt* BigInt::add(BigInt& value) {
 }
 
 BigInt* BigInt::sub(BigInt& value) {
-    if(value.sign != this->sign){
+    if(value.sign != this->sign) {
         BigInt *tempVal = new BigInt(value);
         tempVal->sign *= -1;
         this->add(*tempVal);
@@ -123,7 +136,10 @@ BigInt* BigInt::sub(BigInt& value) {
     }
 
     if(cmp(value) == 0) {
-        return new BigInt();
+        innerData->clear();
+        innerData->push_back(0);
+        sign = 1;
+        return this;
     }
     BigInt *subBase = new BigInt(), *subActive = new BigInt();
     int overflow = 0;
@@ -211,7 +227,7 @@ BigInt* BigInt::mult(BigInt& value) {
     return this;
 }
 
-pair<BigInt*, int> BigInt::divMod(int value) {
+pair<BigInt*, BigInt*> BigInt::divMod(int value) {
     assert (value < MODULE);
 
     BigInt* temp = new BigInt(0);
@@ -228,69 +244,100 @@ pair<BigInt*, int> BigInt::divMod(int value) {
         overfloat = currData % value;
     }
     mod = overfloat;
-    return pair<BigInt*, int>(temp, mod);
+    return pair<BigInt*, BigInt*>(temp, new BigInt(mod));
 }
 
 BigInt* BigInt::div(int value) {
-    BigInt* temp = divMod(value).first;
-    this->copy(*temp);
-    delete temp;
+    DivModData temp = divMod(value);
+    this->copy(*(temp.first));
+    delete temp.first;
+    delete temp.second;
     return this;
 }
 
-int BigInt::mod(int value) {
-    pair<BigInt*, int>  temp = divMod(value);
+BigInt* BigInt::mod(int value) {
+    if(value == 2) {
+        if(*(innerData->begin()) % 2 == 1) {
+            this->copy(*ONE);
+        } else {
+            this->copy(*ZERO);
+        }
+        return this;
+    }
+    DivModData temp = divMod(value);
+    this->copy(*(temp.second));
     delete temp.first;
-    return divMod(value).second;
+    delete temp.second;
+    return this;
 }
 
 BigInt* BigInt::div(BigInt& value) {
+    DivModData temp = divMod(value);
+    this->copy(*(temp.first));
+    delete temp.first;
+    delete temp.second;
+    return this;
+}
+
+BigInt* BigInt::mod(BigInt& value) {
+    if(value.cmp(*TWO) == 0) {
+        if(*(innerData->begin()) % 2 == 1) {
+            this->copy(*ONE);
+        } else {
+            this->copy(*ZERO);
+        }
+        return this;
+    }
+    DivModData temp = divMod(value);
+    this->copy(*(temp.second));
+    delete temp.first;
+    delete temp.second;
+    return this;
+}
+
+DivModData BigInt::divMod(BigInt& value) {
     if(cmp(value) < 0) {
-        return new BigInt(0);
+        return DivModData(new BigInt(0), new BigInt(*this));
     } else if (cmp(value) == 0) {
-        return new BigInt(1);
+        return DivModData(new BigInt(1), new BigInt(0));
     }
 
-    //i / j -> k
     int resultSign = this->sign * value.sign;
 
     BigInt* base = new BigInt(*this);
     base->sign *= base->sign; // make sign == 1;
 
-    BigIntData* result = new BigIntData(0);
+    BigIntData* divDataAggregator = new BigIntData(0);
 
-    int resLen = base->innerData->size() - value.innerData->size();
+    int shiftLength = base->innerData->size() - value.innerData->size();
 
     BigInt* dividor = new BigInt(value);
-    for(int i = 0; i < resLen + 1; ++i) {
+    for(int i = 0; i < shiftLength + 1; ++i) {
         dividor->copy(value);
-        dividor->shift(resLen - i);
+        dividor->shift(shiftLength - i);
         dividor->sign *= dividor->sign; // make sign == 1;
 
         int resDiv = divSimple(*base, *dividor);
-        result->push_back(resDiv);
+        divDataAggregator->push_back(resDiv);
         dividor->mult(resDiv);
         base->sub(*dividor);
     }
 
     base->sign *= resultSign;
-    // mod: this->copy(*base);
 
-    BigInt* res = new BigInt(*base);
-    res->innerData->clear();
+    BigInt* mod = new BigInt(*base);
+    BigInt* div = new BigInt(*base);
 
-    for(BigIntData::iterator it = result->end() - 1; it != result->begin() - 1; --it) {
-        res->innerData->push_back(*it);
+    div->innerData->clear();
+    for(BigIntData::iterator it = divDataAggregator->end() - 1; it != divDataAggregator->begin() - 1; --it) {
+        div->innerData->push_back(*it);
     }
 
-    this->copy(*res);
-
-    delete res;
-    delete result;
+    delete divDataAggregator;
     delete base;
     delete dividor;
 
-    return this;
+    return DivModData(div, mod);
 }
 
 int BigInt::divSimple(BigInt& base, BigInt& dividor) {
@@ -341,7 +388,53 @@ int BigInt::cmp(BigInt& value) {
     return 0;
 }
 
-void BigInt::print(string message){
+BigInt* BigInt::powMod(BigInt& deg, BigInt& module) {
+    vector<BigInt*> *pow2 = new vector<BigInt*>(0);
+    vector<BigInt*> *pow2this = new vector<BigInt*>(0);
+    pow2->push_back(new BigInt(1));
+    pow2this->push_back(new BigInt(*this));
+    //array of 2^n: maxDeg if first, such 2^maxDeg > deg.
+    //parallelly build array of this^(2^i) by adding last*last to end.
+    while(true) {
+        vector<BigInt*>::iterator lastPow2 = pow2->end() - 1;
+        vector<BigInt*>::iterator lastPow2This = pow2this->end() - 1;
+        BigInt* temp = new BigInt(**lastPow2This);
+        pow2this->push_back(temp->mult(*temp));
+
+        temp = new BigInt(**lastPow2);
+        pow2->push_back(temp->mult(*temp));
+
+        if(*temp > deg) {
+            break;
+        }
+    }
+    //for each 2^n check, if it exists in deg.
+    BigInt* ret = new BigInt(*ONE);
+    BigInt* temp = new BigInt();
+    for(size_t i = 0; i < pow2->size(); ++i) {
+        temp->copy(deg);
+        temp->div(*pow2->at(i));
+        if(*temp->mod(*TWO) == *ONE) {
+            ret->mult(*pow2this->at(i));
+            ret->mod(module);
+        }
+    }
+
+    this->copy(*ret);
+
+    delete temp;
+    for(size_t i = 0; i < pow2->size(); ++i) {
+        delete (*pow2)[i];
+        delete (*pow2this)[i];
+    }
+    delete[] pow2;
+    delete[] pow2this;
+    delete ret;
+
+    return this;
+}
+
+void BigInt::print(string message) {
     if(message != "") {
         cout << message << ": ";
     }
@@ -351,7 +444,7 @@ void BigInt::print(string message){
         printf("%04d", *it);
     }
 }
-void BigInt::println(string message){
+void BigInt::println(string message) {
     print(message);
     printf("\n");
 }
@@ -416,6 +509,46 @@ BigInt& operator* (int left, BigInt& right) {
 BigInt& operator* (BigInt& left, int right) {
     BigInt* ret = new BigInt(left), *temp = new BigInt(right);
     ret->mult(*temp);
+    delete temp;
+    return *ret;
+}
+
+BigInt& operator/ (BigInt& left, BigInt& right) {
+    BigInt* ret = new BigInt(left);
+    ret->div(right);
+    return *ret;
+}
+
+BigInt& operator/ (int left, BigInt& right) {
+    BigInt* ret = new BigInt(right), *temp = new BigInt(left);
+    ret->div(*temp);
+    delete temp;
+    return *ret;
+}
+
+BigInt& operator/ (BigInt& left, int right) {
+    BigInt* ret = new BigInt(left), *temp = new BigInt(right);
+    ret->div(*temp);
+    delete temp;
+    return *ret;
+}
+
+BigInt& operator% (BigInt& left, BigInt& right) {
+    BigInt* ret = new BigInt(left);
+    ret->mod(right);
+    return *ret;
+}
+
+BigInt& operator% (int left, BigInt& right) {
+    BigInt* ret = new BigInt(right), *temp = new BigInt(left);
+    ret->mod(*temp);
+    delete temp;
+    return *ret;
+}
+
+BigInt& operator% (BigInt& left, int right) {
+    BigInt* ret = new BigInt(left), *temp = new BigInt(right);
+    ret->mod(*temp);
     delete temp;
     return *ret;
 }

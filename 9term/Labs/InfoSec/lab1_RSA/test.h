@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "include/BigInt.h"
+#include "BigInt.h"
 
 using namespace std;
 using namespace long_math;
@@ -46,6 +46,13 @@ void testMult(){
     (a * b).println("a * b");
     (b * a).println("b * a");
     (a * 1000001).println("a * 1000001");
+
+    BigInt c = *(new BigInt(2));
+    BigInt d = *(new BigInt(256));
+    BigInt mod = *(new BigInt(100000));
+    mod.mult(mod);
+    c.powMod(d, mod)->println("2^256 % 100000 00000");
+
 }
 
 void testDiv(){
@@ -58,11 +65,15 @@ void testDiv(){
     b.println("b");
     //a.div(123)->println("a div 123");
     (a*b*c).println("a*b*c");
-    (a*b*c).div(b)->println("(a*b*c).div(b)");
+    ((a*b*c) / b).println("(a*b*c) / (b)");
     (a*c).println("(a*c)");
+    ((a*b*c*d) / (d * b)).println("(a*b*c*d) / (d * b)");
+    ((a*b*c*d + b*d + c*b + a*d) % (d * b)).println("((a*b*c*d + b*d + c*b + a*d) % (d * b))");
+    ((c*b + a*d) % (d * b)).println("((c*b + a*d) % (d * b))");
+    (* (new BigInt(256)) % *(new BigInt(4))).println("256 % 4");
 }
 
-int main() {
+int test() {
     testSum();
     testSub();
     testMult();

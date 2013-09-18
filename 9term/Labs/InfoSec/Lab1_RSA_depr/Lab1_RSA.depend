@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1379403910 source:/home/hkyten/study_git/Study/9term/Labs/InfoSec/Lab1_RSA/main.cpp
+	<iostream>
+	<vector>
+	<string>
+	"include/BigInt.h"
+
+1379401242 source:/home/hkyten/study_git/Study/9term/Labs/InfoSec/Lab1_RSA/src/BigInt.cpp
+	"../include/BigInt.h"
+
+1379401280 /home/hkyten/study_git/Study/9term/Labs/InfoSec/Lab1_RSA/include/BigInt.h
+	<iostream>
+	<vector>
+	<string>
+	<assert.h>
+
