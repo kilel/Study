@@ -4,15 +4,11 @@
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
                    projectFiles="true">
-      <itemPath>BigInt.cpp</itemPath>
-      <itemPath>BigIntOperators.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
-      <itemPath>BigInt.h</itemPath>
-      <itemPath>test.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Файлы ресурсов"
@@ -41,18 +37,10 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandLine>-std=c++11</commandLine>
+          <commandlineTool>mpic++</commandlineTool>
         </ccTool>
       </compileType>
-      <item path="BigInt.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="BigInt.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="test.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -76,15 +64,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="BigInt.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="BigInt.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="test.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

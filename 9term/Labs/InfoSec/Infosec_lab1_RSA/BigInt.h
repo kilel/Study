@@ -16,12 +16,15 @@ namespace long_math {
     class BigInt {
     public:
         static const int MODULE = 1e4;
+        static const int MODULE_LENGTH = 4;
 
         BigInt();
         BigInt(int value);
         virtual ~BigInt();
         BigInt(const BigInt& source);
         BigInt(BigIntData& source);
+        BigInt(string& source);
+        BigInt(char *source);
 
         void copy(BigInt& source);
 
@@ -35,6 +38,8 @@ namespace long_math {
         BigInt* div(BigInt& value);
         BigInt* mod(BigInt& value);
         BigInt* powMod(BigInt& deg, BigInt& module);
+        
+        BigInt* gcd(BigInt& second);
 
         int cmp(BigInt& value);
 
@@ -69,9 +74,13 @@ namespace long_math {
         friend bool operator== (BigInt& left, BigInt& right);
         friend bool operator== (int left, BigInt& right);
         friend bool operator== (BigInt& left, int right);
+        
+        friend bool operator!= (BigInt& left, BigInt& right);
+        friend bool operator!= (int left, BigInt& right);
+        friend bool operator!= (BigInt& left, int right);
 
         //BigInt& inverseMod(const BigInt& mod);
-        //bool isPrime();
+        bool isPrime();
 
         void print(string message = "");
         void println(string message = "");
@@ -86,6 +95,7 @@ namespace long_math {
         DivModData divMod(int value);
         DivModData divMod(BigInt& dividor);
         static int divSimple(BigInt& base, BigInt& dividor);
+        void initFromString(string s);
 
     };
 }

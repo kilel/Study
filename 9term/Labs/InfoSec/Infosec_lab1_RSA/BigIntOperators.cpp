@@ -143,6 +143,21 @@ namespace long_math {
     bool operator==(BigInt& left, int right) {
         return right == left;
     }
+    
+    bool operator!=(BigInt& left, BigInt& right) {
+        return left.cmp(right) != 0;
+    }
+
+    bool operator!=(int left, BigInt& right) {
+        BigInt *temp = new BigInt(left);
+        bool ret = right.cmp(*temp) != 0;
+        delete temp;
+        return ret;
+    }
+
+    bool operator!=(BigInt& left, int right) {
+        return right != left;
+    }
 
 
 }

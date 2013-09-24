@@ -1,3 +1,11 @@
+/* 
+ * File:   BITest.cpp
+ * Author: hkyten
+ *
+ * Created on 22.09.2013, 13:19:35
+ */
+
+#include <stdlib.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -6,14 +14,15 @@
 using namespace std;
 using namespace long_math;
 
-void print(BigInt value, string s) {
-    BigIntData* data = value.getData();
-    cout << s;
-    for(BigIntData::iterator it = data->begin(); it != data->end(); ++it) {
-        cout << *it << " ";
-    }
-    cout << endl;
+void test1() {
+    std::cout << "BITest test 1" << std::endl;
 }
+
+/*void test2() {
+    std::cout << "BITest test 2" << std::endl;
+    std::cout << "%TEST_FAILED% time=0 testname=test2 (BITest) message=error message sample" << std::endl;
+}*/
+
 
 void testSum(){
     cout << "testing add\n";
@@ -71,13 +80,21 @@ void testDiv(){
     ((a*b*c*d + b*d + c*b + a*d) % (d * b)).println("((a*b*c*d + b*d + c*b + a*d) % (d * b))");
     ((c*b + a*d) % (d * b)).println("((c*b + a*d) % (d * b))");
     (* (new BigInt(256)) % *(new BigInt(4))).println("256 % 4");
+    string num = "-1245692834295329834";
+    BigInt init = *(new BigInt(num));
+    init.println("Init test [1245692834295329834]");
 }
 
-int test() {
+int main(int argc, char** argv) {
+    std::cout << "%SUITE_STARTING% BITest" << std::endl;
+    std::cout << "%SUITE_STARTED%" << std::endl;
+
+    std::cout << "%TEST_STARTED% test1 (BITest)" << std::endl;
     testSum();
-    testSub();
-    testMult();
-    testDiv();
+    std::cout << "%TEST_FINISHED% time=0 test1 (BITest)" << std::endl;
 
-    return 0;
+    std::cout << "%SUITE_FINISHED% time=0" << std::endl;
+
+    return (EXIT_SUCCESS);
 }
+

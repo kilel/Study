@@ -1,3 +1,6 @@
+#include <exception>
+#include <string>
+
 #include "BigInt.h"
 namespace long_math {
 
@@ -44,6 +47,45 @@ namespace long_math {
         this->sign = source.sign;
         for (BigIntData::iterator it = source.innerData->begin(); it != source.innerData->end(); ++it) {
             innerData->push_back(*it);
+        }
+    }
+
+    BigInt::BigInt(string& source) {
+        innerData = new BigIntData(0);
+        sign = 1;
+        initFromString(source);
+    }
+
+    BigInt::BigInt(char *source) {
+        innerData = new BigIntData(0);
+        sign = 1;
+        string s = "";
+        s.append(source);
+        initFromString(s);
+    }
+
+    void BigInt::initFromString(string source) {
+        int begin = 0;
+        int end = source.length();
+        if (source[begin] == '-') {
+            sign = -1;
+            ++begin;
+        } else if (source[begin] == '+') {
+            ++begin;
+        }
+        for (int i = begin; i < end; ++i) {
+            if (source[i] > '9' || source[i] < '0') {
+                throw "Illegal format of number: [" + source + "]";
+            }
+        }
+        for (int i = end - 1; i >= begin; i -= MODULE_LENGTH) {
+            int temp = 0;
+            int maxRead = min(i + 1 - begin, (int) MODULE_LENGTH);
+
+            for (int j = maxRead - 1; j >= 0; --j) {
+                temp = temp * 10 + source[i - j] - '0';
+            }
+            innerData->push_back(temp);
         }
     }
 
@@ -438,6 +480,9 @@ namespace long_math {
             cout << message << ": ";
         }
         BigIntData::iterator it = innerData->end() - 1;
+        if (sign < 0) {
+            printf("-");
+        }
         printf("%d", *it);
         while (--it != innerData->begin() - 1) {
             printf("%04d", *it);
@@ -449,4 +494,46 @@ namespace long_math {
         printf("\n");
     }
 
+    bool BigInt::isPrime() {
+        BigInt* curr = new BigInt(2);
+        BigInt* end = new BigInt(999);
+        BigInt* base = new BigInt();
+        BigInt* deg = new BigInt(*this);
+        deg->sub(*ONE);
+
+        bool ret = true;
+
+        while (*curr < *end) {
+            base->copy(*curr);
+            curr->add(*ONE);
+            if (*base->powMod(*deg, *this) == *ONE) {
+                ret = false;
+                break;
+            }
+        }
+
+        delete curr;
+        delete end;
+        delete deg;
+        delete base;
+
+        return ret;
+    }
+
+    BigInt* BigInt::gcd(BigInt& second) {
+        BigInt* firstOne, *secondOne;
+        firstOne = new BigInt(*this);
+        secondOne = new BigInt(second);
+        while (*secondOne != *ZERO) {
+            firstOne->mod(*secondOne);
+            BigInt* temp = firstOne;
+            firstOne = secondOne;
+            secondOne = temp;
+        }
+        this->copy(*firstOne);
+
+        delete firstOne;
+        delete secondOne;
+        return this;
+    }
 }

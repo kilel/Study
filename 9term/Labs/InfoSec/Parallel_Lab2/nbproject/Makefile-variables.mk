@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux-x86
-CND_ARTIFACT_NAME_Debug=lab1_rsa
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/lab1_rsa
+CND_ARTIFACT_NAME_Debug=parallel_lab2
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/parallel_lab2
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=lab1rsa.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/lab1rsa.tar
+CND_PACKAGE_NAME_Debug=parallellab2.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/parallellab2.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=lab1_rsa
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/lab1_rsa
+CND_ARTIFACT_NAME_Release=parallel_lab2
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/parallel_lab2
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=lab1rsa.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/lab1rsa.tar
+CND_PACKAGE_NAME_Release=parallellab2.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/parallellab2.tar
 #
 # include compiler specific variables
 #
