@@ -37,6 +37,8 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <architecture>2</architecture>
+          <standard>8</standard>
           <commandlineTool>mpic++</commandlineTool>
         </ccTool>
       </compileType>
@@ -56,6 +58,9 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <architecture>2</architecture>
+          <standard>8</standard>
+          <commandlineTool>mpic++</commandlineTool>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>

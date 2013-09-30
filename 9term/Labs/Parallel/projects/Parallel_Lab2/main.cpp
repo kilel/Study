@@ -13,7 +13,6 @@ private:
     int size;
     static const int master = 0;
 
-
 public:
 
     Lab2() {
@@ -70,29 +69,26 @@ public:
 
     void task4() {
         barrier("Task 4");
-        int buffSize = 1 + BSEND_OVERHEAD + 5;
         int * buffer;
+        int buffSize = 1 + BSEND_OVERHEAD;
+        buffer = new int[buffSize];
+
+        Attach_buffer(buffer, buffSize);
         
-        if(id == master){
-            buffer = new int[buffSize + 5];
-            MPI_Buffer_attach(buffer, buffSize);
-        }
-        
-        //Attach_buffer(buffer, buffSize);
-        if (id % 2 == 0 && id + 1 != size) {
-            *buffer = rand();
-            int to = id + 1;
-            
-            comm.Bsend(buffer, buffSize, INTEGER, to, 0);
-            printf("Process %d sent data [%d] to %d\n", id, *buffer, to);
-        } else if (id != master) {
-            int from = id - 1;
-            comm.Recv(buffer, buffSize, INTEGER, from, 0);
+        if (id == master) {
+            int toSend = rand();
+            *buffer = toSend;
+            int to = 1;
+            comm.Bsend(buffer, 1, INTEGER4, to, 0);
+            printf("Process %d sent data [%d] to %d\n", id, toSend, to);
+        } else if (id == 1) {
+            int from = 0;
+            comm.Recv(buffer, 1, INTEGER4, from, 0);
             printf("Process %d recieved data [%d] from %d\n", id, *buffer, from);
         }
-        if(id == master)
-            MPI_Buffer_detach(buffer, &buffSize);
-        //Detach_buffer(buffer);
+        comm.Barrier();
+        //MPI_Buffer_detach(buffer, &buffSize);
+        Detach_buffer((void*&)buffer);
         delete [] buffer;
     }
 
@@ -123,48 +119,79 @@ public:
         if (id == master) {
             data = rand();
             printf("Process %d initialized data [%d]\n", id, data);
+            comm.Bcast(&data, 1, INTEGER, master);
+            printf("Process %d sent data [%d]\n", id, data);
+        } else {
+            comm.Bcast(&data, 1, INTEGER, master);
+            printf("Process %d catched data [%d]\n", id, data);
         }
-        comm.Bcast(&data, 1, INTEGER, master);
-        printf("Process %d has now data [%d]\n", id, data);
     }
 
     void task7() {
         barrier("Task 7");
-        char data[] = "";
-        int dataLen = 3;
+        string data = "";
+        //int dataLen = 3;
         if (id == master) {
-            scanf("%s", data);
-            //data = "zaq";
-            printf("Process %d initialized data [%s]\n", id, data);
+            char * temp = new char[100];
+            scanf("%s", temp);
+            data = temp;
+            delete temp;
+            printf("Process %d initialized data [%s]\n", id, data.data());  
         }
-        comm.Bcast(&data, 3, CHAR, master);
-        printf("Process %d has now data [%s]\n", id, data);
+        comm.Barrier();
+        if(id == master){
+            int len = data.length();
+            comm.Bcast(&len, 1, INTEGER, master);
+            printf("Process %d sent length [%d]\n", id, data.length());
+            comm.Bcast((char *) data.data(), len + 1, CHAR, master);
+            printf("Process %d sent data [%s]\n", id, data.data());
+        } else {
+            char *resp;
+            int len = 0;
+            comm.Bcast(&len, 1, INTEGER, master);
+            printf("Process %d catched length [%d]\n", id, len);
+            resp = new char[len + 1];
+            comm.Bcast(resp, len + 1, CHAR, master);
+            printf("Process %d catched data [%s]\n", id, resp);
+            delete resp;
+        }    
     }
-
+    
     void task8() {
         barrier("Task 8");
         int excludeNode = size - 1;
         Group group = comm.Get_group().Excl(1, &excludeNode);
         Intracomm newComm = comm.Create(group);
 
-        char *data = "default";
-        int dataLen = 3;
+        string data = "default";
         if (newComm != COMM_NULL) {
             if (newComm.Get_rank() == master) {
                 data = "task8";
-                printf("Process %d initialized data [%s]\n", id, data);
+                printf("Process %d initialized data [%s]\n", id, &data[0]);
             }
-            newComm.Bcast(&data, 3, CHAR, master);
-            printf("Process %d has now data [%s]\n", id, data);
+            newComm.Barrier();
+            if(id == master) {
+                int len = data.length();
+                newComm.Bcast(&len, 1, INTEGER, master);
+                newComm.Bcast(&data[0], len + 1, CHAR, master);
+                printf("Process %d sent data [%s]\n", id, &data[0]);
+            } else {
+                int len = 0;
+                newComm.Bcast(&len, 1, INTEGER, master);
+                char *resp = new char[len + 1];
+                newComm.Bcast(resp, len + 1, CHAR, master);
+                printf("Process %d catched data [%s]\n", id, resp);
+                delete resp;
+            }
             newComm.Free();
             group.Free();
         }
     }
-    
+
     void task9() {
         barrier("Task 9");
         int excludeNode = size - 1;
-        int elements[] = {0,2};
+        int elements[] = {0, 2};
         Group group = comm.Get_group().Incl(2, elements);
         Intracomm newComm = comm.Create(group);
 
@@ -177,7 +204,7 @@ public:
             }
             int red = 0;
             newComm.Reduce(&data, &red, dataLen, INTEGER, SUM, 0);
-            if(newComm.Get_rank() == master){
+            if (newComm.Get_rank() == master) {
                 printf("Reduced data: [%d]\n", red);
             }
             newComm.Free();

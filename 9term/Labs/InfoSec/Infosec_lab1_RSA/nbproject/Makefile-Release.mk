@@ -41,11 +41,11 @@ OBJECTFILES= \
 
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=`cppunit-config --cflags` 
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=`cppunit-config --cflags` 
+CXXFLAGS=`cppunit-config --cflags` 
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -67,17 +67,17 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa: ${OBJECTFILES}
 ${OBJECTDIR}/BigInt.o: BigInt.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigInt.o BigInt.cpp
+	$(COMPILE.cc) -O2 -I. -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigInt.o BigInt.cpp
 
 ${OBJECTDIR}/BigIntOperators.o: BigIntOperators.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigIntOperators.o BigIntOperators.cpp
+	$(COMPILE.cc) -O2 -I. -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigIntOperators.o BigIntOperators.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O2 -I. -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

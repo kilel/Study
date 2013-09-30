@@ -6,6 +6,13 @@
 using namespace std;
 using namespace long_math;
 
+void testInit() {
+    cout << "\ntesting init\n";
+    string num = "-1245692834295329834";
+    BigInt init = *(new BigInt(num));
+    init.println("Init test [-1245692834295329834]");
+}
+
 void testSum() {
     cout << "\ntesting add\n";
     BigInt a = *(new BigInt(1234567));
@@ -44,8 +51,9 @@ void testPow() {
     BigInt c = *(new BigInt(2));
     BigInt d = *(new BigInt(256));
     BigInt mod = *(new BigInt(100000));
-    mod.mult(mod);
-    c.powMod(d, mod)->println("2^256 % 100000 00000");
+    c.powMod(d, mod*mod)->println("2^256 % 100000 00000");
+    c = *(new BigInt(2));
+    c.powMod(d, mod)->println("2^256 % 100000");
 }
 
 void testDiv() {
@@ -64,13 +72,6 @@ void testDiv() {
     ((a * b * c * d + b * d + c * b + a * d) % (d * b)).println("((a*b*c*d + b*d + c*b + a*d) % (d * b))");
     ((c * b + a * d) % (d * b)).println("((c*b + a*d) % (d * b))");
     (* (new BigInt(256)) % *(new BigInt(4))).println("256 % 4");
-}
-
-void testInit() {
-    cout << "\ntesting init\n";
-    string num = "-1245692834295329834";
-    BigInt init = *(new BigInt(num));
-    init.println("Init test [1245692834295329834]");
 }
 
 void testGcd() {
@@ -101,8 +102,8 @@ int test() {
     testSum();
     testSub();
     testMult();
-    testDiv();
     testPow();
+    testDiv();
     testGcd();
     testPrime();
 
