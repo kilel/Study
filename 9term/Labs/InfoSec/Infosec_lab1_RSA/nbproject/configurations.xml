@@ -4,15 +4,37 @@
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
                    projectFiles="true">
-      <itemPath>BigInt.cpp</itemPath>
-      <itemPath>BigIntOperators.cpp</itemPath>
+      <logicalFolder name="f2" displayName="long_math" projectFiles="true">
+        <itemPath>BigInt.cpp</itemPath>
+        <itemPath>BigIntOperators.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="RSA" projectFiles="true">
+        <logicalFolder name="f1" displayName="RSA_key" projectFiles="true">
+          <itemPath>RSAKey.cpp</itemPath>
+          <itemPath>RSAKeySet.cpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="RSA_message" projectFiles="true">
+          <itemPath>Message.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
-      <itemPath>BigInt.h</itemPath>
-      <itemPath>test.h</itemPath>
+      <logicalFolder name="f1" displayName="long_math" projectFiles="true">
+        <itemPath>BigInt.h</itemPath>
+        <itemPath>big_int_test.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="RSA" projectFiles="true">
+        <logicalFolder name="f1" displayName="RSA_key" projectFiles="true">
+          <itemPath>RSAKey.h</itemPath>
+          <itemPath>RSAKeySet.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="RSA_message" projectFiles="true">
+          <itemPath>Message.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Файлы ресурсов"
@@ -54,16 +76,43 @@
             <pElem>.</pElem>
           </incDir>
         </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa</output>
+        </linkerTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/rsa_kislitsyn.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <item path="BigInt.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="BigInt.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="test.h" ex="false" tool="3" flavor2="0">
+      <item path="Message.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKey.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -84,11 +133,11 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <standard>8</standard>
           <incDir>
             <pElem>.</pElem>
             <pElem>.</pElem>
           </incDir>
-          <commandLine>`cppunit-config --cflags`</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -103,9 +152,204 @@
       </item>
       <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Message.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKey.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="test.h" ex="false" tool="3" flavor2="0">
+    </conf>
+    <conf name="Decode_test" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandlineTool>g++ -std=c++11</commandlineTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa</output>
+        </linkerTool>
+      </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/rsa_kislitsyn.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
+      <item path="BigInt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BigInt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Message.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKey.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Code_test" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandlineTool>g++ -std=c++11</commandlineTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa</output>
+        </linkerTool>
+      </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/rsa_kislitsyn.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
+      <item path="BigInt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BigInt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Message.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKey.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Key_generator" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandlineTool>g++ -std=c++11</commandlineTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa</output>
+        </linkerTool>
+      </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/rsa_kislitsyn.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
+      <item path="BigInt.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BigInt.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Message.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKey.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <assert.h>
+#include <exception>
 
 namespace long_math {
     class BigInt;
@@ -22,7 +23,7 @@ namespace long_math {
         static const int MODULE = 1 << 16;
         static const int MODULE_LENGTH = 4;
         static const int MODULE_DIGIT_BIT_LENGTH = 4;
-        
+
         /**
          * @param left
          * @param right
@@ -50,9 +51,16 @@ namespace long_math {
         BigInt* div(BigInt& value);
         BigInt* mod(BigInt& value);
         BigInt* powMod(BigInt& deg, BigInt& module);
-
+        void powMod(vector<BigInt*>* data, BigInt& deg, BigInt& module);
+        BigInt* inverseMod(BigInt& module);
         BigInt* gcd(BigInt& second);
+        BigInt* makePrime();
 
+        void print(string message = "");
+        void println(string message = "");
+        string toString();
+
+        bool isPrime();
         int cmp(BigInt& value);
 
         friend BigInt& operator+(BigInt& left, BigInt& right);
@@ -91,13 +99,6 @@ namespace long_math {
         friend bool operator!=(int left, BigInt& right);
         friend bool operator!=(BigInt& left, int right);
 
-        BigInt* inverseMod(BigInt& module);
-        bool isPrime();
-        BigInt* makePrime();
-
-        void print(string message = "");
-        void println(string message = "");
-        string toString();
 
         BigIntData* getData();
 
@@ -113,7 +114,6 @@ namespace long_math {
         DivModData divMod(BigInt& dividor);
         static int divSimple(BigInt& base, BigInt& dividor);
         void initFromString(string s);
-
     };
 }
 

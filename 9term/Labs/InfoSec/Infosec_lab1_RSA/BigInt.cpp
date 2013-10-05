@@ -1,7 +1,3 @@
-#include <exception>
-#include <string>
-#include <iostream>
-
 #include "BigInt.h"
 namespace long_math {
 
@@ -89,12 +85,12 @@ namespace long_math {
                 char digit = source[i - j];
                 temp <<= MODULE_DIGIT_BIT_LENGTH;
 
-                if (digit >= '0' || digit <= '9') {
+                if (digit >= '0' && digit <= '9') {
                     temp |= digit - '0';
-                } else if (digit >= 'A' || digit <= 'F') {
-                    temp |= digit - 'A';
-                } else if (digit >= 'a' || digit <= 'f') {
-                    temp |= digit - 'a';
+                } else if (digit >= 'A' && digit <= 'F') {
+                    temp |= digit - 'A' + 10;
+                } else if (digit >= 'a' && digit <= 'f') {
+                    temp |= digit - 'a' + 10;
                 }
             }
             innerData->push_back(temp);
@@ -160,11 +156,11 @@ namespace long_math {
             }
             int currData = overflow;
             if (it_val != value.innerData->end()) {
-                currData += *it_val * value.sign;
+                currData += *it_val;
                 ++it_val;
             }
             if (it_this != innerData->end()) {
-                currData += *it_this * this->sign;
+                currData += *it_this;
                 *it_this = currData % MODULE;
                 ++it_this;
             } else {
@@ -240,7 +236,7 @@ namespace long_math {
         delete subBase;
         delete subActive;
 
-        while (*(this->innerData->end() - 1) == 0) {
+        while (*(this->innerData->end() - 1) == 0 && this->innerData->size() > 1) {
             this->innerData->pop_back();
         }
 
@@ -268,6 +264,9 @@ namespace long_math {
     BigInt* BigInt::mult(BigInt& value) {
         BigInt* sumOfMult = new BigInt(0);
         BigInt* tempVal = new BigInt(0);
+        int resSign = this->sign * value.sign;
+        this->sign = 1;
+        value.sign = 1;
         int shift = 0;
         for (BigIntData::iterator it_val = value.innerData->begin(); it_val != value.innerData->end(); ++it_val) {
             tempVal->copy(*this);
@@ -276,6 +275,10 @@ namespace long_math {
             sumOfMult->add(*tempVal);
         }
         this->copy(*sumOfMult);
+        this->sign = resSign;
+        while (*(this->innerData->end() - 1) == 0 && this->innerData->size() > 1) {
+            this->innerData->pop_back();
+        }
         delete sumOfMult;
         delete tempVal;
         return this;
@@ -467,6 +470,33 @@ namespace long_math {
         return this;
     }
 
+    void BigInt::powMod(vector<BigInt*>* data, BigInt& deg, BigInt& module) {
+        vector<BigInt*> *ret = new vector<BigInt*>();
+        for (int i = 0; i < data->size(); ++i) {
+            ret->push_back(new BigInt(*ONE));
+        }
+
+        int len = deg.innerData->size() * MODULE_DIGIT_BIT_LENGTH * MODULE_LENGTH;
+        for (size_t i = 0; i < len; ++i) {
+            size_t shift = i % (MODULE_DIGIT_BIT_LENGTH * MODULE_LENGTH);
+            size_t digit = i / (MODULE_DIGIT_BIT_LENGTH * MODULE_LENGTH);
+            int val = deg.innerData->at(digit) & 1 << shift;
+            for (int i = 0; i < ret->size(); ++i) {
+                if (val) {
+                    ret->at(i)->mult(*data->at(i))->mod(module);
+                }
+                data->at(i)->mult(*data->at(i))->mod(module);
+            }
+        }
+
+        for (int i = 0; i < ret->size(); ++i) {
+            data->at(i)->copy(*ret->at(i));
+            delete ret->at(i);
+        }
+        delete ret;
+
+    }
+
     void BigInt::print(string message) {
         if (message != "") {
             cout << message << ": ";
@@ -500,30 +530,44 @@ namespace long_math {
         BigInt* curr = new BigInt(2);
         BigInt* end = new BigInt(200);
         BigInt* base = new BigInt();
-        BigInt* deg = new BigInt(*this);
-        deg->sub(*ONE);
+        BigInt* deg = (new BigInt(*this))->sub(*ONE);
 
         bool ret = true;
 
         while (*curr < *end) {
-            base->copy(*curr);
-            curr->add(*ONE);
-            if (*base->powMod(*deg, *this) == *ONE) {
+            base->copy(*this);
+            if (*base->mod(*curr) == *ZERO) {
                 ret = false;
                 break;
             }
+            curr->add(*ONE);
         }
 
         delete curr;
         delete end;
-        delete deg;
         delete base;
+
+        vector<BigInt*> *data = new vector<BigInt*> ();
+        for (int i = 0; i < 200; ++i) {
+            data->push_back(new BigInt(rand()));
+        }
+
+        powMod(data, *deg, *this);
+        
+        for(int i = 0; i < data->size(); ++i) {
+            if(ret && *data->at(i) != *ONE) {
+                ret = false;
+            }
+            delete data->at(i);
+        }
+        delete data;
+        delete deg;
 
         return ret;
     }
 
     BigInt* BigInt::makePrime() {
-        if (!isPrime()) {
+        while (!isPrime()) {
             add(*ONE);
         }
         return this;
@@ -545,38 +589,38 @@ namespace long_math {
         delete secondOne;
         return this;
     }
-    
+
     pair<BigInt*, BigInt*> BigInt::getXYEucledian(BigInt* left, BigInt* right) {
-        if(*right == *ZERO) {
+        if (*right == *ZERO) {
             return pair<BigInt*, BigInt*>(new BigInt(1), new BigInt(0));
         }
-        
+
         BigInt *x1, *x2;
         pair<BigInt*, BigInt*> divModTemp;
         divModTemp = left->divMod(*right);
-        
+
         pair<BigInt*, BigInt*> result = getXYEucledian(right, divModTemp.second);
-        
-        x2 = new BigInt(*result.second); //x2 = retX2
-        x1 = new BigInt(*result.first); //x1 = retX1 - (left/right) * retX2
-        x1->sub(*(divModTemp.first->mult(*result.second)));
-        
+
+        x1 = new BigInt(*result.second); //x1 = retX2
+        x2 = new BigInt(*result.first); //x2 = retX1 - (left/right) * retX2
+        x2->sub(*(divModTemp.first->mult(*result.second)));
+
         delete divModTemp.first;
         delete divModTemp.second;
         delete result.first;
         delete result.second;
-        
+
         return pair<BigInt*, BigInt*>(x1, x2);
     }
-    
+
     BigInt* BigInt::inverseMod(BigInt& module) {
         pair<BigInt*, BigInt*> ret = getXYEucledian(this, &module);
         ret.first->add(module)->mod(module);
         this->copy(*ret.first);
-        
+
         delete ret.second;
-        delete ret.first; 
-        
+        delete ret.first;
+
         return this;
     }
 }

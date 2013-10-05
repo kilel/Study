@@ -37,6 +37,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/BigInt.o \
 	${OBJECTDIR}/BigIntOperators.o \
+	${OBJECTDIR}/Message.o \
+	${OBJECTDIR}/RSAKey.o \
+	${OBJECTDIR}/RSAKeySet.o \
 	${OBJECTDIR}/main.o
 
 
@@ -58,11 +61,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/BigInt.o: BigInt.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -73,6 +76,21 @@ ${OBJECTDIR}/BigIntOperators.o: BigIntOperators.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigIntOperators.o BigIntOperators.cpp
+
+${OBJECTDIR}/Message.o: Message.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/Message.o Message.cpp
+
+${OBJECTDIR}/RSAKey.o: RSAKey.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKey.o RSAKey.cpp
+
+${OBJECTDIR}/RSAKeySet.o: RSAKeySet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKeySet.o RSAKeySet.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
@@ -85,7 +103,7 @@ ${OBJECTDIR}/main.o: main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa
 
 # Subprojects
 .clean-subprojects:
