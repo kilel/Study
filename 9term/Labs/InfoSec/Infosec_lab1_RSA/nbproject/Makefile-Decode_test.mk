@@ -37,9 +37,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/BigInt.o \
 	${OBJECTDIR}/BigIntOperators.o \
+	${OBJECTDIR}/EncodedMessage.o \
 	${OBJECTDIR}/Message.o \
 	${OBJECTDIR}/RSAKey.o \
-	${OBJECTDIR}/RSAKeySet.o \
+	${OBJECTDIR}/RSAKeyFactory.o \
 	${OBJECTDIR}/main.o
 
 
@@ -77,6 +78,11 @@ ${OBJECTDIR}/BigIntOperators.o: BigIntOperators.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigIntOperators.o BigIntOperators.cpp
 
+${OBJECTDIR}/EncodedMessage.o: EncodedMessage.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/EncodedMessage.o EncodedMessage.cpp
+
 ${OBJECTDIR}/Message.o: Message.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
@@ -87,10 +93,10 @@ ${OBJECTDIR}/RSAKey.o: RSAKey.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKey.o RSAKey.cpp
 
-${OBJECTDIR}/RSAKeySet.o: RSAKeySet.cpp 
+${OBJECTDIR}/RSAKeyFactory.o: RSAKeyFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKeySet.o RSAKeySet.cpp
+	$(COMPILE.cc) -g -I. -I. -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKeyFactory.o RSAKeyFactory.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}

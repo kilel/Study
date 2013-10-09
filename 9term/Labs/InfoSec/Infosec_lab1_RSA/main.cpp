@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include "big_int_test.h"
-#include "RSAKeySet.h"
+#include "RSAKeyFactory.h"
 
 using namespace std;
 using namespace RSA;
@@ -37,11 +37,10 @@ int main(int argc, char** argv) {
             if (argc < 4) {
                 cout << "Incorrect parameters\nFormat:\n\t k keyLength privateKeyPath publicKeyPath\n\n";
             }
+            int keyLength = atoi(argv[2]);
             string privateKeyPath = args[3];
             string publicKeyPath = args[4];
-
-            int keyLength = atoi(argv[2]);
-
+            
             RSAKeySet *keySet = new RSAKeySet(keyLength);
             keySet->getPrivate()->save(privateKeyPath);
             keySet->getPublic()->save(publicKeyPath);
@@ -55,14 +54,16 @@ int main(int argc, char** argv) {
             string inputFile = args[2];
             string outFile = args[3];
             string keyPath = args[4];
+            
             RSAKey *key = new RSAKey(keyPath);
 
             if (args[1] == encryptFlag) {
                 Message *in = Message::getFromFile(inputFile);
-                Message::writeEncoded(outFile, key->encrypt(in));
+                key->encrypt(in)->save(outFile);
                 cout << "Successfully encrypted" << endl;
             } else {
-                key->decrypt(Message::readEncoded(inputFile))->save(outFile);
+                EncodedMessage *in = EncodedMessage::readFromFile(inputFile);
+                key->decrypt(in)->save(outFile);
                 cout << "Successfully decrypted" << endl;
             }
             return 0;

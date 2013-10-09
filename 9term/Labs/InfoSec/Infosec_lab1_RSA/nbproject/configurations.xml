@@ -11,9 +11,11 @@
       <logicalFolder name="f3" displayName="RSA" projectFiles="true">
         <logicalFolder name="f1" displayName="RSA_key" projectFiles="true">
           <itemPath>RSAKey.cpp</itemPath>
-          <itemPath>RSAKeySet.cpp</itemPath>
+          <itemPath>RSAKeyFactory.cpp</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="RSA_message" projectFiles="true">
+          <itemPath>EncodedMessage.cpp</itemPath>
+          <itemPath>EncodedMessage.h</itemPath>
           <itemPath>Message.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -29,7 +31,7 @@
       <logicalFolder name="f2" displayName="RSA" projectFiles="true">
         <logicalFolder name="f1" displayName="RSA_key" projectFiles="true">
           <itemPath>RSAKey.h</itemPath>
-          <itemPath>RSAKeySet.h</itemPath>
+          <itemPath>RSAKeyFactory.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="RSA_message" projectFiles="true">
           <itemPath>Message.h</itemPath>
@@ -98,6 +100,10 @@
       </item>
       <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="EncodedMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EncodedMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Message.h" ex="false" tool="3" flavor2="0">
@@ -106,9 +112,9 @@
       </item>
       <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      <item path="RSAKeyFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      <item path="RSAKeyFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -132,11 +138,11 @@
           <commandLine>`cppunit-config --cflags`</commandLine>
         </cTool>
         <ccTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
           <standard>8</standard>
           <incDir>
-            <pElem>.</pElem>
-            <pElem>.</pElem>
+            <pElem>../InfoSec_lab2_Hash</pElem>
+            <pElem>../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86</pElem>
           </incDir>
         </ccTool>
         <fortranCompilerTool>
@@ -145,12 +151,25 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa</output>
+          <linkerAddLib>
+            <pElem>../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>InfoSec_lab2_Hash</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="BigInt.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="BigInt.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EncodedMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EncodedMessage.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -160,9 +179,9 @@
       </item>
       <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      <item path="RSAKeyFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      <item path="RSAKeyFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -213,6 +232,10 @@
       </item>
       <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="EncodedMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EncodedMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Message.h" ex="false" tool="3" flavor2="0">
@@ -221,9 +244,9 @@
       </item>
       <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      <item path="RSAKeyFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      <item path="RSAKeyFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -274,6 +297,10 @@
       </item>
       <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="EncodedMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EncodedMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Message.h" ex="false" tool="3" flavor2="0">
@@ -282,9 +309,9 @@
       </item>
       <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      <item path="RSAKeyFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      <item path="RSAKeyFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -335,6 +362,10 @@
       </item>
       <item path="BigIntOperators.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="EncodedMessage.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="EncodedMessage.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Message.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Message.h" ex="false" tool="3" flavor2="0">
@@ -343,9 +374,9 @@
       </item>
       <item path="RSAKey.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="RSAKeySet.cpp" ex="false" tool="1" flavor2="0">
+      <item path="RSAKeyFactory.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="RSAKeySet.h" ex="false" tool="3" flavor2="0">
+      <item path="RSAKeyFactory.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="big_int_test.h" ex="false" tool="3" flavor2="0">
       </item>

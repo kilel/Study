@@ -5,10 +5,12 @@
 #include <fstream>
 #include <string>
 #include "BigInt.h"
+#include "../InfoSec_lab2_Hash/MD5Algorithm.h"
 
 namespace RSA {
     using namespace std;
     using namespace long_math;
+    using namespace hashAlgo;
 
     typedef vector<int> MessageData;
 
@@ -21,15 +23,14 @@ namespace RSA {
 
         static Message* getFromFile(string path);
         void save(string path);
-
-        static vector<BigInt*>* readEncoded(string path);
-        static void writeEncoded(string path, vector<BigInt*>* data);
+        string getHash();
 
         MessageData* getData() {
             return data;
         }
     private:
         MessageData *data;
+        MD5Algorithm md5;
     };
 }
 

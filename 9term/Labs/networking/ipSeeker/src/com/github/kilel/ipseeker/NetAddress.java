@@ -24,10 +24,7 @@ public class NetAddress {
 
 	public String getInfo() {
 		StringBuilder builder = new StringBuilder();
-
-		builder.append("Searching for name info...\n");
 		builder.append(getNameInfo());
-
 		builder.append(getMacInfo());
 		return builder.toString();
 	}
@@ -55,17 +52,17 @@ public class NetAddress {
 		}
 		return base;
 	}
-	
+
 	public byte[] getAddr() {
 		return address;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		boolean first = true;
-		for(byte val : address) {
-			if(!first){
+		for (byte val : address) {
+			if (!first) {
 				builder.append(".");
 			}
 			builder.append(val >= 0 ? val : (val & 0x7F) + 128);
@@ -73,7 +70,7 @@ public class NetAddress {
 		}
 		return builder.toString();
 	}
-	
+
 	@Override
 	protected NetAddress clone() throws CloneNotSupportedException {
 		return new NetAddress(address.clone(), mask);

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <mpi.h>
+#include <sstream>
 
 using namespace std;
 using namespace MPI;
@@ -76,12 +77,13 @@ public:
         Cartcomm grid = comm.Create_cart(numDims, dims, periodic, reorder);
         int *coords = new int[numDims];
         grid.Get_coords(grid.Get_rank(), numDims, coords);
-        printf("Rank: %d (in comm = %d), coords:(%d, %d)\n", grid.Get_rank(), comm.Get_rank(),
+        printf("Rank: %d (in comm = %d), coords:(%d, %d)\n", grid.Get_cart_rank(coords), comm.Get_rank(),
                 coords[0], coords[1]);
+
     }
-    
-    void task3() {
-        barrier("Task 2");
+
+    void task3_dummy() {
+        barrier("Task 3 (dummy edition)");
         int numDims = 2;
         int dims[] = {4, 4};
         bool periodic[] = {true, true};
@@ -89,8 +91,70 @@ public:
         Cartcomm grid = comm.Create_cart(numDims, dims, periodic, reorder);
         int *coords = new int[numDims];
         grid.Get_coords(grid.Get_rank(), numDims, coords);
-        printf("Rank: %d (in comm = %d), coords:(%d, %d)\n", grid.Get_rank(), comm.Get_rank(),
-                coords[0], coords[1]);
+
+        int *coordsTo = new int[numDims];
+        int dimToShift = 0;
+        for (int i = 0; i < numDims; ++i) {
+            coordsTo[i] = coords[i];
+        }
+        coordsTo[dimToShift] = (coordsTo[dimToShift] + 1) % dims[dimToShift];
+        int toRank = grid.Get_cart_rank(coordsTo);
+
+        printf("Rank: %d (in comm = %d), coords:(%d, %d) sends to rank %d, cooords (%d, %d)\n",
+                grid.Get_cart_rank(coords), comm.Get_rank(), coords[0], coords[1],
+                toRank, coordsTo[0], coordsTo[1]);
+
+    }
+
+    void task3() {
+        barrier("Task 3");
+        int numDims = 2;
+        int dims[] = {4, 4};
+        bool periodic[] = {true, true};
+        bool reorder = true;
+        Cartcomm grid = comm.Create_cart(numDims, dims, periodic, reorder);
+
+        int fromRank = grid.Get_rank();
+        int toRank;
+        grid.Shift(0, 1, fromRank, toRank);
+
+        int *coords = new int[numDims];
+        int *coordsTo = new int[numDims];
+        int *currCoords = new int[numDims];
+        grid.Get_coords(fromRank, numDims, coords);
+        grid.Get_coords(toRank, numDims, coordsTo);
+        grid.Get_coords(grid.Get_rank(), numDims, currCoords);
+
+        printf("Current rank: %d (%d, %d). Before rank %d, coords:(%d, %d), next rank %d, cooords (%d, %d)\n",
+                grid.Get_rank(), currCoords[0], currCoords[1],
+                fromRank, coords[0], coords[1],
+                toRank, coordsTo[0], coordsTo[1]);
+    }
+
+    void task4() {
+        barrier("Task 4");
+        int numV = 7;
+        int degrees[] = {4, 8, 12, 13, 14, 15, 16};
+        int edges[] = {1, 1, 2, 2,
+            0, 0, 3, 4,
+            0, 0, 5, 6,
+            1, 1, 2, 2};
+        Graphcomm gcomm = comm.Create_graph(numV, &degrees[0], &edges[0], true);
+
+        if (gcomm != COMM_NULL) {
+            int rank = gcomm.Get_rank();
+            int deg = gcomm.Get_neighbors_count(rank);
+            int *neigh = new int[deg];
+            gcomm.Get_neighbors(rank, deg, neigh);
+            string nei = "";
+            stringstream st;
+            for (int i = 0; i < deg; ++i) {
+                st << neigh[i] << ", ";
+            }
+            nei = st.str();
+            printf("rank = %d, deg = %d, neighboars = %s\n", rank, deg, &nei[0]);
+
+        }
     }
 
 };
@@ -100,9 +164,13 @@ int main(int argc, char** argv) {
     Lab3 &lab = *(new Lab3());
     lab.task1();
     lab.task2();
+    lab.task3_dummy();
+    lab.task3();
+    lab.task4();
 
     lab.barrier("Finished lab 2");
     delete &lab;
     return 0;
 }
+
 

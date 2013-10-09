@@ -1,4 +1,5 @@
 #include "RSAKey.h"
+#include "EncodedMessage.h"
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -38,7 +39,7 @@ namespace RSA {
         delete module;
         delete key;
     }
-    
+
     string RSAKey::toString() {
         stringstream out;
         out << module->toString() << endl;
@@ -46,7 +47,8 @@ namespace RSA {
         return out.str();
     }
 
-    vector<BigInt*>* RSAKey::encrypt(Message *message) {
+    EncodedMessage* RSAKey::encrypt(Message *message) {
+        cout << "Encrypting message" << endl;
         //message is a array of 2-bytes unsigned shorts
         MessageData* data = message->getData();
         int moduleLength = module->getData()->size();
@@ -57,7 +59,9 @@ namespace RSA {
         }
         //create messages as BigInt values
         BigIntData *tempData = new BigIntData();
-        vector<BigInt*> *partMessages = new vector<BigInt*>();
+        EncodedMessage *retMessage = new EncodedMessage();
+        retMessage->setDecodedDigest(message->getHash());
+        vector<BigInt*> *partMessages = retMessage->getData();
         for (int i = 0; i < data->size(); i += dataBlock) {
             tempData->clear();
             for (int j = 0; j < dataBlock && i + j < data->size(); ++j) {
@@ -69,11 +73,13 @@ namespace RSA {
         for (int i = 0; i < partMessages->size(); ++i) {
             partMessages->at(i)->powMod(*key, *module);
         }
-        return partMessages;
+        return retMessage;
     }
 
-    Message* RSAKey::decrypt(vector<BigInt*>* data) {
+    Message* RSAKey::decrypt(EncodedMessage* message) {
         //decode data
+        cout << "Decrypting message" << endl;
+        vector<BigInt*> *data = message->getData();
         for (int i = 0; i < data->size(); ++i) {
             data->at(i)->powMod(*key, *module);
         }
@@ -84,6 +90,16 @@ namespace RSA {
             for (BigIntData::iterator it = value->getData()->begin(); it != value->getData()->end(); ++it) {
                 response->getData()->push_back(*it);
             }
+        }
+        //chech hash
+        string expectedHash = message->getDecodedDigest();
+        string calcHash = response->getHash();
+        cout << "Checking decoded message hash:\n\t"
+                << "Expected:[" << expectedHash << "]\n\t"
+                << "Calculated:[" << calcHash << "]\n";
+        if(expectedHash != calcHash) {
+            cout << "Invalid hash, message is broken" << endl;
+            assert(false);
         }
         //push message
         return response;

@@ -37,9 +37,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/BigInt.o \
 	${OBJECTDIR}/BigIntOperators.o \
+	${OBJECTDIR}/EncodedMessage.o \
 	${OBJECTDIR}/Message.o \
 	${OBJECTDIR}/RSAKey.o \
-	${OBJECTDIR}/RSAKeySet.o \
+	${OBJECTDIR}/RSAKeyFactory.o \
 	${OBJECTDIR}/main.o
 
 
@@ -57,45 +58,50 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -lInfoSec_lab2_Hash
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/BigInt.o: BigInt.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigInt.o BigInt.cpp
+	$(COMPILE.cc) -O3 -I../InfoSec_lab2_Hash -I../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigInt.o BigInt.cpp
 
 ${OBJECTDIR}/BigIntOperators.o: BigIntOperators.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigIntOperators.o BigIntOperators.cpp
+	$(COMPILE.cc) -O3 -I../InfoSec_lab2_Hash -I../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/BigIntOperators.o BigIntOperators.cpp
+
+${OBJECTDIR}/EncodedMessage.o: EncodedMessage.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O3 -I../InfoSec_lab2_Hash -I../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/EncodedMessage.o EncodedMessage.cpp
 
 ${OBJECTDIR}/Message.o: Message.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Message.o Message.cpp
+	$(COMPILE.cc) -O3 -I../InfoSec_lab2_Hash -I../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/Message.o Message.cpp
 
 ${OBJECTDIR}/RSAKey.o: RSAKey.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKey.o RSAKey.cpp
+	$(COMPILE.cc) -O3 -I../InfoSec_lab2_Hash -I../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKey.o RSAKey.cpp
 
-${OBJECTDIR}/RSAKeySet.o: RSAKeySet.cpp 
+${OBJECTDIR}/RSAKeyFactory.o: RSAKeyFactory.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKeySet.o RSAKeySet.cpp
+	$(COMPILE.cc) -O3 -I../InfoSec_lab2_Hash -I../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/RSAKeyFactory.o RSAKeyFactory.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -I. -I. -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -O3 -I../InfoSec_lab2_Hash -I../InfoSec_lab2_Hash/dist/Lib/GNU-Linux-x86 -std=c++11 -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
@@ -103,7 +109,7 @@ ${OBJECTDIR}/main.o: main.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/infosec_lab1_rsa
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/rsa
 
 # Subprojects
 .clean-subprojects:

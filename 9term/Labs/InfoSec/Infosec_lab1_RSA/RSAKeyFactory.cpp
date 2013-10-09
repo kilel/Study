@@ -1,4 +1,4 @@
-#include "RSAKeySet.h"
+#include "RSAKeyFactory.h"
 
 namespace RSA {
     BigInt* ONE = new BigInt(1);

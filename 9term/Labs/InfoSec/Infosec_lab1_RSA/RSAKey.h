@@ -3,6 +3,7 @@
 
 #include "BigInt.h"
 #include "Message.h"
+#include "EncodedMessage.h"
 
 
 namespace RSA {
@@ -15,8 +16,8 @@ namespace RSA {
         RSAKey(const RSAKey& orig);
         virtual ~RSAKey();
         
-        vector<BigInt*>* encrypt(Message *message);
-        Message* decrypt(vector<BigInt*> *data);
+        EncodedMessage* encrypt(Message *message);
+        Message* decrypt(EncodedMessage* message);
         void save(string file);
         
         string toString();

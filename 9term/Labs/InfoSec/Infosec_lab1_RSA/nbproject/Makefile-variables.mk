@@ -17,8 +17,8 @@ CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/rsa_kislitsyn.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=infosec_lab1_rsa
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/infosec_lab1_rsa
+CND_ARTIFACT_NAME_Release=rsa
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/rsa
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Release=infoseclab1rsa.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/infoseclab1rsa.tar
