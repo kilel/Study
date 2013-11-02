@@ -15,7 +15,6 @@
         </logicalFolder>
         <logicalFolder name="f2" displayName="RSA_message" projectFiles="true">
           <itemPath>EncodedMessage.cpp</itemPath>
-          <itemPath>EncodedMessage.h</itemPath>
           <itemPath>Message.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -34,6 +33,7 @@
           <itemPath>RSAKeyFactory.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="RSA_message" projectFiles="true">
+          <itemPath>EncodedMessage.h</itemPath>
           <itemPath>Message.h</itemPath>
         </logicalFolder>
       </logicalFolder>

@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
     lab.task3();
     lab.task4();
 
-    lab.barrier("Finished lab 2");
+    lab.barrier("Finished lab 3");
     delete &lab;
     return 0;
 }
