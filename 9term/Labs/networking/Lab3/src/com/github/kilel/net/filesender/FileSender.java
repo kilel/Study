@@ -6,10 +6,6 @@ import java.net.InetAddress;
 
 public class FileSender {
 
-    /**
-     * @param args
-     * @throws IOException .
-     */
     public static void main(String[] args) throws IOException {
         Runnable toRun;
         if (args.length > 0) {

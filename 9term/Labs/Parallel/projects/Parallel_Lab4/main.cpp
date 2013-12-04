@@ -111,14 +111,14 @@ public:
             //cout << endl;
             //send data to all nodes
             for (int i = 1; i < size; ++i) {
-                comm.Send(array + i*typicalBlockSize, blockSize[i], INTEGER, i, 0);
+                comm.Send(array + i*typicalBlockSize, blockSize[i], INTEGER4, i, 0);
             }
             //set master array
             for (int i = 0; i < blockSize[rank]; ++i) {
                 toSort[i] = array[i];
             }
         } else {
-            comm.Recv(toSort, blockSize[rank], INTEGER, 0, 0);
+            comm.Recv(toSort, blockSize[rank], INTEGER4, 0, 0);
         }
         //comm.Barrier();
         //printArray(comm, toSort, blockSize[rank], rank, " unsorted");
@@ -139,14 +139,14 @@ public:
             int step = count % 2;
             if ((rank + step) % 2 == 0) {
                 if (next < size) {
-                    comm.Send(toSort, blockSize[rank], INTEGER, next, 0);
-                    comm.Recv(temp, blockSize[next], INTEGER, next, 0);
+                    comm.Send(toSort, blockSize[rank], INTEGER4, next, 0);
+                    comm.Recv(temp, blockSize[next], INT, next, 0);
                     splitMin(splitTemp, toSort, temp, blockSize[rank], blockSize[next]);
                 }
             } else {
                 if (prev >= 0) {
-                    comm.Send(toSort, blockSize[rank], INTEGER, prev, 0);
-                    comm.Recv(temp, blockSize[prev], INTEGER, prev, 0);
+                    comm.Send(toSort, blockSize[rank], INT, prev, 0);
+                    comm.Recv(temp, blockSize[prev], INT, prev, 0);
                     splitMax(splitTemp, toSort, temp, blockSize[rank], blockSize[prev]);
                 }
             }
@@ -158,13 +158,13 @@ public:
         comm.Barrier();
         if (rank == 0) {
             for (int i = 1; i < size; ++i) {
-                comm.Recv(array + i*typicalBlockSize, blockSize[i], INTEGER, i, 0);
+                comm.Recv(array + i*typicalBlockSize, blockSize[i], INT, i, 0);
             }
             for (int i = 0; i < blockSize[rank]; ++i) {
                 array[i] = toSort[i];
             }
         } else {
-            comm.Send(toSort, blockSize[rank], INTEGER, 0, 0);
+            comm.Send(toSort, blockSize[rank], INT, 0, 0);
         }
 
         long long end = getTime();
