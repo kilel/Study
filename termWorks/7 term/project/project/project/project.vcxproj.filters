@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Файлы исходного кода">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Заголовочные файлы">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Заголовочные файлы\классы функций">
+      <UniqueIdentifier>{15fd92e9-6323-424b-9e35-7218d5287318}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainForm.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="addClasses\CheckerForConstraints.h">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClInclude>
+    <ClInclude Include="addClasses\Function.h">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClInclude>
+    <ClInclude Include="addClasses\ParsingTools.h">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClInclude>
+    <ClInclude Include="MPToolsCore.h">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClInclude>
+    <ClInclude Include="MPToolsAlienor.h">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClInclude>
+    <ClInclude Include="plotTools.h">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainForm.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="addClasses\CheckerForConstraints.cpp">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClCompile>
+    <ClCompile Include="addClasses\Function.cpp">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClCompile>
+    <ClCompile Include="addClasses\ParsingTools.cpp">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClCompile>
+    <ClCompile Include="plotTools.cpp">
+      <Filter>Заголовочные файлы\классы функций</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainForm.resx">
+      <Filter>Файлы ресурсов</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

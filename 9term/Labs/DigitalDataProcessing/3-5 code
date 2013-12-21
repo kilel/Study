@@ -1,0 +1,254 @@
+restart;
+with(PolynomialTools):with(plots):
+numElements := 4:
+degElement := 2:
+deg := numElements * degElement:
+a := [[1.0,	-2.0,	1.0],
+[1.0,	2.0,	1.0],
+[1.0,	-2.0,	1.0],
+[1.0,	2.0,	1.0]]:
+
+b := [[1, 0.5255105661730298, 0.9282002484842149],
+[1, -1.553115895306827, 0.9541037161358508],
+[1, -0.1802644442576899, 0.8012100199005483],
+[1, -1.1158326558729976, 0.8379957820342729]]:
+
+scale := [0.40970269370333545,
+0.6092773811532036,
+0.11066419565223808,
+0.423055206452789]:
+
+zeros := [1.0 ,
+1.0,
+1.0,
+1.0,
+-1.0,
+-1.0,
+-1.0,
+-1.0]:
+
+
+poles := [-0.2627552830865149 + I * 0.9269087925434414,
+-0.2627552830865148 - I * 0.9269087925434415,
+0.7765579476534135 - I * 0.5925044051078179,
+0.7765579476534137 + I * 0.592504405107818,
+0.09013222212884495 + I * 0.8905538739653346,
+0.09013222212884495 - I * 0.8905538739653346,
+0.5579163279364988 - I * 0.7257583296498401,
+0.5579163279364987 + I * 0.7257583296498401]:
+
+#generate polinoms
+H := 1:
+for k from 1 to numElements do
+  H := H * scale[k] * FromCoefficientList(a[k], z_1) / FromCoefficientList(b[k], z_1):
+od:
+A := expand(numer(H)); # числитель
+B := expand(denom(H)); # знаменатель
+
+                                        2                    4
+  A := 0.01168659655 - 0.04674638620 z_1  + 0.07011957930 z_1
+
+                            6                    8
+         - 0.04674638620 z_1  + 0.01168659655 z_1
+
+
+                                            2                  3
+  B := 1 - 2.323702429 z_1 + 4.238352195 z_1  - 5.258244086 z_1
+
+                          4                  5                  6
+         + 5.811585719 z_1  - 4.682268834 z_1  + 3.328214105 z_1
+
+                          7                   8
+         - 1.556787229 z_1  + 0.5946007769 z_1
+
+#Create coefficients
+coeffA := Array(0..deg):
+coeffB := Array(0..deg):
+coeffC := Array(1..deg):
+parCoeffA := Array(1..numElements, 0..degElement):
+parCoeffB := Array(1..numElements, 0..degElement):
+for k from deg to 0 by -1 do
+  coeffA[k] := coeff(A, z_1, k);
+  coeffB[k] := coeff(B, z_1, k);
+od:
+for k from 1 to deg do
+  coeffC[k] := 1;
+  for j from 1 to deg do
+    coeffC[k] := coeffC[k] * (poles[k] - zeros[j]);
+    if j <> k then coeffC[k] := coeffC[k] / (poles[k] - poles[j]); fi;
+  od;
+od:
+parElnumer := Array(1..numElements):
+parEldenom := Array(1..numElements):
+testPar := 0:
+for k from 1 to numElements do
+  temp := coeffC[2*k - 1] / (z - poles[2*k - 1]) + coeffC[2*k] / (z - poles[2*k]);
+  testPar := testPar + temp;
+  parElnumer[k] := expand(numer(temp)); 
+  parEldenom[k] := expand(denom(temp));
+  parCoeffB0 := Re(coeff(parEldenom[k], z, degElement));
+  for degr from 0 to degElement do
+    parCoeffA[k, degr] := Re(coeff(parElnumer[k], z, degElement - degr)) / parCoeffB0;
+    parCoeffB[k, degr] := Re(coeff(parEldenom[k], z, degElement - degr)) / parCoeffB0;
+  od:
+od:
+print(coeffA);print(coeffB);print(coeffC);print(parCoeffA);print(parCoeffB);
+
+  Array(0 .. 8, {0 = 0.01168659655, 2 = -0.04674638620,
+
+        4 = 0.07011957930, 6 = -0.04674638620, 8 = 0.01168659655},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+  Array(0 .. 8, {0 = 1, 1 = -2.323702429, 2 = 4.238352195,
+
+        3 = -5.258244086, 4 = 5.811585719, 5 = -4.682268834,
+
+        6 = 3.328214105, 7 = -1.556787229, 8 = 0.5946007769},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+  [-2.775929187 - 1.390597543 I, -2.775929186 + 1.390597543 I,
+
+        0.9231535010 + 1.756873188 I, 0.9231535025 - 1.756873189 I,
+
+        8.636413738 - 0.2694910169 I, 8.636413733 + 0.2694910157 I,
+
+        -5.621786840 - 4.240382354 I, -5.621786840 + 4.240382355 I]
+
+
+  Array(1 .. 4, 0 .. 2, {(1, 1) = -5.551858373, (1, 2) = 1.119134060,
+
+        (2, 1) = 1.846307004, (2, 2) = 0.648145830,
+
+        (3, 1) = 17.27282747, (3, 2) = -1.076845785,
+
+        (4, 1) = -11.24357368, (4, 2) = 0.117987711},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+  Array(1 .. 4, 0 .. 2, {(1, 0) = 1, (1, 1) = 0.5255105662,
+
+        (1, 2) = 0.9282002484, (2, 0) = 1, (2, 1) = -1.553115895,
+
+        (2, 2) = 0.9541037162, (3, 0) = 1, (3, 1) = -0.1802644443,
+
+        (3, 2) = 0.8012100200, (4, 0) = 1, (4, 1) = -1.115832656,
+
+        (4, 2) = 0.8379957819}, datatype = anything,
+
+        storage = rectangular, order = Fortran_order)
+
+#Fill initial values
+numValues := 200:
+x := Array(1..numValues + deg):
+printX := Array(1..numValues + deg):
+x[deg+1] := 1:
+for k from 1 to numValues + deg do printX[k] := k: od:
+ 
+#Main calculations for simple form
+y_simple := Array(1..numValues + deg):
+
+> for k from deg + 1 to numValues + deg do
+  localSum := 0:
+  for shift from 1 to deg do
+    localSum := localSum + coeffA[shift] * x[k - shift] - coeffB[shift] * y_simple[k - shift];
+  od;
+  localSum := localSum + coeffA[0] * x[k];
+  y_simple[k] := localSum;
+od:
+
+> #Main calculations for canonical form
+y_canonical := Array(1..numValues + deg):
+w := Array(1..numValues + deg):
+for k from deg + 1 to numValues + deg do
+  localSumW := 0:
+  localSumY := 0:
+  for shift from 1 to deg do
+    localSumW := localSumW - coeffB[shift] * w[k - shift];
+    localSumY := localSumY + coeffA[shift] * w[k - shift];
+  od;
+  localSumW := localSumW + x[k];
+  w[k] := localSumW;
+  localSumY := localSumY + coeffA[0] * w[k];
+  y_canonical[k] := localSumY;
+od:
+#Main calculations for transposed form
+y_transposed := Array(1..numValues + deg):
+trY := Array(0..deg, 1..numValues + deg):
+trX := Array(0..deg, 1..numValues + deg):
+for k from deg + 1 to numValues + deg do
+  currVal := x[k] + trX[1, k-1];
+  trY[deg, k] := currVal * coeffA[deg];
+  trX[deg, k] := - currVal * coeffB[deg];
+  for shift from 0 to deg - 1 do
+    trY[shift, k] := trY[shift + 1, k - 1] + currVal * coeffA[shift];
+    trX[shift, k] := trX[shift + 1, k - 1] - currVal * coeffB[shift];
+  od;
+  y_transposed[k] := trY[0, k];
+od:
+#Main calculations for transposed canonical form
+y_transposed_canonical := Array(1..numValues + deg):
+trX := Array(0..deg, 1..numValues + deg):
+for k from deg + 1 to numValues + deg do printX[k] := k: od:
+for k from deg + 1 to numValues + deg do
+  y_transposed_canonical[k] := trX[deg, k - 1] + coeffA[0] * x[k];
+  for shift from 1 to deg do
+    trX[shift, k] := trX[shift - 1, k - 1] + coeffA[deg - shift + 1] * x[k] - coeffB[deg - shift + 1] * y_transposed_canonical[k];
+  od;
+od:
+#Main calculations for chain form
+y_chain := Array(1..numValues + deg):
+trX := Array(0..numElements, 1..numValues + deg):
+for k from 1 to numValues + deg do  trX[0,k] := x[k]; od:
+w := Array(1..numElements, 1..numValues + deg):
+for k from deg + 1 to numValues + deg do
+  for element from 1 to numElements do
+    localSumW := 0:
+    localSumY := 0:
+    for shift from 2 to degElement + 1 do
+      localSumW := localSumW - b[element][shift] * w[element, k - shift+1];
+      localSumY := localSumY + a[element][shift] * w[element, k - shift+1];
+    od;
+    localSumW := localSumW + trX[element - 1, k];
+    w[element, k] := localSumW;
+    localSumY := localSumY + a[element][1] * w[element, k];
+    trX[element, k] := localSumY * scale[element];
+  od:
+  y_chain[k] := trX[numElements, k];
+od:
+#Main calculations for parallel form
+y_parallel := Array(1..numValues + deg):
+w := Array(1..numElements, 1..numValues + deg):
+for k from deg + 1 to numValues + deg do
+  totalSum := coeffA[0] * x[k];
+  for element from 1 to numElements do
+    localSumW := 0:
+    localSumY := 0:
+    for shift from 1 to degElement do
+      localSumW := localSumW - parCoeffB[element,shift] * w[element, k - shift];
+      localSumY := localSumY + parCoeffA[element,shift] * coeffA[0] * w[element, k - shift];
+    od;
+    localSumW := localSumW + x[k];
+    w[element, k] := localSumW;
+    localSumY := localSumY + parCoeffA[element,0] * coeffA[0] * w[element, k];
+    totalSum := totalSum + localSumY;
+  od:
+  y_parallel[k] := totalSum;
+od:
+#plotting
+plot([seq([printX[i],y_simple[i]],i=deg..numValues)],style=line);
+plot([seq([printX[i],y_canonical[i]],i=deg..numValues)],style=line);
+plot([seq([printX[i],y_transposed[i]],i=deg..numValues)],style=line);
+plot([seq([printX[i],y_transposed_canonical[i]],i=deg..numValues)],style=line);
+plot([seq([printX[i],y_chain[i]],i=deg..numValues)],style=line);
+plot([seq([printX[i],y_parallel[i]],i=deg..numValues)],style=line);

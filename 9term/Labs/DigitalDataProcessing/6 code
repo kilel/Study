@@ -1,0 +1,147 @@
+deg := 2:
+zeroR := 1:
+zeroFi := 0.225:
+poleR := 0.95:
+poleFi := 0.2:
+
+Z := [zeroR * exp(I * zeroFi), zeroR * exp(-I * zeroFi)]:
+P := [poleR * exp(I * poleFi), poleR * exp(-I * poleFi)]:
+
+A := expand((z - Z[1]) * (z - Z[2]));
+B := expand((z - P[1]) * (z - P[2]));
+
+                   2
+             A := z  - 1.949588214 z + 1.000000000 + 0. I
+
+
+                  2
+            B := z  - 1.862126498 z + 0.9024999999 + 0. I
+
+#create coefficients
+coeffA := Array(0..deg):
+coeffB := Array(0..deg):
+for k from 0 to deg  do
+  coeffA[k] := coeff(A, z, k);
+  coeffB[k] := coeff(B, z, k);
+od:
+print(coeffA);print(coeffB);
+
+  Array(0 .. 2, {0 = 1.000000000 + 0. I, 1 = -1.949588214, 2 = 1},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+  Array(0 .. 2, {0 = 0.9024999999 + 0. I, 1 = -1.862126498, 2 = 1},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+# create IA coefficients
+IA := Array(0..deg):
+IB := Array(0..deg):
+A_I := A:
+B_I := B:
+for k from 1 to deg do
+majorB := coeff(B, z, deg - k + 1);
+A := expand(A / majorB);
+B := expand(B / majorB);
+majorA := coeff(A, z, deg - k + 1);
+IA[k-1] := majorA;
+A := expand(A - majorA * B);
+
+majorA := coeff(A, z, deg - k);
+A := expand(A / majorA);
+B := expand(B / majorA);
+majorB := coeff(B, z, deg - k + 1);
+IB[k] := majorB;
+B := expand(B - majorB * z * A);
+od:
+IA[deg] := A/B:
+print(IA); print(IB);
+A := A_I: B := B_I:
+
+  Array(0 .. 2, {0 = 1, 1 = 0.1170286490, 2 = -0.008995407936 - 0. I},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+  Array(0 .. 2, {1 = -11.43357398, 2 = 92.05719306},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+# create IIA coefficients
+IIA := Array(0..deg):
+IIB := Array(0..deg):
+A_I := A:
+B_I := B:
+for k from 1 to deg do
+majorB := coeff(B, z, 0);
+A := expand(A / majorB);
+B := expand(B / majorB);
+majorA := coeff(A, z, 0);
+IIA[k-1] := majorA;
+A := expand((A - majorA * B) / z);
+
+majorA := coeff(A, z, 0);
+A := expand(A / majorA);
+B := expand(B / majorA);
+majorB := coeff(B, z, 0);
+IIB[k] := majorB;
+B := expand((B - majorB  * A) / z);
+od:
+IIA[deg] := expand(A/B):
+print(IIA); print(IIB);
+A := A_I: B := B_I:
+
+  Array(0 .. 2, {
+
+        0 = 1.108033241 + 0. I, 1 = -0.1131800543, 2 = 0.005146813451
+
+        }, datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+  Array(0 .. 2, {1 = 7.936867740 + 0. I, 2 = -195.2044626},
+
+        datatype = anything, storage = rectangular,
+
+        order = Fortran_order)
+
+
+        
+# IA form
+> y_IA := Array(1..numValues + deg):
+> trX := Array(0..deg + 2, 1..numValues + deg):
+> for k from deg to numValues + deg do
+>   trX[0,k] := x[k];
+>   for unit from deg to 1 by -1 do
+>     trX[unit,k] := (trX[unit-1, k-1] - IA[unit] * trX[unit, k-1] - trX[unit+1, k-1] ) / IB[unit];
+>   od:
+>   y_IA[k] := x[k] * IA[0] + trX[1,k];
+> od:# IIA form
+> y_IIA := Array(1..numValues + deg):
+> trX := Array(0..deg + 1, 1..numValues + deg):
+> trY := Array(0..deg + 1, 1..numValues + deg):
+> for k from deg + 1 to numValues + deg do
+>   trX[0,k] := x[k];
+>   for unit from 1 to deg do
+>     trX[unit,k] := trX[unit-1,k] - IIB[unit] * trY[unit,k-1];
+>   od:
+>   for unit from deg to 1 by -1 do
+>     trY[unit,k] := trX[unit,k] * IIA[unit] + trY[unit + 1, k];
+>   od:
+> 
+>   y_IIA[k] := x[k] * IA[0] + trY[1,k];
+> od:
+> plot([seq([printX[i],y_IA[i]],i=deg..numValues)],style=line);
+> plot([seq([printX[i],y_IIA[i]],i=deg..numValues)],style=line); 

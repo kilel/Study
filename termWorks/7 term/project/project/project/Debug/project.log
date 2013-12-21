@@ -1,0 +1,35 @@
+﻿Построение начато 22.12.2012 12:54:47.
+     1>Проект "D:\Dropbox\VyatSU\7 term\MIMPO\Курсовая работа\project\project\project\project.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\\" /AI"C:\Program Files (x86)\Windows Kits\8.0\References\CommonConfiguration\Neutral" /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\\" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\mscorlib.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Xml.dll" /analyze- /errorReport:prompt /clr:nostdlib MainForm.cpp
+         MainForm.cpp
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MPToolsCore.h(65): warning C4244: return: преобразование "__int64" в "int", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MPToolsCore.h(253): warning C4552: -: оператор не имеет результата; требуется оператор с побочным действием
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MPToolsAlienor.h(122): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MPToolsAlienor.h(171): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MPToolsAlienor.h(229): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MainForm.h(567): warning C4677: plotter: сигнатура члена, не являющегося частным, содержит частный тип сборки "plottools::plotTools"
+                 d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\plotTools.h(16): см. объявление "plottools::plotTools"
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MainForm.h(610): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MainForm.h(612): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MainForm.h(614): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MainForm.h(594): warning C4101: mps: неиспользованная локальная переменная
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\MainForm.h(650): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\mptoolscore.h(226): warning C4715: MPTools::FSetZizler::getCrit: значение возвращается не при всех путях выполнения
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\mptoolscore.h(249): warning C4715: MPTools::FSetBIHNKORN::getCrit: значение возвращается не при всех путях выполнения
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\mptoolscore.h(255): warning C4715: MPTools::FSetBIHNKORN::getCons: значение возвращается не при всех путях выполнения
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\mptoolscore.h(282): warning C4715: MPTools::FSetOsyczkaKundu::getCrit: значение возвращается не при всех путях выполнения
+     1>d:\dropbox\vyatsu\7 term\mimpo\курсовая работа\project\project\project\mptoolscore.h(292): warning C4715: MPTools::FSetOsyczkaKundu::getCons: значение возвращается не при всех путях выполнения
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Dropbox\VyatSU\7 term\MIMPO\Курсовая работа\project\project\Debug\project.exe" /INCREMENTAL /NOLOGO /ASSEMBLYRESOURCE:Debug\project.MainForm.resources /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Dropbox\VyatSU\7 term\MIMPO\Курсовая работа\project\project\Debug\project.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\CheckerForConstraints.obj
+         Debug\Function.obj
+         Debug\ParsingTools.obj
+         Debug\MainForm.obj
+         Debug\plotTools.obj
+         "Debug\.NETFramework,Version=v4.5.AssemblyAttributes.obj"
+         project.vcxproj -> D:\Dropbox\VyatSU\7 term\MIMPO\Курсовая работа\project\project\Debug\project.exe
+     1>Построение проекта "D:\Dropbox\VyatSU\7 term\MIMPO\Курсовая работа\project\project\project\project.vcxproj" завершено (целевые объекты Build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:02.79
