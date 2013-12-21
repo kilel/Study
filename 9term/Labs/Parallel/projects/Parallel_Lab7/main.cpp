@@ -1,176 +1,270 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <math.h>
+#include <fstream>
 #include <mpi.h>
-#include <sstream>
+#include <algorithm>
 
 using namespace std;
 using namespace MPI;
 
-class Lab3 {
-private:
-    Intracomm &comm = COMM_WORLD;
-    int id;
-    int size;
-    static const int master = 0;
+const double eps = 1e-8;
 
-public:
+Intracomm *comm;
+int myRank;
+int size;
+struct Coord;
+void readInputRand(int &n, Coord *&first, Coord *&second);
+void readInputFile(int &n, Coord *&first, Coord *&second);
 
-    Lab3() {
-        Init();
-        id = comm.Get_rank();
-        size = comm.Get_size();
+int starts = 7;
+int randStartNum = 0;
+int startVal[] = {100, 300, 500, 700, 900, 1100, 1300};
+
+void (*readInput)(int &n, Coord *&first, Coord *&second) = readInputRand;
+
+double Min(double a, double b) {
+    return a < b ? a : b;
+}
+
+double Max(double a, double b) {
+    return a > b ? a : b;
+}
+
+double getRand() {
+    return (double) rand() / RAND_MAX * 20;
+}
+
+uint64_t getTime() {
+    uint64_t lo, hi;
+    __asm__ __volatile__(
+            "xorl %%eax, %%eax\n"
+            "cpuid\n"
+            "rdtsc\n"
+            : "=a" (lo), "=d" (hi)
+            :
+            : "%ebx", "%ecx");
+    return (uint64_t) hi << 32 | lo;
+}
+
+struct Coord {
+    double x;
+    double y;
+
+    Coord(double x_, double y_) : x(x_), y(y_) {
     }
 
-    ~Lab3() {
-        Finalize();
+    Coord() : x(0), y(0) {
     }
-
-    void barrier(string message = "") {
-        comm.Barrier();
-        if (id == master) {
-            printf("\n%s\n", &message.at(0));
-        }
-        comm.Barrier();
-    }
-
-    void task1() {
-        barrier("Task 1");
-
-        struct MyType {
-            int a;
-            int b;
-            double c;
-        } tempVal;
-        int dataLength[] = {1, 1, 1};
-        Datatype types[] = {INTEGER, INTEGER, DOUBLE};
-        Aint shift[] = {&tempVal.a - (int*) &tempVal,
-            &tempVal.b - (int*) &tempVal,
-            &tempVal.c - (double*) &tempVal};
-
-        Datatype newType = Datatype::Create_struct(3, dataLength, shift, types);
-        newType.Commit();
-        if (id == master) {
-            MyType val;
-            val.a = rand();
-            val.b = rand();
-            val.c = rand() / 3.45492;
-            int to = 1;
-
-            comm.Send(&val, 1, newType, to, 0);
-            printf("send: [%d], [%d], [%lf]\n", val.a, val.b, val.c);
-        } else if (id == 1) {
-            MyType val;
-            int from = 0;
-            comm.Recv(&val, 1, newType, from, 0);
-            printf("recv: [%d], [%d], [%lf]", val.a, val.b, val.c);
-        }
-        newType.Free();
-    }
-
-    void task2() {
-        barrier("Task 2");
-        int numDims = 2;
-        int dims[] = {4, 4};
-        bool periodic[] = {true, true};
-        bool reorder = true;
-        Cartcomm grid = comm.Create_cart(numDims, dims, periodic, reorder);
-        int *coords = new int[numDims];
-        grid.Get_coords(grid.Get_rank(), numDims, coords);
-        printf("Rank: %d (in comm = %d), coords:(%d, %d)\n", grid.Get_cart_rank(coords), comm.Get_rank(),
-                coords[0], coords[1]);
-
-    }
-
-    void task3_dummy() {
-        barrier("Task 3 (dummy edition)");
-        int numDims = 2;
-        int dims[] = {4, 4};
-        bool periodic[] = {true, true};
-        bool reorder = true;
-        Cartcomm grid = comm.Create_cart(numDims, dims, periodic, reorder);
-        int *coords = new int[numDims];
-        grid.Get_coords(grid.Get_rank(), numDims, coords);
-
-        int *coordsTo = new int[numDims];
-        int dimToShift = 0;
-        for (int i = 0; i < numDims; ++i) {
-            coordsTo[i] = coords[i];
-        }
-        coordsTo[dimToShift] = (coordsTo[dimToShift] + 1) % dims[dimToShift];
-        int toRank = grid.Get_cart_rank(coordsTo);
-
-        printf("Rank: %d (in comm = %d), coords:(%d, %d) sends to rank %d, cooords (%d, %d)\n",
-                grid.Get_cart_rank(coords), comm.Get_rank(), coords[0], coords[1],
-                toRank, coordsTo[0], coordsTo[1]);
-
-    }
-
-    void task3() {
-        barrier("Task 3");
-        int numDims = 2;
-        int dims[] = {4, 4};
-        bool periodic[] = {true, true};
-        bool reorder = true;
-        Cartcomm grid = comm.Create_cart(numDims, dims, periodic, reorder);
-
-        int fromRank = grid.Get_rank();
-        int toRank;
-        grid.Shift(0, 1, fromRank, toRank);
-
-        int *coords = new int[numDims];
-        int *coordsTo = new int[numDims];
-        int *currCoords = new int[numDims];
-        grid.Get_coords(fromRank, numDims, coords);
-        grid.Get_coords(toRank, numDims, coordsTo);
-        grid.Get_coords(grid.Get_rank(), numDims, currCoords);
-
-        printf("Current rank: %d (%d, %d). Before rank %d, coords:(%d, %d), next rank %d, cooords (%d, %d)\n",
-                grid.Get_rank(), currCoords[0], currCoords[1],
-                fromRank, coords[0], coords[1],
-                toRank, coordsTo[0], coordsTo[1]);
-    }
-
-    void task4() {
-        barrier("Task 4");
-        int numV = 7;
-        int degrees[] = {4, 8, 12, 13, 14, 15, 16};
-        int edges[] = {1, 1, 2, 2,
-            0, 0, 3, 4,
-            0, 0, 5, 6,
-            1, 1, 2, 2};
-        Graphcomm gcomm = comm.Create_graph(numV, &degrees[0], &edges[0], true);
-
-        if (gcomm != COMM_NULL) {
-            int rank = gcomm.Get_rank();
-            int deg = gcomm.Get_neighbors_count(rank);
-            int *neigh = new int[deg];
-            gcomm.Get_neighbors(rank, deg, neigh);
-            string nei = "";
-            stringstream st;
-            for (int i = 0; i < deg; ++i) {
-                st << neigh[i] << ", ";
-            }
-            nei = st.str();
-            printf("rank = %d, deg = %d, neighboars = %s\n", rank, deg, &nei[0]);
-
-        }
-    }
-
 };
+
+struct GradCoord {
+    int x;
+    int y;
+
+    GradCoord(int x_, int y_) : x(x_), y(y_) {
+    }
+
+    GradCoord() : x(0), y(0) {
+    }
+};
+
+void readInputRand(int &n, Coord *&first, Coord *&second) {
+    n = startVal[randStartNum++];
+    first = new Coord[n];
+    second = new Coord[n];
+    for (int i = 0; i < n; ++i) {
+        first[i] = Coord(getRand(), getRand());
+        second[i] = Coord(getRand(), getRand());
+    }
+}
+
+void readInputFile(int &n, Coord *&first, Coord *&second) {
+    ifstream in;
+    in.open("input");
+    in >> n;
+    first = new Coord[n];
+    second = new Coord[n];
+    for (int i = 0; i < n; ++i) {
+        double x, y;
+        in >> x >> y;
+        first[i] = Coord(x, y);
+        in >> x >> y;
+        second[i] = Coord(x, y);
+    }
+    in.close();
+}
+
+int getIndex(double value, double *sortedArray, int m) {
+    int l = 0, r = m;
+    while (r > l) {
+        int c = (l + r) >> 1;
+        if (fabs(sortedArray[c] - value) < eps) {
+            return c;
+        }
+        if (sortedArray[c] > value) {
+            r = c - 1;
+        } else {
+            l = c + 1;
+        }
+    }
+    return r;
+}
+
+void prepareData(int n, Coord *first, Coord *second) {
+    for (int i = 0; i < n; ++i) {
+        double x1 = first[i].x, x2 = second[i].x, y1 = first[i].y, y2 = second[i].y;
+        first[i].x = Min(x1, x2);
+        second[i].x = Max(x1, x2);
+
+        first[i].y = Min(y1, y2);
+        second[i].y = Max(y1, y2);
+    }
+}
+
+int** createMatrix(int m) {
+    int **a = new int*[m];
+    for (int i = 0; i < m + 1; ++i) {
+        a[i] = new int[m];
+    }
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < m; ++j) {
+            a[i][j] = 0;
+        }
+    }
+    return a;
+}
+
+double solve_poster(int n, Coord *first, Coord *second) {
+    double sum = 0;
+    //broadcast number of rectangles
+    comm->Bcast(&n, 1, INT, 0);
+
+    int m = 2 * n;
+
+    int *x1, *x2, *y1, *y2;
+    x1 = new int[n];
+    x2 = new int[n];
+    y1 = new int[n];
+    y2 = new int[n];
+
+    double *xSorted;
+    double *ySorted;
+
+    if (myRank == 0) {
+        //get sorted lists
+        xSorted = new double[m];
+        ySorted = new double[m];
+        for (int i = 0; i < m; ++i) {
+            xSorted[i] = i < n ? first[i].x : second[i - n].x;
+            ySorted[i] = i < n ? first[i].y : second[i - n].y;
+        }
+
+        sort(xSorted, xSorted + m);
+        sort(ySorted, ySorted + m);
+
+        //build indexies for input values in sorted.
+        //GradCoord *gFirst, *gSecond;int *x1, *x2, *y1, *y2;
+        //gFirst = new GradCoord[n];
+        //gSecond = new GradCoord[n];
+
+        for (int i = 0; i < n; ++i) {
+            /*gFirst[i].x = getIndex(first[i].x, xSorted, m);
+            gFirst[i].y = getIndex(first[i].y, ySorted, m);
+            gSecond[i].x = getIndex(second[i].x, xSorted, m);
+            gSecond[i].y = getIndex(second[i].y, ySorted, m);
+             */
+            x1[i] = getIndex(first[i].x, xSorted, m);
+            y1[i] = getIndex(first[i].y, ySorted, m);
+            x2[i] = getIndex(second[i].x, xSorted, m);
+            y2[i] = getIndex(second[i].y, ySorted, m);
+        }
+
+
+
+    }
+
+    if (size > 1) {
+        comm->Bcast(x1, n, INT, 0);
+        comm->Bcast(x2, n, INT, 0);
+        comm->Bcast(y1, n, INT, 0);
+        comm->Bcast(y2, n, INT, 0);
+    }
+
+    //main solving
+    int **a = createMatrix(m);
+    int** reduceMatrix = createMatrix(m);
+
+    for (int k = myRank; k < n; k += size) {
+        for (int i = x1[k]; i < x2[k]; ++i) {
+            for (int j = y1[k]; j < y2[k]; ++j) {
+                a[i][j] = 1;
+            }
+        }
+    }
+
+
+
+    if (size > 1) {
+
+        for (int k = 0; k < m; ++k) {
+            comm->Reduce(a[k], reduceMatrix[k], m, INT, LOR, 0);
+        }
+    }
+
+
+
+    if (myRank == 0) {
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (reduceMatrix[i][j]) {
+                    sum += (xSorted[i + 1] - xSorted[i]) * (ySorted[j + 1] - ySorted[j]);
+                }
+            }
+        }
+        delete[] xSorted;
+        delete[] ySorted;
+    }
+
+    delete[] a;
+    delete[] reduceMatrix;
+    delete[] x1;
+    delete[] x2;
+    delete[] y1;
+    delete[] y2;
+
+    return sum;
+}
 
 int main(int argc, char** argv) {
     srand(time(0));
-    Lab3 &lab = *(new Lab3());
-    lab.task1();
-    lab.task2();
-    lab.task3_dummy();
-    lab.task3();
-    lab.task4();
+    Init();
 
-    lab.barrier("Finished lab 3");
-    delete &lab;
+    comm = &COMM_WORLD;
+    myRank = comm->Get_rank();
+    size = comm->Get_size();
+
+    int n;
+    Coord *first, *second;
+    for (int i = 0; i < starts; ++i) {
+        if (myRank == 0) {
+            readInput(n, first, second);
+            prepareData(n, first, second);
+        }
+        comm->Barrier();
+        uint64_t start = getTime();
+        double result = solve_poster(n, first, second);
+        uint64_t timeLength = getTime() - start;
+
+        if (myRank == 0) {
+            cout << timeLength << endl;
+        }
+    }
+
+    Finalize();
     return 0;
 }
+
 
 

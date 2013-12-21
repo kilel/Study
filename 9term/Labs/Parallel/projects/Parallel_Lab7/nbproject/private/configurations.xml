@@ -24,11 +24,11 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
+          <runcommandpicklistitem>mpiexec -n 16 "${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>mpiexec -n 4 "${OUTPUT_PATH}"</runcommandpicklistitem>
-          <runcommandpicklistitem>mpiexec -n 16 "${OUTPUT_PATH}"</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>mpiexec -n 16 "${OUTPUT_PATH}"</runcommand>
+        <runcommand>mpiexec -n 4 "${OUTPUT_PATH}"</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -59,11 +59,14 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
-          <runcommandpicklistitem>mpiexec -n 4 "${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>mpiexec -n 16 "${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>mpiexec -n 8 "${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>mpiexec -n 1 "${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>mpiexec -n 2 "${OUTPUT_PATH}"</runcommandpicklistitem>
+          <runcommandpicklistitem>mpiexec -n 4 "${OUTPUT_PATH}"</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>mpiexec -n 16 "${OUTPUT_PATH}"</runcommand>
+        <runcommand>mpiexec -n 4 "${OUTPUT_PATH}"</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

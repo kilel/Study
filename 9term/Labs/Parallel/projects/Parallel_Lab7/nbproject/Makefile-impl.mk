@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Parallel_Lab3
+PROJECTNAME=Parallel_Lab7
 
 # Active Configuration
 DEFAULTCONF=Debug

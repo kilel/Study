@@ -136,17 +136,17 @@ vector<uint64_t>* sequentEratosfen(uint64_t maxValue) {
     return primes;
 }
 
-vector<uint64_t>* ompEratosfen(uint64_t maxValue) {
+vector<uint64_t>* ompEratosfen(const uint64_t maxValue) {
     vector<uint64_t>* primes = new vector<uint64_t>(0);
     vector<bool> primesIndent = vector<bool>(maxValue + 1, 1);
     primesIndent[0] = primesIndent[1] = 0;
     uint64_t lim = sqrt(maxValue) + 1.001;
-#pragma omp parallel for
+//#pragma omp parallel for
     for (int i = 2; i <= lim; ++i) {
         if (primesIndent[i]) {
-//#pragma omp parallel shared(primesIndent, maxValue, i) num_threads(4)
+//#pragma omp parallel shared(primesIndent) private(maxValue, i, lim);
             {
-//#pragma omp for
+#pragma omp parallel for
                 for (int j = i * i; j <= maxValue; j += i) {
                     //#pragma omp critical
                     primesIndent[j] = 0;

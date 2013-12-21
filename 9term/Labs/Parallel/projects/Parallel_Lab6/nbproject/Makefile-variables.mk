@@ -9,19 +9,27 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux-x86
-CND_ARTIFACT_NAME_Debug=parallel_lab3
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/parallel_lab3
+CND_ARTIFACT_NAME_Debug=parallel_lab6
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/parallel_lab6
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=parallellab3.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/parallellab3.tar
+CND_PACKAGE_NAME_Debug=parallellab6.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/parallellab6.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=parallel_lab3
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/parallel_lab3
+CND_ARTIFACT_NAME_Release=parallel_lab6
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/parallel_lab6
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=parallellab3.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/parallellab3.tar
+CND_PACKAGE_NAME_Release=parallellab6.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/parallellab6.tar
+# MPI configuration
+CND_PLATFORM_MPI=GNU-Linux-x86
+CND_ARTIFACT_DIR_MPI=dist/MPI/GNU-Linux-x86
+CND_ARTIFACT_NAME_MPI=parallel_lab6
+CND_ARTIFACT_PATH_MPI=dist/MPI/GNU-Linux-x86/parallel_lab6
+CND_PACKAGE_DIR_MPI=dist/MPI/GNU-Linux-x86/package
+CND_PACKAGE_NAME_MPI=parallellab6.tar
+CND_PACKAGE_PATH_MPI=dist/MPI/GNU-Linux-x86/package/parallellab6.tar
 #
 # include compiler specific variables
 #
